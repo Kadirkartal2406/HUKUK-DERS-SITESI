@@ -1,0 +1,52 @@
+/* css/variables.css */
+:root {
+  /* Colors */
+  --bg-primary: #050811;
+  --bg-secondary: #0c1020;
+  --bg-card: rgba(22, 28, 45, 0.45);
+  --bg-card-hover: rgba(22, 28, 45, 0.7);
+  --bg-input: #111827;
+  
+  --accent-gold: #d9a036;
+  --accent-gold-hover: #fbbf24;
+  --accent-gold-glow: rgba(217, 160, 54, 0.15);
+  
+  --color-text: #f3f4f6;
+  --color-text-muted: #9ca3af;
+  --color-text-dark: #4b5563;
+  
+  --border-color: rgba(255, 255, 255, 0.05);
+  --border-color-active: rgba(217, 160, 54, 0.35);
+  
+  /* Status Colors */
+  --color-success: #10b981;
+  --color-success-bg: rgba(16, 185, 129, 0.1);
+  --color-error: #ef4444;
+  --color-error-bg: rgba(239, 68, 68, 0.1);
+  --color-warning: #f59e0b;
+  --color-warning-bg: rgba(245, 158, 11, 0.1);
+  --color-info: #3b82f6;
+  --color-info-bg: rgba(59, 130, 246, 0.1);
+
+  /* Fonts */
+  --font-title: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  /* Layout & Geometry */
+  --sidebar-width: 260px;
+  --header-height: 70px;
+  --border-radius-sm: 8px;
+  --border-radius-md: 14px;
+  --border-radius-lg: 20px;
+  
+  /* Shadows & Glows */
+  --shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.9);
+  --gold-glow: 0 0 20px rgba(217, 160, 54, 0.15);
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
