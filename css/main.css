@@ -846,3 +846,56 @@ body {
   gap: 16px;
 }
 
+/* --- Desktop Collapsible Sidebar & Panel Transitions --- */
+@media (min-width: 769px) {
+  .sidebar {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .sidebar.collapsed {
+    transform: translateX(-260px);
+  }
+  .main-content {
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .main-content.full-width {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+  
+  /* Hide hamburger button on desktop when sidebar is open */
+  .hamburger-menu {
+    display: none !important;
+  }
+  
+  /* Show hamburger button on desktop when sidebar is collapsed */
+  .sidebar.collapsed ~ .main-content .hamburger-menu {
+    display: flex !important;
+  }
+  
+  /* Hover state for desktop collapse button */
+  #sidebar-collapse-btn-desktop:hover {
+    color: var(--accent-gold) !important;
+  }
+}
+
+.workspace-panel-left {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.workspace-panel-left.collapsed {
+  width: 0 !important;
+  min-width: 0 !important;
+  opacity: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  pointer-events: none;
+}
+
+.notebooklm-workspace {
+  transition: gap 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.notebooklm-workspace:has(.workspace-panel-left.collapsed) {
+  gap: 0 !important;
+}
+
+

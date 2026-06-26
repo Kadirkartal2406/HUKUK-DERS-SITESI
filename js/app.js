@@ -352,6 +352,17 @@ function initEventListeners() {
     });
   }
 
+  // Desktop sidebar collapse button
+  const desktopCollapseBtn = document.getElementById('sidebar-collapse-btn-desktop');
+  if (desktopCollapseBtn) {
+    desktopCollapseBtn.addEventListener('click', () => {
+      const sidebar = document.querySelector('.sidebar');
+      const mainContent = document.querySelector('.main-content');
+      sidebar.classList.add('collapsed');
+      mainContent.classList.add('full-width');
+    });
+  }
+
   // Close sidebar on menu click on mobile
   document.querySelectorAll('.sidebar-menu .menu-item').forEach(link => {
     link.addEventListener('click', () => {

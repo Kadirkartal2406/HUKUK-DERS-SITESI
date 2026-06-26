@@ -925,6 +925,58 @@ body {
   gap: 16px;
 }
 
+/* --- Desktop Collapsible Sidebar & Panel Transitions --- */
+@media (min-width: 769px) {
+  .sidebar {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .sidebar.collapsed {
+    transform: translateX(-260px);
+  }
+  .main-content {
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .main-content.full-width {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+  
+  /* Hide hamburger button on desktop when sidebar is open */
+  .hamburger-menu {
+    display: none !important;
+  }
+  
+  /* Show hamburger button on desktop when sidebar is collapsed */
+  .sidebar.collapsed ~ .main-content .hamburger-menu {
+    display: flex !important;
+  }
+  
+  /* Hover state for desktop collapse button */
+  #sidebar-collapse-btn-desktop:hover {
+    color: var(--accent-gold) !important;
+  }
+}
+
+.workspace-panel-left {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.workspace-panel-left.collapsed {
+  width: 0 !important;
+  min-width: 0 !important;
+  opacity: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  pointer-events: none;
+}
+
+.notebooklm-workspace {
+  transition: gap 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.notebooklm-workspace:has(.workspace-panel-left.collapsed) {
+  gap: 0 !important;
+}
+
 /* css/dashboard.css */
 
 /* css/dashboard.css */
@@ -2559,36 +2611,6 @@ body {
   }
 }
 
-/* --- Desktop Collapsible Sidebar & Panel Transitions --- */
-@media (min-width: 769px) {
-  .sidebar {
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .sidebar.collapsed {
-    transform: translateX(-260px);
-  }
-  .main-content {
-    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .main-content.full-width {
-    margin-left: 0 !important;
-    width: 100%;
-  }
-}
-
-.workspace-panel-left {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.workspace-panel-left.collapsed {
-  width: 0 !important;
-  min-width: 0 !important;
-  opacity: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  border: none !important;
-  pointer-events: none;
-}
-
 </style>
 </head>
 <body>
@@ -2597,12 +2619,19 @@ body {
     
     <!-- Sidebar Drawer Navigation -->
     <aside class="sidebar">
-      <div class="brand-section">
-        <div class="brand-logo">Δ</div>
-        <div>
-          <h2 class="brand-name">Kampüs</h2>
-          <span class="brand-sub" id="sidebar-brand-sub">NotebookLM</span>
+      <div class="brand-section" style="position: relative; display: flex; align-items: center; justify-content: space-between; width: 100%;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div class="brand-logo">Δ</div>
+          <div>
+            <h2 class="brand-name">Kampüs</h2>
+            <span class="brand-sub" id="sidebar-brand-sub">NotebookLM</span>
+          </div>
         </div>
+        <button id="sidebar-collapse-btn-desktop" class="sidebar-collapse-btn" aria-label="Menüyü Kapat" style="background: none; border: none; color: var(--color-text-muted); cursor: pointer; padding: 6px; display: flex; align-items: center; justify-content: center; transition: color var(--transition-fast);">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width: 18px; height: 18px;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg>
+        </button>
       </div>
       
       <ul class="sidebar-menu">
@@ -4936,6 +4965,17 @@ function initEventListeners() {
         sidebar.classList.toggle('collapsed');
         mainContent.classList.toggle('full-width');
       }
+    });
+  }
+
+  // Desktop sidebar collapse button
+  const desktopCollapseBtn = document.getElementById('sidebar-collapse-btn-desktop');
+  if (desktopCollapseBtn) {
+    desktopCollapseBtn.addEventListener('click', () => {
+      const sidebar = document.querySelector('.sidebar');
+      const mainContent = document.querySelector('.main-content');
+      sidebar.classList.add('collapsed');
+      mainContent.classList.add('full-width');
     });
   }
 
