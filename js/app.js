@@ -268,6 +268,7 @@ function initEventListeners() {
 
   document.getElementById('start-ai-quiz-generation').addEventListener('click', handleAiQuizGeneration);
   document.getElementById('start-pdf-quiz-conversion').addEventListener('click', handlePdfQuizConversion);
+  document.getElementById('start-local-pdf-quiz').addEventListener('click', handleLocalPdfQuizConversion);
   document.getElementById('start-manual-quiz').addEventListener('click', handleManualQuizImport);
 
   // Active quiz controls
@@ -933,6 +934,38 @@ async function handlePdfQuizConversion() {
   }
 }
 
+/**
+ * LOCAL (AI-free) fast quiz extraction from PDF text.
+ * Tries multiple common Turkish question formats.
+ */
+async function handleLocalPdfQuizConversion() {
+  const pdfId = document.getElementById('quiz-pdf-select').value;
+  if (!pdfId) {
+    ui.showToast('Lütfen listeden bir PDF seçin.', 'warning');
+    return;
+  }
+
+  const pdf = await db.getPdf(pdfId);
+  if (!pdf || !pdf.textContent.trim()) {
+    ui.showToast('PDF metin içeriği okunamadı.', 'error');
+    return;
+  }
+
+  const parsedQuestions = parseLocalQuestions(pdf.textContent);
+
+  if (parsedQuestions.length === 0) {
+    ui.showToast(
+      'Bu PDF\'te standart formatlı soru bulunamadı. AI dönüştürücüyü deneyin.',
+      'warning'
+    );
+    return;
+  }
+
+  await promptSaveQuizBank(parsedQuestions, pdf.name.replace(/\.pdf$/i, '') + ' (Hızlı)');
+  startQuizSession(parsedQuestions);
+  ui.showToast(`⚡ ${parsedQuestions.length} soru AI olmadan anında çözüldü!`);
+}
+
 // Manual Text Quiz Import Parser
 function handleManualQuizImport() {
   const rawText = document.getElementById('quiz-manual-paste-area').value.trim();
@@ -1031,6 +1064,109 @@ function parseManualQuestions(text) {
   }
 
   return questionsList;
+}
+
+/**
+ * Robust multi-format local parser for Turkish exam PDFs.
+ * Handles: numbered questions (1. / 1- / Soru 1:), A/B/C/D options
+ * in multiple styles, inline answer keys and cevap anahtarı tables.
+ * Does NOT require AI - works instantly.
+ */
+function parseLocalQuestions(text) {
+  // --- Step 1: Detect answer key table (e.g. "1-A  2-B  3-C") at end of text ---
+  const answerKey = {};
+  const keyTableRe = /(\d+)\s*[-\.)\s]\s*([A-Ea-e])\b/g;
+  let keyMatch;
+  // Only harvest from last 3000 chars (likely answer key section)
+  const tail = text.slice(-3000);
+  while ((keyMatch = keyTableRe.exec(tail)) !== null) {
+    answerKey[parseInt(keyMatch[1])] = keyMatch[2].toUpperCase();
+  }
+
+  // --- Step 2: Split text into question blocks ---
+  // Support: "1." "1-" "1)" "Soru 1:" "SORU 1." at line start
+  const blockSplitRe = /(?:^|\n)\s*(?:SORU\s*)?(\d{1,3})\s*[.\-\):](?!\d)/gi;
+  const blocks = [];
+  let lastIndex = 0;
+  let lastNum = null;
+  const matches = [...text.matchAll(blockSplitRe)];
+
+  for (let i = 0; i < matches.length; i++) {
+    const m = matches[i];
+    const num = parseInt(m[1]);
+    if (lastNum !== null) {
+      blocks.push({ num: lastNum, text: text.slice(lastIndex, m.index).trim() });
+    }
+    lastNum = num;
+    lastIndex = m.index + m[0].length;
+  }
+  if (lastNum !== null) {
+    blocks.push({ num: lastNum, text: text.slice(lastIndex).trim() });
+  }
+
+  // --- Step 3: Parse each block ---
+  const questions = [];
+
+  for (const block of blocks) {
+    const lines = block.text.split('\n').map(l => l.trim()).filter(l => l);
+    if (lines.length < 3) continue;
+
+    let questionLines = [];
+    let options = [];
+    let answerIndex = -1;
+    let explanation = '';
+
+    for (const line of lines) {
+      // Option line: A) A. A- (A) [A]
+      const optMatch = line.match(/^[\[\(]?([A-Ea-e])[\]\).\-\s]\s*(.+)/);
+      if (optMatch && options.length < 5) {
+        options.push(optMatch[2].trim());
+        continue;
+      }
+
+      // Inline answer: "Cevap: B" "Yanıt: C" "Doğru: A"
+      const ansMatch = line.match(/^(?:cevap|yan[iı]t|do[gğ]ru\s*(?:cevap)?)\s*[:\-]\s*([A-Ea-e])/i);
+      if (ansMatch) {
+        answerIndex = 'ABCDE'.indexOf(ansMatch[1].toUpperCase());
+        continue;
+      }
+
+      // Explanation line
+      const expMatch = line.match(/^(?:a[cç][iı]klama|gerek[cç]e)\s*[:\-]\s*(.+)/i);
+      if (expMatch) {
+        explanation = expMatch[1];
+        continue;
+      }
+
+      // Still building question text
+      if (options.length === 0) {
+        questionLines.push(line);
+      }
+    }
+
+    const questionText = questionLines.join(' ').trim();
+    if (!questionText || options.length < 2) continue;
+
+    // Try answer key table if no inline answer
+    if (answerIndex === -1 && answerKey[block.num]) {
+      answerIndex = 'ABCDE'.indexOf(answerKey[block.num]);
+    }
+
+    // Default to first option if still unknown (will show as ? in explanation)
+    const finalAnswerIndex = answerIndex >= 0 ? answerIndex : 0;
+
+    questions.push({
+      question: `${block.num}. ${questionText}`,
+      options: options.slice(0, 5),
+      answerIndex: finalAnswerIndex,
+      explanation: explanation ||
+        (answerIndex >= 0
+          ? `Doğru cevap: ${['A','B','C','D','E'][finalAnswerIndex]} şıkkıdır.`
+          : 'Cevap anahtarı bu PDF\'te belirtilmemiş. AI dönüştürücü kullanarak detaylı açıklama alabilirsiniz.')
+    });
+  }
+
+  return questions;
 }
 
 // Start active Quiz Session

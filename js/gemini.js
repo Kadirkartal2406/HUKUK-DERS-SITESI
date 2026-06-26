@@ -158,6 +158,26 @@ async function callGemini(contents, systemInstruction = '', jsonMode = false) {
 }
 
 /**
+ * Smartly truncates text to maxLen by taking distributed samples
+ * from the beginning, middle and end – giving the AI a balanced
+ * view of the whole document rather than just the start.
+ */
+function smartTruncate(text, maxLen) {
+  if (!text || text.length <= maxLen) return text || '';
+  // Take 60% from start, 25% from middle, 15% from end
+  const startLen  = Math.floor(maxLen * 0.60);
+  const midLen    = Math.floor(maxLen * 0.25);
+  const endLen    = maxLen - startLen - midLen;
+  const midStart  = Math.floor((text.length - midLen) / 2);
+  return (
+    text.substring(0, startLen) +
+    `\n\n[... dökümanın ortasından devam ...] \n\n` +
+    text.substring(midStart, midStart + midLen) +
+    `\n\n[... dökümanın sonundan devam ...] \n\n` +
+    text.substring(text.length - endLen)
+  );
+}
+/**
  * Generates quiz questions from provided text sources.
  * 
  * @param {string} sourceText The aggregated notes and PDF content.
@@ -182,7 +202,7 @@ Not: Metin dışında başka bir şey döndürme, direkt JSON listesini ver. Mar
 
 DERS MATERYALİ:
 ---
-${sourceText.substring(0, 120000)}
+${smartTruncate(sourceText, 40000)}
 ---`;
 
   const contents = [
@@ -223,7 +243,7 @@ KURALLAR:
 
 KAYNAKLAR:
 ---
-${sourceText.substring(0, 150000)}
+${smartTruncate(sourceText, 60000)}
 ---`;
 
   // We should prepare the contents payload matching the history format
@@ -265,7 +285,7 @@ Not: Metin dışında başka bir şey döndürme, direkt JSON listesini ver. Mar
 
 SINAV DÖKÜMANI:
 ---
-${pdfText.substring(0, 120000)}
+${smartTruncate(pdfText, 60000)}
 ---`;
 
   const contents = [

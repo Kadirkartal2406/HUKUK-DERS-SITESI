@@ -1947,6 +1947,26 @@ body {
   line-height: 1.5;
 }
 
+.pdf-convert-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pdf-convert-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pdf-convert-hint {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--color-text-dark);
+  text-align: center;
+}
+
 
 /* css/mobile.css */
 
@@ -2544,7 +2564,17 @@ body {
                 <label for="quiz-pdf-select">İçinde Soru Olan PDF Dosyasını Seçin</label>
                 <select class="input-field" id="quiz-pdf-select" style="width: 100%;"></select>
               </div>
-              <button class="btn btn-primary" id="start-pdf-quiz-conversion">PDF'i İnteraktif Sınava Dönüştür</button>
+              <div class="pdf-convert-actions">
+                <button class="btn btn-secondary" id="start-local-pdf-quiz">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" /></svg>
+                  ⚡ Hızlı Çözüm (AI Yok)
+                </button>
+                <button class="btn btn-primary" id="start-pdf-quiz-conversion">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 21l8.982-11.795H14.28l1.09-5.705L6.38 15.362h3.433Z" /></svg>
+                  🤖 AI ile Detaylı Dönüştür
+                </button>
+              </div>
+              <p class="pdf-convert-hint">⚡ Hızlı: Anında, API kullanmaz. &nbsp;|&nbsp; 🤖 AI: Yavaş ama cevap açıklamaları ekler.</p>
             </div>
 
             <!-- Manual Paste Controls -->
