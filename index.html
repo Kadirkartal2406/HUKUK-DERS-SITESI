@@ -4989,6 +4989,10 @@ function initEventListeners() {
 
   document.getElementById('workspace-note-save-btn').addEventListener('click', saveWorkspaceNote);
 
+  // Editor rich text command buttons
+  document.querySelectorAll('.editor-toolbar .toolbar-btn[data-cmd]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cmd = btn.dataset.cmd;
       const val = btn.dataset.val || null;
       document.execCommand(cmd, false, val);
       document.getElementById('note-editor-body').focus();
@@ -4996,50 +5000,13 @@ function initEventListeners() {
     });
   });
 
-  // Landing Page Events
-  const testApiLanding = document.getElementById('landing-test-api-btn');
-  if (testApiLanding) {
-    testApiLanding.addEventListener('click', async () => {
-      const key = document.getElementById('landing-api-key').value.trim();
-      const resultsDiv = document.getElementById('landing-api-test-results');
-      if (!key) {
-        resultsDiv.style.display = 'block';
-        resultsDiv.innerHTML = '<span style="color:#ef4444;">Lütfen bir API anahtarı girin.</span>';
-        return;
-      }
-      resultsDiv.style.display = 'block';
-      resultsDiv.textContent = 'Bağlantı test ediliyor...';
-      try {
-        const models = await ai.testApiKeyAndListModels(key);
-        resultsDiv.innerHTML = `<span style="color:#10b981;font-weight:bold;">✓ Başarılı!</span> Yetkili Modeller: ${models.slice(0, 3).map(m=>m.name.replace('models/','')).join(', ')}`;
-      } catch (err) {
-        resultsDiv.innerHTML = `<span style="color:#ef4444;font-weight:bold;">✗ Başarısız!</span> Hata: ${err.message}`;
-      }
-    });
-  }
-
-  // Landing page Custom input toggle
-  const univSelect = document.getElementById('landing-univ-select');
-  const customUnivInput = document.getElementById('landing-univ-custom');
-  if (univSelect && customUnivInput) {
-    univSelect.addEventListener('change', () => {
-      customUnivInput.style.display = univSelect.value === 'diğer' ? 'block' : 'none';
-    });
-  }
+  const noteTitleField = document.getElementById('note-title-field');
+  const noteBodyField = document.getElementById('note-editor-body');
+  if (noteTitleField) noteTitleField.addEventListener('input', handleNoteContentChange);
+  if (noteBodyField) noteBodyField.addEventListener('input', handleNoteContentChange);
   
-  const deptSelect = document.getElementById('landing-dept-select');
-  const customDeptInput = document.getElementById('landing-dept-custom');
-  if (deptSelect && customDeptInput) {
-    deptSelect.addEventListener('change', () => {
-      customDeptInput.style.display = deptSelect.value === 'diger' ? 'block' : 'none';
-    });
-  }
-
-  const landingSubmit = document.getElementById('landing-submit-btn');
-  if (landingSubmit) {
-    landingSubmit.addEventListener('submit', (e) => e.preventDefault());
-    landingSubmit.addEventListener('click', handleLandingSetup);
-  }
+  const editorSaveBtn = document.getElementById('editor-save-btn');
+  if (editorSaveBtn) editorSaveBtn.addEventListener('click', saveActiveNoteImmediate);
 
   // Community Filters
   const fUniv = document.getElementById('comm-filter-univ');
@@ -5050,7 +5017,7 @@ function initEventListeners() {
   if (fType) fType.addEventListener('change', filterCommunityItems);
 }
 
-// Modal opening
+// Modal open/close helpers
 function openModal(id) {
   const modal = document.getElementById(id);
   if (modal) modal.classList.add('active');
@@ -5061,17 +5028,213 @@ function closeModal(id) {
   if (modal) modal.classList.remove('active');
 }
 
+// --- AUTHENTICATION INTERACTIVE PAGE FUNCTIONS ---
+function initAuthPage() {
+  const univSelect = document.getElementById('register-univ-select');
+  const deptSelect = document.getElementById('register-dept-select');
+  
+  if (univSelect) {
+    univSelect.innerHTML = '<option value="">Üniversite Seçin...</option>' + 
+      TURKISH_UNIVERSITIES.map(u => `<option value="${u}">${u}</option>`).join('');
+      
+    univSelect.addEventListener('change', () => {
+      const customInput = document.getElementById('register-univ-custom');
+      if (customInput) {
+        customInput.style.display = univSelect.value === 'diğer' ? 'block' : 'none';
+        if (univSelect.value === 'diğer') customInput.required = true;
+        else customInput.required = false;
+      }
+    });
+  }
+  
+  if (deptSelect) {
+    deptSelect.innerHTML = '<option value="">Bölüm Seçin...</option>' + 
+      DEPARTMENTS.map(d => `<option value="${d.toLowerCase().replace(/[^a-z0-9]/g, '-')}">${d}</option>`).join('');
+      
+    deptSelect.addEventListener('change', () => {
+      const customInput = document.getElementById('register-dept-custom');
+      if (customInput) {
+        customInput.style.display = deptSelect.value === 'diğer' ? 'block' : 'none';
+        if (deptSelect.value === 'diğer') customInput.required = true;
+        else customInput.required = false;
+      }
+    });
+  }
+  
+  // Navigation between Login and Register cards
+  const toRegister = document.getElementById('go-to-register-link');
+  const toLogin = document.getElementById('go-to-login-link');
+  const loginCard = document.getElementById('auth-login-card');
+  const registerCard = document.getElementById('auth-register-card');
+  
+  if (toRegister && loginCard && registerCard) {
+    toRegister.addEventListener('click', (e) => {
+      e.preventDefault();
+      loginCard.style.display = 'none';
+      registerCard.style.display = 'block';
+    });
+  }
+  if (toLogin && loginCard && registerCard) {
+    toLogin.addEventListener('click', (e) => {
+      e.preventDefault();
+      registerCard.style.display = 'none';
+      loginCard.style.display = 'block';
+    });
+  }
+
+  // Forms submission registration
+  const loginForm = document.getElementById('auth-login-form');
+  if (loginForm) {
+    loginForm.addEventListener('submit', handleLoginUser);
+  }
+  const registerForm = document.getElementById('auth-register-form');
+  if (registerForm) {
+    registerForm.addEventListener('submit', handleRegisterUser);
+  }
+}
+
+// User registration handler
+async function handleRegisterUser(e) {
+  e.preventDefault();
+  
+  const fullName = document.getElementById('register-fullname').value.trim();
+  const email = document.getElementById('register-email').value.trim();
+  const username = document.getElementById('register-username').value.trim();
+  const password = document.getElementById('register-password').value;
+  const univSelect = document.getElementById('register-univ-select');
+  const deptSelect = document.getElementById('register-dept-select');
+  const customUniv = document.getElementById('register-univ-custom').value.trim();
+  const customDept = document.getElementById('register-dept-custom').value.trim();
+  const apiKey = document.getElementById('register-api-key').value.trim();
+
+  let university = univSelect.value === 'diğer' ? customUniv : univSelect.value;
+  let department = deptSelect.value === 'diğer' ? customDept : deptSelect.value;
+
+  if (!university || !department) {
+    ui.showToast('Lütfen üniversite ve bölüm seçiniz.', 'error');
+    return;
+  }
+
+  const user = {
+    username,
+    email,
+    password,
+    fullName,
+    university,
+    department,
+    apiKey,
+    createdAt: Date.now()
+  };
+
+  try {
+    ui.showToast('Kayıt oluşturuluyor...');
+    await db.registerUser(user);
+    
+    // Seed default curriculum courses for the new user
+    ui.showToast('Müfredat dersleri hazırlanıyor...');
+    await db.setupCurriculum(university, department, username);
+    
+    // Log user in automatically
+    currentUser = user;
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    
+    // UI changes to show dashboard
+    document.querySelector('.sidebar').style.display = 'flex';
+    document.getElementById('mobile-menu-toggle').style.display = 'flex';
+    
+    // Update sidebar/header info
+    document.getElementById('sidebar-brand-sub').textContent = currentUser.department.toUpperCase();
+    document.getElementById('current-course-display').textContent = `${currentUser.university} - ${currentUser.department.toUpperCase()}`;
+    document.getElementById('dashboard-welcome-title').textContent = `Hoş geldin, ${currentUser.fullName}!`;
+    
+    if (currentUser.apiKey) {
+      ai.setApiKey(currentUser.apiKey);
+    }
+    ui.updateApiKeyBadgeStatus();
+    
+    document.getElementById('auth-register-form').reset();
+    
+    await refreshDashboard();
+    switchPageProgrammatic('dashboard-page');
+    ui.showToast('Kayıt başarılı! Kampüs NotebookLM\'e hoş geldiniz.', 'success');
+  } catch (err) {
+    ui.showToast('Kayıt hatası: ' + err.message, 'error');
+  }
+}
+
+// User login handler
+async function handleLoginUser(e) {
+  e.preventDefault();
+  
+  const usernameOrEmail = document.getElementById('login-username').value.trim();
+  const password = document.getElementById('login-password').value;
+
+  try {
+    ui.showToast('Giriş yapılıyor...');
+    const user = await db.loginUser(usernameOrEmail, password);
+    
+    currentUser = user;
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    
+    // UI changes to show dashboard
+    document.querySelector('.sidebar').style.display = 'flex';
+    document.getElementById('mobile-menu-toggle').style.display = 'flex';
+    
+    // Update sidebar/header info
+    document.getElementById('sidebar-brand-sub').textContent = currentUser.department.toUpperCase();
+    document.getElementById('current-course-display').textContent = `${currentUser.university} - ${currentUser.department.toUpperCase()}`;
+    document.getElementById('dashboard-welcome-title').textContent = `Hoş geldin, ${currentUser.fullName}!`;
+    
+    if (currentUser.apiKey) {
+      ai.setApiKey(currentUser.apiKey);
+      if (currentUser.apiModel) {
+        ai.setApiModel(currentUser.apiModel);
+      }
+    }
+    ui.updateApiKeyBadgeStatus();
+    
+    document.getElementById('auth-login-form').reset();
+    
+    await refreshDashboard();
+    switchPageProgrammatic('dashboard-page');
+    ui.showToast('Başarıyla giriş yapıldı.', 'success');
+  } catch (err) {
+    ui.showToast('Giriş başarısız: ' + err.message, 'error');
+  }
+}
+
+// Logout handler
+function handleLogout() {
+  currentUser = null;
+  localStorage.removeItem('currentUser');
+  ai.setApiKey('');
+  ui.updateApiKeyBadgeStatus();
+  
+  // Hide UI layouts
+  document.querySelector('.sidebar').style.display = 'none';
+  document.querySelector('.main-content').style.marginLeft = '0';
+  document.getElementById('mobile-menu-toggle').style.display = 'none';
+  
+  // Remove collapsible classes if active
+  document.querySelector('.sidebar').classList.remove('collapsed', 'mobile-active');
+  document.querySelector('.main-content').classList.remove('full-width');
+  
+  switchPageProgrammatic('auth-page');
+  ui.showToast('Oturum kapatıldı.', 'warning');
+}
+
 // Refresh Dashboard Info
 async function refreshDashboard() {
-  courses = await db.getCourses();
+  if (!currentUser) return;
+  courses = await db.getCourses(currentUser.username);
   const stats = await db.getGlobalStats();
   ui.renderDashboardStats(stats);
   
-  const uni = localStorage.getItem('selected_university') || 'Kampüs';
-  const dept = localStorage.getItem('selected_department') || 'NotebookLM';
+  const uni = currentUser.university || 'Kampüs';
+  const dept = currentUser.department || 'NotebookLM';
   
   const welcomeTitle = document.getElementById('dashboard-welcome-title');
-  if (welcomeTitle) welcomeTitle.textContent = `Hoş geldin! (${uni})`;
+  if (welcomeTitle) welcomeTitle.textContent = `Hoş geldin, ${currentUser.fullName}!`;
   
   const welcomeDesc = document.getElementById('dashboard-welcome-desc');
   if (welcomeDesc) {
@@ -5082,7 +5245,7 @@ async function refreshDashboard() {
       'isletme': 'İşletme',
       'diger': 'Genel Akademik'
     };
-    const deptLabel = DEPT_LABELS_FULL[dept] || dept;
+    const deptLabel = DEPT_LABELS_FULL[dept] || dept.toUpperCase();
     welcomeDesc.textContent = `Eğitim Profiliniz: ${uni} - ${deptLabel}. Derslerinize ait kaynakları yükleyerek başlayabilir, notlarınızı düzenleyebilir ve Gemini AI ile dilediğiniz ders veya PDF üzerinden sınavlar oluşturarak kendinizi test edebilirsiniz.`;
   }
 
@@ -5095,11 +5258,11 @@ async function refreshDashboard() {
 // Render grid based on year
 async function renderCoursesGridByTab(year) {
   ui.renderCoursesGrid(courses, year, (course) => {
-    switchPageProgrammatic('course-detail-page');
     loadCourseDetails(course);
+    switchPageProgrammatic('course-detail-page');
   });
   
-  // Fill counts async on the generated cards
+  // Refresh course cards note and pdf counts
   courses.forEach(async (c) => {
     if (c.year === year) {
       const notes = await db.getNotes(c.id);
@@ -5115,15 +5278,20 @@ async function renderCoursesGridByTab(year) {
 // Add Course submit
 async function handleAddCourse(e) {
   e.preventDefault();
+  if (!currentUser) return;
+  
   const name = document.getElementById('course-name-input').value;
   const year = parseInt(document.getElementById('course-year-input').value);
   
-  const id = name.toLowerCase()
-                 .replace(/[^a-z0-9]/g, '-')
-                 .replace(/-+/g, '-')
-                 .trim();
+  const baseId = name.toLowerCase()
+                     .replace(/[^a-z0-9]/g, '-')
+                     .replace(/-+/g, '-')
+                     .trim();
+  
+  // Generate unique course ID per user to prevent ID conflicts
+  const id = `${baseId}-${currentUser.username}`;
 
-  const newCourse = { id, name, year };
+  const newCourse = { id, name, year, userId: currentUser.username };
 
   try {
     await db.addCourse(newCourse);
@@ -5136,44 +5304,9 @@ async function handleAddCourse(e) {
   }
 }
 
-// --- LANDING SETUP ---
-async function handleLandingSetup() {
-  const key = document.getElementById('landing-api-key').value.trim();
-  const univSelect = document.getElementById('landing-univ-select');
-  const deptSelect = document.getElementById('landing-dept-select');
-  const customUniv = document.getElementById('landing-univ-custom').value.trim();
-  const customDept = document.getElementById('landing-dept-custom').value.trim();
-
-  let university = univSelect.value === 'diğer' ? customUniv : univSelect.value;
-  let department = deptSelect.value === 'diger' ? (customDept || 'diger') : deptSelect.value;
-
-  if (!university) university = 'Genel Üniversite';
-  if (!department) department = 'diger';
-
-  if (key) {
-    ai.setApiKey(key);
-    ui.updateApiKeyBadgeStatus();
-  }
-
-  try {
-    ui.showToast('Müfredat kuruluyor, lütfen bekleyin...');
-    await db.setupCurriculum(university, department);
-    
-    // UI Layout restoration
-    document.querySelector('.sidebar').style.display = 'flex';
-    document.getElementById('mobile-menu-toggle').style.display = 'flex';
-    
-    // Load Dashboard
-    await refreshDashboard();
-    switchPageProgrammatic('dashboard-page');
-    ui.showToast('Kurulum tamamlandı! Kampüs NotebookLM\'e hoş geldiniz.', 'success');
-  } catch (err) {
-    ui.showToast('Müfredat yüklenirken hata oluştu: ' + err.message, 'error');
-  }
-}
-
 // --- SETTINGS SAVE ---
 async function handleSaveSettings() {
+  if (!currentUser) return;
   const key = document.getElementById('api-key-input').value.trim();
   const model = document.getElementById('api-model-select').value;
   
@@ -5189,28 +5322,46 @@ async function handleSaveSettings() {
   const dCustom = document.getElementById('settings-dept-custom');
 
   let university = uSelect.value === 'diğer' ? uCustom.value.trim() : uSelect.value;
-  let department = dSelect.value === 'diger' ? (dCustom.value.trim() || 'diger') : dSelect.value;
+  let department = dSelect.value === 'diğer' ? dCustom.value.trim() : dSelect.value;
 
-  if (!university) university = localStorage.getItem('selected_university');
-  if (!department) department = localStorage.getItem('selected_department');
+  if (!university) university = currentUser.university;
+  if (!department) department = currentUser.department;
 
-  const oldDept = localStorage.getItem('selected_department');
+  const oldDept = currentUser.department;
   
   if (department !== oldDept) {
-    if (!confirm('DİKKAT! Bölüm değiştirme işlemi tüm eski derslerinizi ve dosyalarınızı tamamen silecektir. Devam etmek istiyor musunuz?')) {
+    if (!confirm('DİKKAT! Bölüm değiştirme işlemi bu bölüme ait ders programını müfredatınıza ekleyecektir. Devam etmek istiyor musunuz?')) {
       closeModal('api-key-modal');
       return;
     }
     
     try {
-      await db.setupCurriculum(university, department);
-      ui.showToast('Bölüm müfredatı güncellendi ve veriler sıfırlandı.', 'warning');
+      await db.setupCurriculum(university, department, currentUser.username);
+      ui.showToast('Yeni bölüm müfredatı derslerinize yüklendi.', 'warning');
     } catch (err) {
       ui.showToast('Müfredat güncellenemedi.', 'error');
     }
-  } else {
-    localStorage.setItem('selected_university', university);
-    ui.showToast('Profil ve API ayarları kaydedildi.');
+  }
+
+  // Update currentUser object
+  currentUser.university = university;
+  currentUser.department = department;
+  currentUser.apiKey = key;
+  currentUser.apiModel = model;
+
+  try {
+    await db.updateUserProfile(currentUser);
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    
+    // Update brand titles
+    document.getElementById('sidebar-brand-sub').textContent = currentUser.department.toUpperCase();
+    document.getElementById('current-course-display').textContent = `${currentUser.university} - ${currentUser.department.toUpperCase()}`;
+    document.getElementById('dashboard-welcome-title').textContent = `Hoş geldin, ${currentUser.fullName}!`;
+    
+    ui.showToast('Profil ve API ayarları başarıyla kaydedildi.');
+  } catch (err) {
+    console.error(err);
+    ui.showToast('Profil kaydedilirken hata oluştu.', 'error');
   }
 
   closeModal('api-key-modal');
@@ -5225,12 +5376,13 @@ async function loadCourseDetails(course) {
   const metaField = document.getElementById('detail-course-meta');
   if (nameField) nameField.textContent = course.name;
   if (metaField) {
-    const dept = localStorage.getItem('selected_department') || 'diger';
+    const dept = currentUser ? currentUser.department : (localStorage.getItem('selected_department') || 'diger');
     metaField.textContent = `${course.year}. Sınıf • ${dept.toUpperCase().replace('-', ' ')}`;
   }
 
   await refreshCourseDetailLists();
 }
+
 
 async function refreshCourseDetailLists() {
   if (!ui.activeCourse) return;
