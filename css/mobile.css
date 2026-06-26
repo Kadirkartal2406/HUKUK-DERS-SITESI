@@ -1,0 +1,277 @@
+/* css/mobile.css */
+
+/* Tablet & Smaller Desktop Screens */
+@media (max-width: 992px) {
+  .notebook-container {
+    flex-direction: column;
+    height: auto;
+    gap: 20px;
+  }
+  
+  .notebook-sidebar {
+    width: 100%;
+  }
+  
+  .editor-container {
+    min-height: 500px;
+    height: auto;
+  }
+  
+  .chat-container {
+    flex-direction: column;
+    height: auto;
+    gap: 20px;
+  }
+  
+  .sources-panel {
+    width: 100%;
+    max-height: 300px;
+  }
+  
+  .chat-window {
+    min-height: 500px;
+  }
+  
+  .hero-welcome {
+    max-width: 100%;
+  }
+}
+
+/* Mobile Screens (Phones & Small Tablets) */
+@media (max-width: 768px) {
+  /* Sidebar Drawer Navigation */
+  .sidebar {
+    left: -260px;
+    top: 0;
+    position: fixed;
+    height: 100vh;
+    z-index: 1000;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.8);
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .sidebar.mobile-active {
+    left: 0;
+  }
+  
+  /* Reset Main Content Margin */
+  .main-content {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+  
+  /* Show Hamburger Button */
+  .hamburger-menu {
+    display: flex !important;
+  }
+  
+  /* Header Adjustments */
+  .top-header {
+    padding: 0 16px;
+    height: 60px;
+  }
+  
+  .header-title-area h1 {
+    font-size: 16px;
+  }
+  
+  .api-key-badge {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+  
+  .api-key-status-dot {
+    width: 6px;
+    height: 6px;
+  }
+  
+  /* Page Padding */
+  .page {
+    padding: 16px;
+  }
+  
+  /* Dashboard Hero */
+  .dashboard-hero {
+    padding: 24px 20px;
+  }
+  
+  .hero-welcome h2 {
+    font-size: 24px;
+  }
+  
+  .hero-welcome p {
+    font-size: 13px;
+  }
+  
+  /* Stats Row */
+  .stats-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  
+  .stat-box {
+    padding: 16px;
+  }
+  
+  /* Course Grid */
+  .courses-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .course-card {
+    height: 200px;
+    padding: 20px;
+  }
+  
+  /* Tabs Navigation */
+  .tabs-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  
+  .tabs-list {
+    overflow-x: auto;
+    padding-bottom: 4px;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .tab-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  
+  /* Editor Text Area & Toolbar */
+  .editor-header {
+    padding: 16px;
+  }
+  
+  .editor-title-input {
+    font-size: 16px;
+  }
+  
+  .editor-toolbar {
+    padding: 8px 16px;
+    gap: 4px;
+  }
+  
+  .toolbar-btn {
+    width: 26px;
+    height: 26px;
+  }
+  
+  .editor-body {
+    padding: 20px;
+    font-size: 14px;
+  }
+  
+  .pdf-viewer-header {
+    padding: 12px 16px;
+  }
+  
+  .pdf-text-extracted {
+    padding: 20px;
+    font-size: 13px;
+  }
+  
+  /* Chat Windows */
+  .chat-header {
+    padding: 12px 16px;
+  }
+  
+  .model-name {
+    font-size: 13px;
+  }
+  
+  .chat-messages {
+    padding: 16px;
+    gap: 16px;
+  }
+  
+  .message {
+    max-width: 95%;
+    gap: 10px;
+  }
+  
+  .message-bubble {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+  
+  .chat-input-area {
+    padding: 12px 16px;
+  }
+  
+  .chat-textarea {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  
+  /* Quiz solve screen */
+  .quiz-setup-card {
+    padding: 24px 16px;
+  }
+  
+  .quiz-options-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .quiz-progress-header {
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    text-align: center;
+  }
+  
+  .quiz-progress-bar-bg {
+    max-width: 100%;
+  }
+  
+  .question-card {
+    padding: 20px 16px;
+    gap: 16px;
+  }
+  
+  .question-text {
+    font-size: 14.5px;
+  }
+  
+  .option-item {
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+  
+  .results-card {
+    padding: 24px 16px;
+  }
+  
+  .results-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  /* Modals */
+  .modal-content {
+    max-width: 90%;
+    border-radius: var(--border-radius-md);
+  }
+  
+  .modal-header {
+    padding: 16px;
+  }
+  
+  .modal-body {
+    padding: 16px;
+  }
+  
+  .modal-footer {
+    padding: 12px 16px;
+  }
+}

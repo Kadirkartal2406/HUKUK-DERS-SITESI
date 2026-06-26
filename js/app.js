@@ -282,6 +282,37 @@ function initEventListeners() {
   document.getElementById('results-close-btn').addEventListener('click', () => {
     document.getElementById('menu-dashboard').click();
   });
+
+  // Mobile Hamburger Toggle
+  const toggleBtn = document.getElementById('mobile-menu-toggle');
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+
+  if (toggleBtn && sidebar && overlay) {
+    const toggleSidebar = () => {
+      const isOpen = sidebar.classList.contains('mobile-active');
+      if (isOpen) {
+        sidebar.classList.remove('mobile-active');
+        overlay.style.display = 'none';
+      } else {
+        sidebar.classList.add('mobile-active');
+        overlay.style.display = 'block';
+      }
+    };
+
+    toggleBtn.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', toggleSidebar);
+
+    // Close menu when navigation items are clicked on mobile
+    document.querySelectorAll('.sidebar-menu .menu-item').forEach(item => {
+      item.addEventListener('click', () => {
+        if (sidebar.classList.contains('mobile-active')) {
+          sidebar.classList.remove('mobile-active');
+          overlay.style.display = 'none';
+        }
+      });
+    });
+  }
 }
 
 // SPA Routing switcher

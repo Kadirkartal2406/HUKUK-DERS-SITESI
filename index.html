@@ -18,6 +18,7 @@
 
 
 
+
 <style id="bundled-css">
 /* css/variables.css */
 :root {
@@ -1850,6 +1851,285 @@ body {
   line-height: 1.5;
 }
 
+
+/* css/mobile.css */
+
+/* Tablet & Smaller Desktop Screens */
+@media (max-width: 992px) {
+  .notebook-container {
+    flex-direction: column;
+    height: auto;
+    gap: 20px;
+  }
+  
+  .notebook-sidebar {
+    width: 100%;
+  }
+  
+  .editor-container {
+    min-height: 500px;
+    height: auto;
+  }
+  
+  .chat-container {
+    flex-direction: column;
+    height: auto;
+    gap: 20px;
+  }
+  
+  .sources-panel {
+    width: 100%;
+    max-height: 300px;
+  }
+  
+  .chat-window {
+    min-height: 500px;
+  }
+  
+  .hero-welcome {
+    max-width: 100%;
+  }
+}
+
+/* Mobile Screens (Phones & Small Tablets) */
+@media (max-width: 768px) {
+  /* Sidebar Drawer Navigation */
+  .sidebar {
+    left: -260px;
+    top: 0;
+    position: fixed;
+    height: 100vh;
+    z-index: 1000;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.8);
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .sidebar.mobile-active {
+    left: 0;
+  }
+  
+  /* Reset Main Content Margin */
+  .main-content {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+  
+  /* Show Hamburger Button */
+  .hamburger-menu {
+    display: flex !important;
+  }
+  
+  /* Header Adjustments */
+  .top-header {
+    padding: 0 16px;
+    height: 60px;
+  }
+  
+  .header-title-area h1 {
+    font-size: 16px;
+  }
+  
+  .api-key-badge {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+  
+  .api-key-status-dot {
+    width: 6px;
+    height: 6px;
+  }
+  
+  /* Page Padding */
+  .page {
+    padding: 16px;
+  }
+  
+  /* Dashboard Hero */
+  .dashboard-hero {
+    padding: 24px 20px;
+  }
+  
+  .hero-welcome h2 {
+    font-size: 24px;
+  }
+  
+  .hero-welcome p {
+    font-size: 13px;
+  }
+  
+  /* Stats Row */
+  .stats-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  
+  .stat-box {
+    padding: 16px;
+  }
+  
+  /* Course Grid */
+  .courses-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .course-card {
+    height: 200px;
+    padding: 20px;
+  }
+  
+  /* Tabs Navigation */
+  .tabs-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  
+  .tabs-list {
+    overflow-x: auto;
+    padding-bottom: 4px;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .tab-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  
+  /* Editor Text Area & Toolbar */
+  .editor-header {
+    padding: 16px;
+  }
+  
+  .editor-title-input {
+    font-size: 16px;
+  }
+  
+  .editor-toolbar {
+    padding: 8px 16px;
+    gap: 4px;
+  }
+  
+  .toolbar-btn {
+    width: 26px;
+    height: 26px;
+  }
+  
+  .editor-body {
+    padding: 20px;
+    font-size: 14px;
+  }
+  
+  .pdf-viewer-header {
+    padding: 12px 16px;
+  }
+  
+  .pdf-text-extracted {
+    padding: 20px;
+    font-size: 13px;
+  }
+  
+  /* Chat Windows */
+  .chat-header {
+    padding: 12px 16px;
+  }
+  
+  .model-name {
+    font-size: 13px;
+  }
+  
+  .chat-messages {
+    padding: 16px;
+    gap: 16px;
+  }
+  
+  .message {
+    max-width: 95%;
+    gap: 10px;
+  }
+  
+  .message-bubble {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+  
+  .chat-input-area {
+    padding: 12px 16px;
+  }
+  
+  .chat-textarea {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  
+  /* Quiz solve screen */
+  .quiz-setup-card {
+    padding: 24px 16px;
+  }
+  
+  .quiz-options-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .quiz-progress-header {
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    text-align: center;
+  }
+  
+  .quiz-progress-bar-bg {
+    max-width: 100%;
+  }
+  
+  .question-card {
+    padding: 20px 16px;
+    gap: 16px;
+  }
+  
+  .question-text {
+    font-size: 14.5px;
+  }
+  
+  .option-item {
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+  
+  .results-card {
+    padding: 24px 16px;
+  }
+  
+  .results-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  /* Modals */
+  .modal-content {
+    max-width: 90%;
+    border-radius: var(--border-radius-md);
+  }
+  
+  .modal-header {
+    padding: 16px;
+  }
+  
+  .modal-body {
+    padding: 16px;
+  }
+  
+  .modal-footer {
+    padding: 12px 16px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1912,6 +2192,9 @@ body {
       
       <!-- Top Header -->
       <header class="top-header">
+        <button class="hamburger-menu" id="mobile-menu-toggle" aria-label="Menüyü Aç/Kapat" style="display:none; background:none; border:none; color:var(--color-text); cursor:pointer; padding:8px; margin-right:12px; align-items:center; justify-content:center;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:24px; height:24px;"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+        </button>
         <div class="header-title-area">
           <h1 id="current-course-display">Çukurova Hukuk Platformu</h1>
         </div>
@@ -2346,6 +2629,10 @@ Soru 2: ..."></textarea>
   
   
   
+
+
+  
+  <div class="sidebar-overlay" id="sidebar-overlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:99; backdrop-filter:blur(4px);"></div>
 
 
   
@@ -3565,6 +3852,37 @@ function initEventListeners() {
   document.getElementById('results-close-btn').addEventListener('click', () => {
     document.getElementById('menu-dashboard').click();
   });
+
+  // Mobile Hamburger Toggle
+  const toggleBtn = document.getElementById('mobile-menu-toggle');
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+
+  if (toggleBtn && sidebar && overlay) {
+    const toggleSidebar = () => {
+      const isOpen = sidebar.classList.contains('mobile-active');
+      if (isOpen) {
+        sidebar.classList.remove('mobile-active');
+        overlay.style.display = 'none';
+      } else {
+        sidebar.classList.add('mobile-active');
+        overlay.style.display = 'block';
+      }
+    };
+
+    toggleBtn.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', toggleSidebar);
+
+    // Close menu when navigation items are clicked on mobile
+    document.querySelectorAll('.sidebar-menu .menu-item').forEach(item => {
+      item.addEventListener('click', () => {
+        if (sidebar.classList.contains('mobile-active')) {
+          sidebar.classList.remove('mobile-active');
+          overlay.style.display = 'none';
+        }
+      });
+    });
+  }
 }
 
 // SPA Routing switcher
