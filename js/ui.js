@@ -8,6 +8,14 @@ export let activeNote = null;
 export let activePdf = null;
 export let activeYearTab = 1;
 
+const DEPT_LABELS = {
+  'hukuk': 'Hukuk Müfredatı',
+  'bilgisayar-muhendisligi': 'Bilgisayar Müh. Müfredatı',
+  'tip': 'Tıp Fakültesi Müfredatı',
+  'isletme': 'İşletme Müfredatı',
+  'diger': 'Akademik Müfredat'
+};
+
 export function setActiveCourse(course) {
   activeCourse = course;
   const tag = document.getElementById('active-course-tag');
@@ -17,29 +25,12 @@ export function setActiveCourse(course) {
     tag.style.display = 'inline-block';
     tag.textContent = `${course.year}. Sınıf`;
     display.textContent = course.name;
-    
-    // Enable study panels
-    document.getElementById('notebook-empty-view').style.display = 'none';
-    document.getElementById('notebook-main-view').style.display = 'flex';
-    
-    document.getElementById('chat-empty-view').style.display = 'none';
-    document.getElementById('chat-main-view').style.display = 'flex';
-    
-    document.getElementById('quiz-empty-view').style.display = 'none';
-    document.getElementById('quiz-main-view').style.display = 'flex';
   } else {
     tag.style.display = 'none';
-    display.textContent = 'Çukurova Hukuk Platformu';
-    
-    // Disable study panels, show placeholders
-    document.getElementById('notebook-empty-view').style.display = 'block';
-    document.getElementById('notebook-main-view').style.display = 'none';
-    
-    document.getElementById('chat-empty-view').style.display = 'block';
-    document.getElementById('chat-main-view').style.display = 'none';
-    
-    document.getElementById('quiz-empty-view').style.display = 'block';
-    document.getElementById('quiz-main-view').style.display = 'none';
+    const uni = localStorage.getItem('selected_university') || 'Kampüs';
+    const dept = localStorage.getItem('selected_department') || 'NotebookLM';
+    const deptLabel = DEPT_LABELS[dept] || 'NotebookLM';
+    display.textContent = `${uni} - ${deptLabel}`;
   }
 }
 
@@ -49,57 +40,54 @@ export function setActiveNote(note) {
   const bodyField = document.getElementById('note-editor-body');
   const statusField = document.getElementById('editor-save-status');
 
-  // Close PDF viewer if it was open
-  document.getElementById('pdf-viewer-container').classList.remove('active');
   activePdf = null;
 
   if (note) {
-    titleField.disabled = false;
-    titleField.value = note.title;
-    bodyField.contentEditable = 'true';
-    bodyField.innerHTML = note.content || '';
-    statusField.textContent = 'Not düzenleniyor';
+    if (titleField) {
+      titleField.disabled = false;
+      titleField.value = note.title;
+    }
+    if (bodyField) {
+      bodyField.contentEditable = 'true';
+      bodyField.innerHTML = note.content || '';
+    }
+    if (statusField) statusField.textContent = 'Not düzenleniyor';
     
     // Highlight in list
-    document.querySelectorAll('#notes-list-area .list-item').forEach(item => {
+    document.querySelectorAll('.list-item').forEach(item => {
       item.classList.toggle('active', item.dataset.id === note.id);
     });
   } else {
-    titleField.disabled = true;
-    titleField.value = '';
-    bodyField.contentEditable = 'false';
-    bodyField.innerHTML = '';
-    statusField.textContent = 'Not seçilmedi';
-    
-    document.querySelectorAll('#notes-list-area .list-item').forEach(item => {
-      item.classList.remove('active');
-    });
+    if (titleField) {
+      titleField.disabled = true;
+      titleField.value = '';
+    }
+    if (bodyField) {
+      bodyField.contentEditable = 'false';
+      bodyField.innerHTML = '';
+    }
+    if (statusField) statusField.textContent = 'Not seçilmedi';
   }
 }
 
 export function setActivePdf(pdf) {
   activePdf = pdf;
-  activeNote = null; // Unselect active note in editor
-  setActiveNote(null);
+  activeNote = null;
 
-  const container = document.getElementById('pdf-viewer-container');
   const titleField = document.getElementById('pdf-viewer-title-field');
   const contentBox = document.getElementById('pdf-text-content-box');
 
   if (pdf) {
-    titleField.textContent = pdf.name;
-    contentBox.textContent = pdf.textContent || 'Bu PDF dosyasından okunabilir metin çıkarılamadı.';
-    container.classList.add('active');
+    if (titleField) titleField.textContent = pdf.name;
+    if (contentBox) contentBox.textContent = pdf.textContent || 'Bu PDF dosyasından okunabilir metin çıkarılamadı.';
     
     // Highlight in list
-    document.querySelectorAll('#pdfs-list-area .list-item').forEach(item => {
+    document.querySelectorAll('.list-item').forEach(item => {
       item.classList.toggle('active', item.dataset.id === pdf.id);
     });
   } else {
-    container.classList.remove('active');
-    document.querySelectorAll('#pdfs-list-area .list-item').forEach(item => {
-      item.classList.remove('active');
-    });
+    if (titleField) titleField.textContent = 'PDF Dokümanı';
+    if (contentBox) contentBox.textContent = '';
   }
 }
 
@@ -182,6 +170,7 @@ export function showToast(message, type = 'success') {
 export function updateApiKeyBadgeStatus() {
   const badge = document.getElementById('api-key-setup-btn');
   const text = document.getElementById('api-key-status-text');
+  if (!badge || !text) return;
   
   if (getApiKey()) {
     badge.classList.add('configured');
@@ -196,20 +185,20 @@ export function updateApiKeyBadgeStatus() {
  * Render the banner figures at the top of Dashboard
  */
 export function renderDashboardStats(stats) {
-  document.getElementById('stat-total-notes').textContent = stats.totalNotes;
-  document.getElementById('stat-total-pdfs').textContent = stats.totalPdfs;
-  document.getElementById('stat-avg-score').textContent = `${stats.avgScore}%`;
+  const n = document.getElementById('stat-total-notes');
+  const p = document.getElementById('stat-total-pdfs');
+  const a = document.getElementById('stat-avg-score');
+  if (n) n.textContent = stats.totalNotes;
+  if (p) p.textContent = stats.totalPdfs;
+  if (a) a.textContent = `${stats.avgScore}%`;
 }
 
 /**
  * Render Course Cards on grid matching selected year
- * 
- * @param {Array} courses List of all course objects
- * @param {number} year Selected year tab (1-4)
- * @param {Function} onCourseClick Callback when card is clicked
  */
 export function renderCoursesGrid(courses, year, onCourseClick) {
   const grid = document.getElementById('courses-grid-area');
+  if (!grid) return;
   grid.innerHTML = '';
   activeYearTab = parseInt(year);
 
@@ -218,16 +207,17 @@ export function renderCoursesGrid(courses, year, onCourseClick) {
 
   if (filtered.length === 0) {
     grid.innerHTML = `
-      <div class="empty-state" style="grid-column: 1 / -1;">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-        </svg>
+      <div class="empty-state" style="grid-column: 1 / -1; padding: 40px 20px;">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:48px;height:48px;color:var(--text-muted);margin-bottom:15px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
         <h3>Ders Bulunamadı</h3>
         <p>Bu sınıfa ait henüz bir ders eklenmemiş.</p>
       </div>
     `;
     return;
   }
+
+  const dept = localStorage.getItem('selected_department') || 'diger';
+  const deptLabel = DEPT_LABELS[dept] || 'Akademik Müfredat';
 
   filtered.forEach(course => {
     const card = document.createElement('div');
@@ -239,9 +229,8 @@ export function renderCoursesGrid(courses, year, onCourseClick) {
     card.innerHTML = `
       <div class="course-header">
         <div class="course-icon-box">
-          <!-- Scale/Justice SVG Icon -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17M3 12h18M5 7l3 3M19 7l-3 3M5 17l3-3M19 17l-3-3" />
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
           </svg>
         </div>
         <span class="course-year-badge">${course.year}. Sınıf</span>
@@ -249,16 +238,16 @@ export function renderCoursesGrid(courses, year, onCourseClick) {
       
       <div class="course-info">
         <h4 class="course-title">${course.name}</h4>
-        <p class="course-subtitle">Çukurova Hukuk Müfredatı</p>
+        <p class="course-subtitle">${deptLabel}</p>
       </div>
       
       <div class="course-stats">
         <div class="course-stat-item" title="Ders Notları">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:14px;height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
           <span class="course-stat-val" id="card-note-count-${course.id}">-</span>
         </div>
         <div class="course-stat-item" title="PDF Dokümanları">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/></svg>
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:14px;height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/></svg>
           <span class="course-stat-val" id="card-pdf-count-${course.id}">-</span>
         </div>
       </div>

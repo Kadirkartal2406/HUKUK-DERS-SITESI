@@ -21,6 +21,8 @@
 
 <style id="bundled-css">
 /* css/variables.css */
+
+/* css/variables.css */
 :root {
   /* Colors */
   --bg-primary: #050811;
@@ -73,10 +75,11 @@
   --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* css/main.css */
 
 /* css/main.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
-
+@import url('variables.css');
 
 /* Global Reset & Base */
 *, *::before, *::after {
@@ -501,6 +504,428 @@ body {
   color: var(--color-text-muted);
 }
 
+/* ==========================================
+   KAMPÜS NOTEBOOKLM CUSTOM STYLES
+   ========================================== */
+
+/* Landing Page (Giriş/Kurulum) */
+.landing-page-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 20px;
+  background-color: var(--color-bg);
+}
+
+.landing-card {
+  width: 100%;
+  max-width: 580px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+  animation: fadeIn var(--transition-normal);
+}
+
+.landing-header {
+  padding: 40px 40px 20px 40px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(135deg, rgba(29, 39, 58, 0.4) 0%, rgba(9, 13, 22, 0.4) 100%);
+}
+
+.landing-header h1 {
+  font-family: var(--font-title);
+  color: var(--accent-gold);
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.landing-header p {
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+.landing-body {
+  padding: 40px;
+}
+
+.landing-step-title {
+  font-family: var(--font-title);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.landing-step-title span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--accent-gold-glow);
+  color: var(--accent-gold);
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.landing-help-text {
+  font-size: 12.5px;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-top: 10px;
+}
+
+.landing-help-text a {
+  color: var(--accent-gold);
+  text-decoration: underline;
+}
+
+.api-test-inline {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.api-test-inline input {
+  flex-grow: 1;
+}
+
+/* Course Detail Page */
+.course-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.detail-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--transition-fast);
+}
+
+.detail-back-btn:hover {
+  color: var(--color-text);
+}
+
+.course-detail-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.detail-column {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-column h3 {
+  font-family: var(--font-title);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail-column-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.detail-item-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.detail-item-card:hover {
+  background-color: var(--bg-card-hover);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+.detail-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-grow: 1;
+  overflow: hidden;
+  margin-right: 12px;
+}
+
+.detail-item-name {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.detail-item-meta {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.detail-item-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.action-icon-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  transition: var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-icon-btn:hover {
+  background-color: rgba(255,255,255,0.08);
+  color: var(--color-text);
+}
+
+.action-icon-btn.btn-delete:hover {
+  color: #ef4444;
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+/* NotebookLM Two-Panel Layout */
+.notebooklm-workspace {
+  display: flex;
+  gap: 24px;
+  flex-grow: 1;
+  height: calc(100vh - 160px);
+  overflow: hidden;
+}
+
+.workspace-panel-left {
+  width: 40%;
+  min-width: 360px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.workspace-panel-right {
+  flex-grow: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.workspace-left-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+  background-color: rgba(9, 13, 22, 0.3);
+}
+
+.workspace-tab-btn {
+  flex-grow: 1;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--color-text-muted);
+  padding: 12px 10px;
+  font-family: var(--font-title);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-align: center;
+}
+
+.workspace-tab-btn:hover {
+  color: var(--color-text);
+  background-color: rgba(255,255,255,0.02);
+}
+
+.workspace-tab-btn.active {
+  color: var(--accent-gold);
+  border-bottom-color: var(--accent-gold);
+}
+
+.workspace-tab-content {
+  flex-grow: 1;
+  display: none;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.workspace-tab-content.active {
+  display: flex;
+}
+
+/* Community Page */
+.community-filter-bar {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-grow: 1;
+  min-width: 180px;
+}
+
+.filter-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.community-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.community-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+  transition: var(--transition-fast);
+}
+
+.community-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(212,175,55,0.3);
+  box-shadow: var(--shadow-md);
+}
+
+.comm-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 12px;
+}
+
+.comm-type-badge {
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.comm-type-badge.pdf { background-color: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.comm-type-badge.note { background-color: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+.comm-type-badge.quiz { background-color: rgba(16, 185, 129, 0.15); color: #10b981; }
+
+.comm-card-title {
+  font-family: var(--font-title);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.comm-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.comm-tag {
+  font-size: 10.5px;
+  background-color: rgba(255,255,255,0.05);
+  border: 1px solid var(--border-color);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--color-text-muted);
+}
+
+.comm-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-color);
+  padding-top: 12px;
+  margin-top: 12px;
+  font-size: 11.5px;
+  color: var(--color-text-muted);
+}
+
+.comm-uploader {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* Custom Curriculum inputs */
+.uni-dept-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* css/dashboard.css */
 
 /* css/dashboard.css */
 
@@ -789,6 +1214,7 @@ body {
   margin-bottom: 8px;
 }
 
+/* css/notebook.css */
 
 /* css/notebook.css */
 
@@ -1092,6 +1518,7 @@ body {
   box-shadow: var(--shadow-sm);
 }
 
+/* css/chat.css */
 
 /* css/chat.css */
 
@@ -1497,6 +1924,7 @@ body {
   50% { opacity: 1; transform: scale(1.1); }
 }
 
+/* css/quiz.css */
 
 /* css/quiz.css */
 
@@ -1510,102 +1938,6 @@ body {
 }
 
 /* Setup View */
-/* ===== SAVED QUIZ BANKS ===== */
-.saved-banks-section {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius-lg);
-  padding: 28px 32px;
-  margin-top: 20px;
-}
-
-.saved-banks-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-title);
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--accent-gold);
-  margin-bottom: 20px;
-}
-
-.saved-banks-header svg {
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
-}
-
-.bank-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius-md);
-  padding: 14px 18px;
-  margin-bottom: 10px;
-  transition: var(--transition-normal);
-  gap: 12px;
-}
-
-.bank-card:hover {
-  border-color: var(--accent-gold);
-  background: var(--bg-card-hover);
-}
-
-.bank-card-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.bank-card-name {
-  font-weight: 600;
-  font-size: 14.5px;
-  color: var(--color-text);
-  margin-bottom: 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.bank-card-meta {
-  font-size: 12px;
-  color: var(--color-text-muted);
-}
-
-.bank-card-actions {
-  display: flex;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.btn-sm {
-  padding: 6px 14px;
-  font-size: 12.5px;
-  border-radius: var(--border-radius-sm);
-}
-
-.empty-banks-msg {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  padding: 30px 20px;
-  color: var(--color-text-dark);
-  text-align: center;
-  font-size: 13.5px;
-  line-height: 1.7;
-}
-
-.empty-banks-msg svg {
-  width: 36px;
-  height: 36px;
-  opacity: 0.4;
-}
-
-/* ============================= */
-
 .quiz-setup-card {
   text-align: center;
   padding: 40px;
@@ -1947,26 +2279,7 @@ body {
   line-height: 1.5;
 }
 
-.pdf-convert-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.pdf-convert-actions .btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.pdf-convert-hint {
-  margin-top: 10px;
-  font-size: 12px;
-  color: var(--color-text-dark);
-  text-align: center;
-}
-
+/* css/mobile.css */
 
 /* css/mobile.css */
 
@@ -2252,13 +2565,13 @@ body {
 
   <div class="app-container">
     
-    <!-- Sidebar Navigation -->
+    <!-- Sidebar Drawer Navigation -->
     <aside class="sidebar">
       <div class="brand-section">
         <div class="brand-logo">Δ</div>
         <div>
-          <h2 class="brand-name">Hukuk Portal</h2>
-          <span class="brand-sub">Çukurova Hukuk</span>
+          <h2 class="brand-name">Kampüs</h2>
+          <span class="brand-sub" id="sidebar-brand-sub">NotebookLM</span>
         </div>
       </div>
       
@@ -2272,27 +2585,11 @@ body {
           </a>
         </li>
         <li>
-          <a href="#" class="menu-item" id="menu-notebook" data-page="notebook-page">
+          <a href="#" class="menu-item" id="menu-community" data-page="community-page">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.77m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
             </svg>
-            Notlar &amp; PDF'ler
-          </a>
-        </li>
-        <li>
-          <a href="#" class="menu-item" id="menu-chat" data-page="chat-page">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-3.658A8.967 8.967 0 0 1 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-            </svg>
-            NotebookLM (Sohbet)
-          </a>
-        </li>
-        <li>
-          <a href="#" class="menu-item" id="menu-quiz" data-page="quiz-page">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 21l8.982-11.795H14.28l1.09-5.705L6.38 15.362h3.433Z" />
-            </svg>
-            AI Soru Çözme
+            Topluluk Kütüphanesi
           </a>
         </li>
       </ul>
@@ -2324,11 +2621,12 @@ body {
       </header>
       
       <!-- PAGE 1: DASHBOARD -->
+<!-- PAGE 1: DASHBOARD -->
       <section class="page active" id="dashboard-page">
         <div class="dashboard-hero">
           <div class="hero-welcome">
-            <h2>Hoş geldin Neslihan!</h2>
-            <p>Derslerine ait kaynakları yükleyerek başlayabilir, notlarını düzenleyebilir, Gemini AI ile dilediğin ders veya PDF üzerinden sınavlar oluşturarak kendini test edebilirsin.</p>
+            <h2 id="dashboard-welcome-title">Hoş geldin!</h2>
+            <p id="dashboard-welcome-desc">Kişiselleştirilmiş Yapay Zeka destekli çalışma platformunda derslerinize ait kaynakları yükleyerek başlayabilir, notlarınızı düzenleyebilir ve interaktif testler çözerek kendinizi test edebilirsiniz.</p>
           </div>
           <div class="stats-row">
             <div class="stat-box">
@@ -2373,297 +2671,352 @@ body {
         
         <div class="courses-grid" id="courses-grid-area"></div>
       </section>
-      
-      <!-- PAGE 2: NOTEBOOK -->
-      <section class="page" id="notebook-page">
-        <div class="empty-state" id="notebook-empty-view">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-          <h3>Bir Ders Seçin</h3>
-          <p>Notlarınızı ve dokümanlarınızı görüntülemek için önce "Ana Panel" üzerinden bir ders seçin.</p>
-          <button class="btn btn-primary" style="margin-top: 15px;" onclick="document.getElementById('menu-dashboard').click();">Panale Git</button>
+
+      <!-- PAGE: COURSE DETAILS -->
+      <section class="page" id="course-detail-page">
+        <div class="course-detail-header">
+          <div class="detail-back-btn" id="course-detail-back-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
+            Derslerime Geri Dön
+          </div>
+          <div>
+            <button class="btn btn-secondary btn-delete" id="course-detail-delete-btn" style="color:#ef4444; border-color:rgba(239, 68, 68, 0.3);">
+              🗑 Dersi Müfredattan Kaldır
+            </button>
+          </div>
         </div>
-        
-        <div class="notebook-container" id="notebook-main-view" style="display:none;">
-          <div class="notebook-sidebar">
-            <div class="notebook-sidebar-section">
-              <div class="section-header">
-                <h3>Notlarım</h3>
-                <button class="btn btn-icon btn-secondary" id="create-note-btn" style="width:28px; height:28px;" title="Yeni Not Oluştur">+</button>
-              </div>
-              <ul class="section-list" id="notes-list-area"></ul>
-            </div>
+
+        <div style="margin-bottom: 24px;">
+          <h2 id="detail-course-name" style="font-family:var(--font-title); font-size:24px; font-weight:700; color:var(--accent-gold); margin-bottom:6px;">Ders Adı</h2>
+          <p id="detail-course-meta" class="text-muted" style="font-size:13px;">1. Sınıf &bull; Akademik Müfredat</p>
+        </div>
+
+        <div class="course-detail-cols">
+          <!-- Column 1: PDFs -->
+          <div class="detail-column">
+            <h3>
+              <span>📚 PDF Belgeleri</span>
+            </h3>
             
-            <div class="notebook-sidebar-section">
-              <div class="section-header">
-                <h3>PDF Dokümanları</h3>
+            <div class="pdf-upload-zone" id="pdf-dropzone" style="margin-bottom: 16px; padding: 16px; text-align: center; border: 2px dashed var(--border-color); border-radius: 8px; cursor: pointer;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:24px;height:24px;color:var(--text-muted);margin-bottom:6px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" /></svg>
+              <p style="font-size:11.5px; color:var(--color-text-muted);">Yeni PDF Sürükleyin veya Tıklayın</p>
+              <input type="file" id="pdf-file-input" accept="application/pdf" style="display:none;">
+            </div>
+
+            <ul class="detail-column-list" id="detail-pdfs-list">
+              <!-- Rendered dynamically -->
+            </ul>
+          </div>
+
+          <!-- Column 2: Notes -->
+          <div class="detail-column">
+            <h3>
+              <span>✍️ Ders Notları</span>
+              <button class="btn btn-sm btn-primary" id="detail-create-note-btn">+ Yeni Not</button>
+            </h3>
+            <ul class="detail-column-list" id="detail-notes-list">
+              <!-- Rendered dynamically -->
+            </ul>
+          </div>
+
+          <!-- Column 3: Quiz Banks -->
+          <div class="detail-column">
+            <h3>
+              <span>📝 Soru Bankaları</span>
+            </h3>
+            <ul class="detail-column-list" id="detail-quizzes-list">
+              <!-- Rendered dynamically -->
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE: NOTEBOOKLM WORKSPACE -->
+      <section class="page" id="notebook-page">
+        <!-- Back and Title bar -->
+        <div class="course-detail-header" style="margin-bottom: 15px;">
+          <div class="detail-back-btn" id="notebook-back-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
+            Ders Detayına Dön
+          </div>
+          <div style="text-align: right; display:flex; gap:10px; align-items:center;">
+            <button class="btn btn-sm btn-secondary" id="notebook-share-btn" style="padding: 4px 10px; font-size:11px;">🌍 Toplulukta Paylaş</button>
+            <span class="course-year-badge" id="notebook-doc-type" style="background-color: var(--accent-gold-glow); color: var(--accent-gold);">PDF</span>
+          </div>
+        </div>
+
+        <div class="notebooklm-workspace">
+          <!-- Left Panel: Tabs for AI operations -->
+          <div class="workspace-panel-left">
+            <div class="workspace-left-tabs">
+              <button class="workspace-tab-btn active" data-tab="tab-chat">🤖 AI Sohbet</button>
+              <button class="workspace-tab-btn" data-tab="tab-quiz">📝 Test Çöz</button>
+              <button class="workspace-tab-btn" data-tab="tab-notes">✍️ Çalışma Notları</button>
+            </div>
+
+            <!-- Tab 1: Chat -->
+            <div class="workspace-tab-content active" id="tab-chat">
+              <div class="chat-window" style="height: 100%; border: none;">
+                <div class="chat-messages" id="chat-messages-box" style="flex-grow: 1; min-height: 250px;">
+                  <div class="message ai">
+                    <div class="message-avatar">AI</div>
+                    <div class="message-content">
+                      <div class="message-bubble">
+                        <p>Merhaba! Bu dökümanı kaynak alarak bana dilediğin soruyu sorabilirsin. Sadece bu kaynak çerçevesinde cevap üreteceğim.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="chat-input-area" style="padding: 10px 0 0 0;">
+                  <form class="chat-input-form" id="chat-form-element">
+                    <textarea class="chat-textarea" id="chat-input-field" placeholder="Dökümana dayalı bir soru sorun..."></textarea>
+                    <button type="submit" class="chat-submit-btn" id="chat-submit-btn" disabled>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" /></svg>
+                    </button>
+                  </form>
+                </div>
               </div>
-              <div class="pdf-upload-zone" id="pdf-dropzone">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" /></svg>
-                <p>Dosyayı sürükleyin veya tıklayın</p>
-                <input type="file" id="pdf-file-input" accept="application/pdf">
+            </div>
+
+            <!-- Tab 2: Quiz -->
+            <div class="workspace-tab-content" id="tab-quiz" style="overflow-y: auto;">
+              <!-- Quiz Setup View -->
+              <div id="workspace-quiz-setup">
+                <h4 style="margin-bottom:10px; font-weight:600; color:var(--accent-gold);">Soru Hazırlama</h4>
+                <p class="text-muted" style="font-size:12px; margin-bottom:20px;">Bu dökümanı okuyup analiz ederek çoktan seçmeli test soruları hazırlayalım.</p>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                  <label for="quiz-question-count" style="font-size:12px;">Soru Sayısı</label>
+                  <select class="input-field" id="quiz-question-count" style="width:100%; margin-top:5px;">
+                    <option value="5" selected>5 Soru</option>
+                    <option value="10">10 Soru</option>
+                    <option value="15">15 Soru</option>
+                  </select>
+                </div>
+
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                  <button class="btn btn-primary" id="start-ai-quiz-generation" style="width:100%;">
+                    🤖 AI ile Detaylı Çöz
+                  </button>
+                  <button class="btn btn-secondary" id="start-local-pdf-quiz" style="width:100%;">
+                    ⚡ Hızlı Çözüm (AI Yok)
+                  </button>
+                </div>
               </div>
-              <ul class="section-list" id="pdfs-list-area"></ul>
+
+              <!-- Active Quiz Solving View -->
+              <div id="workspace-quiz-solving" style="display:none; flex-direction:column; gap:15px; height:100%;">
+                <div class="quiz-header-status" style="display:flex; justify-content:space-between; font-size:12px; color:var(--color-text-muted);">
+                  <span>Soru: <strong id="current-q-index" class="text-gold">1</strong> / <span id="total-q-count">5</span></span>
+                  <span id="quiz-score-badge" class="text-gold">Skor: 0 / 5</span>
+                </div>
+                <div class="progress-bar-container" style="height:4px; background:var(--border-color); border-radius:2px; overflow:hidden;">
+                  <div class="progress-bar-fill" id="quiz-progress-bar" style="height:100%; width:0%; background:var(--accent-gold); transition: width 0.3s ease;"></div>
+                </div>
+
+                <div class="quiz-question-text" id="active-q-text" style="font-size:14px; font-weight:500; line-height:1.5; min-height:80px; padding:10px; background:rgba(255,255,255,0.02); border-radius:6px; border:1px solid var(--border-color);">
+                  Soru yükleniyor...
+                </div>
+
+                <ul class="quiz-options-list" id="active-q-options" style="display:flex; flex-direction:column; gap:10px; list-style:none; padding:0;"></ul>
+
+                <div class="explanation-box" id="active-q-explanation-box" style="display:none; flex-direction:column; gap:6px; padding:12px; background:rgba(212,175,55,0.05); border:1px dashed var(--accent-gold); border-radius:6px; font-size:12.5px; line-height:1.5;">
+                  <strong style="color:var(--accent-gold);">Yasal Gerekçe &amp; Açıklama:</strong>
+                  <p id="active-q-explanation-text" class="text-muted"></p>
+                </div>
+
+                <div style="display:flex; gap:10px; margin-top:auto;">
+                  <button class="btn btn-secondary" id="quiz-quit-btn" style="flex:1;">Sınavı Bitir</button>
+                  <button class="btn btn-primary" id="quiz-next-btn" style="flex:2;" disabled>Sonraki Soru</button>
+                </div>
+              </div>
+
+              <!-- Quiz Results View -->
+              <div id="workspace-quiz-results" style="display:none; flex-direction:column; align-items:center; text-align:center; gap:20px; padding:20px 0;">
+                <div class="results-ring" style="width:100px; height:100px; border-radius:50%; border:4px solid var(--border-color); display:flex; align-items:center; justify-content:center; position:relative;">
+                  <span id="results-percentage" style="font-size:24px; font-weight:bold; color:var(--accent-gold);">0%</span>
+                </div>
+                <div>
+                  <h4 style="font-size:18px; font-weight:600; color:var(--color-text); margin-bottom:8px;">Sınav Tamamlandı!</h4>
+                  <p id="results-message" class="text-muted" style="font-size:13px; max-width:280px; margin:0 auto; line-height:1.4;"></p>
+                </div>
+                <div class="results-stats-row" style="display:grid; grid-template-columns:1fr 1fr; gap:15px; width:100%;">
+                  <div class="results-stat-card">
+                    <span class="results-stat-val correct" id="results-correct-count">0</span>
+                    <span class="results-stat-label">Doğru</span>
+                  </div>
+                  <div class="results-stat-card">
+                    <span class="results-stat-val wrong" id="results-wrong-count">0</span>
+                    <span class="results-stat-label">Yanlış</span>
+                  </div>
+                </div>
+                <button class="btn btn-primary" id="results-restart-btn" style="width:100%;">Tekrar Çöz</button>
+              </div>
+            </div>
+
+            <!-- Tab 3: Notes -->
+            <div class="workspace-tab-content" id="tab-notes">
+              <h4 style="margin-bottom:10px; font-weight:600; color:var(--accent-gold);">Çalışma Notu Al</h4>
+              <p class="text-muted" style="font-size:12px; margin-bottom:15px;">Dökümanı okurken edindiğiniz önemli bilgileri buraya not edebilirsiniz.</p>
+              
+              <!-- Simple Notepad Editor -->
+              <div class="editor-container" style="flex-grow:1; border:1px solid var(--border-color); border-radius:8px; display:flex; flex-direction:column; min-height:250px; background:rgba(0,0,0,0.15);">
+                <div class="editor-header" style="padding:10px; border-bottom:1px solid var(--border-color);">
+                  <input type="text" class="editor-title-input" id="workspace-note-title" placeholder="Summary Note Title..." style="font-size:13px; padding:6px; border-radius:4px; border:1px solid var(--border-color); background:transparent; width:100%;">
+                </div>
+                <div class="editor-toolbar" style="padding:4px 8px; border-bottom:1px solid var(--border-color); gap:4px;">
+                  <button class="toolbar-btn" style="padding:4px 8px; font-size:11px;" onclick="document.execCommand('bold', false, null)"><b>B</b></button>
+                  <button class="toolbar-btn" style="padding:4px 8px; font-size:11px;" onclick="document.execCommand('italic', false, null)"><i>I</i></button>
+                  <button class="toolbar-btn" style="padding:4px 8px; font-size:11px;" onclick="document.execCommand('underline', false, null)"><u>U</u></button>
+                  <button class="toolbar-btn" style="padding:4px 8px; font-size:11px;" onclick="document.execCommand('insertUnorderedList', false, null)">•-</button>
+                  <span style="flex-grow:1;"></span>
+                  <button class="btn btn-primary btn-sm" id="workspace-note-save-btn" style="padding:4px 10px; font-size:11px;">Kaydet</button>
+                </div>
+                <div class="editor-body" id="workspace-note-body" contenteditable="true" style="padding:12px; font-size:13px; overflow-y:auto; flex-grow:1; min-height:120px;" placeholder="Notlarınızı buraya yazın..."></div>
+              </div>
             </div>
           </div>
-          
-          <div class="editor-container">
-            <div class="editor-header">
-              <input type="text" class="editor-title-input" id="note-title-field" placeholder="Başlıksız Not..." disabled>
-              <span class="editor-status" id="editor-save-status">Ders seçin</span>
-            </div>
-            <div class="editor-toolbar">
-              <button class="toolbar-btn" data-cmd="bold" title="Kalın"><b>B</b></button>
-              <button class="toolbar-btn" data-cmd="italic" title="Eğik"><i>I</i></button>
-              <button class="toolbar-btn" data-cmd="underline" title="Altı Çizili"><u>U</u></button>
-              <span class="toolbar-divider"></span>
-              <button class="toolbar-btn" data-cmd="formatBlock" data-val="h2" title="Başlık 1">H1</button>
-              <button class="toolbar-btn" data-cmd="formatBlock" data-val="h3" title="Başlık 2">H2</button>
-              <button class="toolbar-btn" data-cmd="insertUnorderedList" title="Madde İşaretli Liste">•-</button>
-              <span class="toolbar-divider"></span>
-              <button class="toolbar-btn" id="editor-save-btn" title="Notu Kaydet">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>
-              </button>
-            </div>
-            <div class="editor-body" id="note-editor-body" contenteditable="false" placeholder="Notlarınızı buraya yazmaya başlayın..."></div>
-            
-            <div class="pdf-viewer-overlay" id="pdf-viewer-container">
-              <div class="pdf-viewer-header">
-                <span class="pdf-viewer-title" id="pdf-viewer-title-field">PDF Dokümanı</span>
-                <button class="btn btn-secondary btn-icon" id="close-pdf-btn" style="width:28px; height:28px;">×</button>
+
+          <!-- Right Panel: Document Reader -->
+          <div class="workspace-panel-right">
+            <!-- PDF Text Reader View -->
+            <div id="workspace-pdf-reader" style="display:flex; flex-direction:column; height:100%;">
+              <div class="pdf-viewer-header" style="border-bottom:1px solid var(--border-color); border-top-left-radius:0; border-top-right-radius:0;">
+                <span class="pdf-viewer-title" id="pdf-viewer-title-field">PDF Doküman Metni</span>
               </div>
-              <div class="pdf-viewer-body">
-                <div class="pdf-text-extracted" id="pdf-text-content-box">Metin yükleniyor...</div>
+              <div class="pdf-viewer-body" style="flex-grow:1; overflow-y:auto; padding:24px;">
+                <div class="pdf-text-extracted" id="pdf-text-content-box" style="white-space:pre-wrap; line-height:1.6; font-family:var(--font-body); font-size:14.5px;">Metin yükleniyor...</div>
               </div>
+            </div>
+
+            <!-- Note Editor View (If active source is a Note) -->
+            <div id="workspace-note-editor" style="display:none; flex-direction:column; height:100%;">
+              <div class="editor-header" style="border-bottom:1px solid var(--border-color); padding:16px;">
+                <input type="text" class="editor-title-input" id="note-title-field" placeholder="Başlıksız Not..." style="font-size:18px; font-weight:600; width:100%;">
+                <span class="editor-status" id="editor-save-status" style="font-size:11px;">Not düzenleniyor</span>
+              </div>
+              <div class="editor-toolbar" style="padding:8px 16px; border-bottom:1px solid var(--border-color);">
+                <button class="toolbar-btn" data-cmd="bold"><b>B</b></button>
+                <button class="toolbar-btn" data-cmd="italic"><i>I</i></button>
+                <button class="toolbar-btn" data-cmd="underline"><u>U</u></button>
+                <span class="toolbar-divider"></span>
+                <button class="toolbar-btn" data-cmd="formatBlock" data-val="h2">H1</button>
+                <button class="toolbar-btn" data-cmd="formatBlock" data-val="h3">H2</button>
+                <button class="toolbar-btn" data-cmd="insertUnorderedList">•-</button>
+                <span class="toolbar-divider"></span>
+                <button class="toolbar-btn" id="editor-save-btn" style="margin-left:auto; background:var(--accent-gold-glow); color:var(--accent-gold); border-color:rgba(212,175,55,0.3);">Kaydet</button>
+              </div>
+              <div class="editor-body" id="note-editor-body" contenteditable="true" style="padding:24px; font-size:14.5px; line-height:1.6; overflow-y:auto; flex-grow:1;" placeholder="Notlarınızı buraya yazın..."></div>
             </div>
           </div>
         </div>
       </section>
-      
-      <!-- PAGE 3: CHAT -->
-      <section class="page" id="chat-page">
-        <div class="empty-state" id="chat-empty-view">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-3.658A8.967 8.967 0 0 1 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" /></svg>
-          <h3>Yapay Zeka Çalışma Odası</h3>
-          <p>Yüklediğiniz dökümanlar üzerinden soru sormak için önce "Ana Panel" üzerinden bir ders seçin.</p>
+
+      <!-- PAGE: COMMUNITY -->
+      <section class="page" id="community-page">
+        <div style="margin-bottom: 24px;">
+          <h2 style="font-family:var(--font-title); font-size:24px; font-weight:700; color:var(--accent-gold); margin-bottom:6px;">Topluluk Paylaşım Kütüphanesi</h2>
+          <p class="text-muted" style="font-size:13.5px;">Diğer üniversite ve bölümlerden öğrencilerin paylaştığı tüm kaynakları ve interaktif testleri keşfedin.</p>
         </div>
-        
-        <div class="chat-container" id="chat-main-view" style="display:none;">
-          <div class="sources-panel">
-            <div class="sources-panel-header">
-              <h3>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25H5.625A2.25 2.25 0 0 1 3.375 18V6.125c0-.621.504-1.125 1.125-1.125H9.75M8.25 21h8.25" /></svg>
-                Notebook Kaynakları
-              </h3>
-            </div>
-            <div class="sources-panel-body">
-              <div>
-                <h4 class="sources-group-title">PDF Dosyaları</h4>
-                <ul class="sources-list" id="chat-sources-pdfs-list"></ul>
-              </div>
-              <div>
-                <h4 class="sources-group-title">Yazılı Notlar</h4>
-                <ul class="sources-list" id="chat-sources-notes-list"></ul>
-              </div>
-            </div>
-            <div class="sources-panel-footer">
-              <button class="btn btn-primary" id="chat-sources-quiz-btn" style="width:100%;">Seçililerden Soru Üret</button>
-            </div>
+
+        <div class="community-filter-bar">
+          <div class="filter-group">
+            <label for="comm-filter-univ">Üniversite</label>
+            <select class="input-field" id="comm-filter-univ">
+              <option value="">Hepsi</option>
+            </select>
           </div>
           
-          <div class="chat-window">
-            <div class="chat-header">
-              <div class="chat-model-info">
-                <div class="model-avatar">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 21l8.982-11.795H14.28l1.09-5.705L6.38 15.362h3.433Z" /></svg>
-                </div>
-                <h3 class="model-name">Gemini Hukuk Asistanı <span id="chat-active-sources-count">0 kaynak aktif</span></h3>
-              </div>
-              <button class="btn btn-secondary" id="clear-chat-btn" style="font-size: 12px; padding: 6px 12px;">Sohbeti Temizle</button>
+          <div class="filter-group">
+            <label for="comm-filter-dept">Bölüm</label>
+            <select class="input-field" id="comm-filter-dept">
+              <option value="">Hepsi</option>
+              <option value="hukuk">Hukuk</option>
+              <option value="bilgisayar-muhendisligi">Bilgisayar Mühendisliği</option>
+              <option value="tip">Tıp</option>
+              <option value="isletme">İşletme</option>
+              <option value="diger">Diğer</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="comm-filter-type">Materyal Türü</label>
+            <select class="input-field" id="comm-filter-type">
+              <option value="">Hepsi</option>
+              <option value="pdf">PDF Belgeleri</option>
+              <option value="note">Ders Notları</option>
+              <option value="quiz">Soru Bankaları</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="community-grid" id="community-grid-area">
+          <!-- Populated dynamically -->
+        </div>
+      </section>
+
+      <!-- PAGE: LANDING / SETUP -->
+      <section class="page" id="landing-page" style="padding: 0;">
+        <div class="landing-page-container">
+          <div class="landing-card">
+            <div class="landing-header">
+              <h1>Kampüs NotebookLM</h1>
+              <p>Kişiselleştirilmiş Yapay Zeka Destekli Çalışma Alanı</p>
             </div>
-            
-            <div class="chat-messages" id="chat-messages-box">
-              <div class="message ai">
-                <div class="message-avatar">AI</div>
-                <div class="message-content">
-                  <div class="message-bubble">
-                    <p>Merhaba Neslihan! Soldaki kutudan aktif dersine yüklediğin notları ve PDF dökümanlarını seçerek bana soru sorabilirsin.</p>
+            <div class="landing-body">
+              <!-- Step 1: API Key -->
+              <div style="margin-bottom: 30px;">
+                <h3 class="landing-step-title"><span>1</span> Gemini API Kurulumu</h3>
+                <p class="landing-help-text" style="margin-bottom:10px;">
+                  Sistem, derslerinizden özet, soru ve sohbet yanıtları oluşturabilmek için Gemini API Anahtarınızı kullanır. 
+                  API anahtarınızı tamamen ücretsiz olarak <a href="https://aistudio.google.com/" target="_blank">Google AI Studio</a> üzerinden alabilirsiniz.
+                </p>
+                <div class="api-test-inline">
+                  <input type="password" class="input-field" id="landing-api-key" placeholder="AI Studio'dan aldığınız API Anahtarı...">
+                  <button class="btn btn-secondary" id="landing-test-api-btn" style="padding: 10px 14px;">Test Et</button>
+                </div>
+                <div id="landing-api-test-results" style="display:none; font-size:11.5px; margin-top:10px; padding:10px; border-radius:6px; border:1px solid var(--border-color); background:rgba(0,0,0,0.15); white-space:pre-wrap;"></div>
+              </div>
+
+              <!-- Step 2: Curriculum Select -->
+              <div style="margin-bottom: 35px;">
+                <h3 class="landing-step-title"><span>2</span> Eğitim Bilgileri</h3>
+                <div class="uni-dept-inputs">
+                  <div class="form-group" style="text-align:left;">
+                    <label for="landing-univ-select" style="font-size:12px; font-weight:600; color:var(--color-text-muted);">Üniversite</label>
+                    <select class="input-field" id="landing-univ-select" style="width:100%; margin-top:5px;">
+                      <option value="Çukurova Üniversitesi">Çukurova Üniversitesi</option>
+                      <option value="Orta Doğu Teknik Üniversitesi">Orta Doğu Teknik Üniversitesi (ODTÜ)</option>
+                      <option value="Ankara Üniversitesi">Ankara Üniversitesi</option>
+                      <option value="İstanbul Üniversitesi">İstanbul Üniversitesi</option>
+                      <option value="diğer">Diğer (Kendim Gireceğim)</option>
+                    </select>
+                    <input type="text" class="input-field" id="landing-univ-custom" placeholder="Üniversite Adını Yazınız..." style="display:none; width:100%; margin-top:8px;">
+                  </div>
+
+                  <div class="form-group" style="text-align:left;">
+                    <label for="landing-dept-select" style="font-size:12px; font-weight:600; color:var(--color-text-muted);">Bölüm</label>
+                    <select class="input-field" id="landing-dept-select" style="width:100%; margin-top:5px;">
+                      <option value="hukuk">Hukuk</option>
+                      <option value="bilgisayar-muhendisligi">Bilgisayar Mühendisliği</option>
+                      <option value="tip">Tıp</option>
+                      <option value="isletme">İşletme</option>
+                      <option value="diger">Diğer (Genel Müfredat)</option>
+                    </select>
+                    <input type="text" class="input-field" id="landing-dept-custom" placeholder="Bölüm Adını Yazınız..." style="display:none; width:100%; margin-top:8px;">
                   </div>
                 </div>
               </div>
-            </div>
-            
-            <div class="chat-input-area">
-              <form class="chat-input-form" id="chat-form-element">
-                <textarea class="chat-textarea" id="chat-input-field" placeholder="Kaynaklarınıza dayanarak bana bir soru sorun..."></textarea>
-                <button type="submit" class="chat-submit-btn" id="chat-submit-btn" disabled>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" /></svg>
-                </button>
-              </form>
+
+              <button class="btn btn-primary" id="landing-submit-btn" style="width:100%; padding:14px; font-size:15px; border-radius:8px;">
+                🚀 Kurulumu Tamamla ve Platforma Giriş Yap
+              </button>
             </div>
           </div>
         </div>
       </section>
-      
-      <!-- PAGE 4: QUIZ -->
-      <section class="page" id="quiz-page">
-        <div class="empty-state" id="quiz-empty-view">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 21l8.982-11.795H14.28l1.09-5.705L6.38 15.362h3.433Z" /></svg>
-          <h3>Yapay Zeka Sınav Modülü</h3>
-          <p>Derslerinizden testler oluşturup çözmek için önce "Ana Panel" üzerinden bir ders seçin.</p>
-        </div>
-        
-        <div class="quiz-container" id="quiz-main-view" style="display:none;">
-          
-          <!-- Setup Panel -->
-          <div class="quiz-setup-card" id="quiz-setup-panel">
-            <h3 class="quiz-setup-title">Yapay Zekaya Soru Hazırlat</h3>
-            <p class="quiz-setup-subtitle">Ders kaynaklarınıza göre veya soru dökümanlarınızdan interaktif hukuk sınavları hazırlayın.</p>
-            
-            <div class="quiz-options-grid">
-              <div class="setup-option-box active" id="quiz-source-ai-btn">
-                <div class="setup-option-title">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 21l8.982-11.795H14.28l1.09-5.705L6.38 15.362h3.433Z" /></svg>
-                  Ders Notlarından Üret
-                </div>
-                <p class="setup-option-desc">Uygulamaya eklediğiniz ders notları ve PDF'ler okunarak otomatik sorular hazırlanır.</p>
-              </div>
-              
-              <div class="setup-option-box" id="quiz-source-pdf-btn">
-                <div class="setup-option-title">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg>
-                  PDF Sorularını Çöz
-                </div>
-                <p class="setup-option-desc">Yüklediğiniz soru dökümanı içeren PDF'leri çözülebilir interaktif sınavlara dönüştürün.</p>
-              </div>
-
-              <div class="setup-option-box" id="quiz-source-manual-btn">
-                <div class="setup-option-title">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 7.5h-.75A2.25 2.25 0 0 0 4.5 9.75v7.5a2.25 2.25 0 0 0 2.25 2.25h7.5a2.25 2.25 0 0 0 2.25-2.25v-.75" /><path stroke-linecap="round" stroke-linejoin="round" d="M15.224 2.44a2.25 2.25 0 1 1 3.182 3.182l-9.172 9.172a4.5 4.5 0 0 1-1.883 1.12l-2.04.68a.75.75 0 0 1-.98-.98l.68-2.04a4.5 4.5 0 0 1 1.12-1.883l9.172-9.172Z" /></svg>
-                  Yapay Zeka Sorularını Yapıştır
-                </div>
-                <p class="setup-option-desc">Gemini, ChatGPT gibi yerlerden aldığınız soruları kopyalayıp çözülebilir test haline getirin.</p>
-              </div>
-            </div>
-            
-            <!-- AI Generation Controls -->
-            <div id="quiz-setup-ai-controls">
-              <div class="form-group" style="max-width: 250px; margin: 0 auto 24px auto;">
-                <label for="quiz-question-count">Soru Sayısı</label>
-                <select class="input-field" id="quiz-question-count">
-                  <option value="5">5 Soru</option>
-                  <option value="10" selected>10 Soru</option>
-                  <option value="15">15 Soru</option>
-                </select>
-              </div>
-              <button class="btn btn-primary" id="start-ai-quiz-generation">Gemini İle Testi Oluştur</button>
-            </div>
-            
-            <!-- PDF Quiz Controls -->
-            <div id="quiz-setup-pdf-controls" style="display:none;">
-              <div class="form-group" style="max-width: 400px; margin: 0 auto 24px auto; text-align: left;">
-                <label for="quiz-pdf-select">İçinde Soru Olan PDF Dosyasını Seçin</label>
-                <select class="input-field" id="quiz-pdf-select" style="width: 100%;"></select>
-              </div>
-              <div class="pdf-convert-actions">
-                <button class="btn btn-secondary" id="start-local-pdf-quiz">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" /></svg>
-                  ⚡ Hızlı Çözüm (AI Yok)
-                </button>
-                <button class="btn btn-primary" id="start-pdf-quiz-conversion">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 21l8.982-11.795H14.28l1.09-5.705L6.38 15.362h3.433Z" /></svg>
-                  🤖 AI ile Detaylı Dönüştür
-                </button>
-              </div>
-              <p class="pdf-convert-hint">⚡ Hızlı: Anında, API kullanmaz. &nbsp;|&nbsp; 🤖 AI: Yavaş ama cevap açıklamaları ekler.</p>
-            </div>
-
-            <!-- Manual Paste Controls -->
-            <div id="quiz-setup-manual-controls" style="display:none;">
-              <div class="manual-import-box">
-                <label for="quiz-manual-paste-area" class="text-muted">Soruları Aşağıdaki Format Gibi Yapıştırın:</label>
-                <textarea class="input-field manual-textarea" id="quiz-manual-paste-area" placeholder="Soru 1: Soru metni...
-A) Şık A
-B) Şık B
-C) Şık C
-D) Şık D
-Cevap: A
-Açıklama: Açıklama metni...
-
-Soru 2: ..."></textarea>
-              </div>
-              <button class="btn btn-primary" style="margin-top:20px;" id="start-manual-quiz">Testi Çözülebilir Hale Getir</button>
-            </div>
-          </div>
-
-          <!-- Saved Quiz Banks Section -->
-          <div class="saved-banks-section" id="saved-banks-section">
-            <div class="saved-banks-header">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" /></svg>
-              Kaydedilmiş Soru Bankalarım
-            </div>
-            <div id="saved-banks-list"></div>
-          </div>
-          
-          <!-- Active Solving Screen -->
-          <div id="quiz-solving-panel" style="display:none; flex-direction:column; gap:20px;">
-            <div class="quiz-progress-header">
-              <div class="quiz-progress-info">
-                <div class="quiz-progress-text">Soru <span id="current-q-index">1</span> / <span id="total-q-count">10</span></div>
-                <div class="quiz-progress-bar-bg">
-                  <div class="quiz-progress-bar-fill" id="quiz-progress-bar"></div>
-                </div>
-              </div>
-              <div class="quiz-live-score" id="quiz-score-badge">Doğru: 0 / 0</div>
-            </div>
-            
-            <div class="question-card" id="active-question-card">
-              <div class="question-text" id="active-q-text">Soru metni yükleniyor...</div>
-              <ul class="options-list" id="active-q-options"></ul>
-              
-              <div class="explanation-box" id="active-q-explanation-box" style="display:none;">
-                <div class="explanation-header">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a3 3 0 0 0-3-3H9.75M12 6a.75.75 0 1 1-.75.75H12a.75.75 0 0 1 .75-.75Z" /></svg>
-                  Yasal Gerekçe ve Açıklama
-                </div>
-                <div class="explanation-body" id="active-q-explanation-text">Açıklama yükleniyor...</div>
-              </div>
-              
-              <div class="quiz-footer">
-                <button class="btn btn-secondary" id="quiz-quit-btn">Testi Bitir</button>
-                <button class="btn btn-primary" id="quiz-next-btn" disabled>Sonraki Soru</button>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Results Screen -->
-          <div class="results-card" id="quiz-results-panel" style="display:none;">
-            <div class="results-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" /></svg>
-            </div>
-            <h3 class="results-title">Sınav Tamamlandı!</h3>
-            <p class="text-muted" id="results-message">Tebrikler Neslihan!</p>
-            <div class="results-stats-grid">
-              <div class="results-stat-card">
-                <span class="results-stat-val correct" id="results-correct-count">0</span>
-                <span class="results-stat-label">Doğru</span>
-              </div>
-              <div class="results-stat-card">
-                <span class="results-stat-val wrong" id="results-wrong-count">0</span>
-                <span class="results-stat-label">Yanlış</span>
-              </div>
-              <div class="results-stat-card">
-                <span class="results-stat-val percentage" id="results-percentage">0%</span>
-                <span class="results-stat-label">Başarı</span>
-              </div>
-            </div>
-            <div style="display:flex; gap:12px;">
-              <button class="btn btn-primary" id="results-restart-btn">Yeniden Çöz</button>
-              <button class="btn btn-secondary" id="results-close-btn">Panele Dön</button>
-            </div>
-          </div>
-        </div>
-      </section>
-      
     </main>
   </div>
   
@@ -2721,40 +3074,77 @@ Soru 2: ..."></textarea>
   </div>
 
   <!-- MODAL: API KEY -->
+  <!-- MODAL: API & PROFILE SETTINGS -->
   <div class="modal" id="api-key-modal">
-    <div class="modal-content">
+    <div class="modal-content" style="max-width:500px;">
       <div class="modal-header">
-        <h3>Gemini API Yapılandırması</h3>
+        <h3>⚙️ Profil &amp; API Ayarları</h3>
         <button class="modal-close" id="close-api-key-modal">&times;</button>
       </div>
-      <div class="modal-body">
-        <p style="font-size: 13.5px; color: var(--color-text-muted); line-height:1.6; margin-bottom:16px;">
-          NotebookLM sohbet özelliği ve yapay zekanın ders notlarınızdan otomatik test üretmesi için bir <strong>Gemini API Anahtarı</strong> gereklidir.
-          API anahtarınız tamamen güvenli bir şekilde tarayıcınızın yerel hafızasında saklanır.
-        </p>
-        <div class="form-group">
-          <label for="api-key-input">Gemini API Key</label>
-          <input type="password" class="input-field" id="api-key-input" placeholder="AIzaSy...">
+      <div class="modal-body" style="display:flex; flex-direction:column; gap:16px;">
+        <!-- API Section -->
+        <div>
+          <h4 style="font-weight:600; color:var(--accent-gold); margin-bottom:10px; font-size:14px; border-bottom:1px solid var(--border-color); padding-bottom:4px;">Gemini API Anahtarı</h4>
+          <div class="form-group" style="margin-bottom:10px;">
+            <label for="api-key-input">Gemini API Key</label>
+            <input type="password" class="input-field" id="api-key-input" placeholder="AIzaSy...">
+          </div>
+          <div class="form-group" style="margin-bottom:10px;">
+            <label for="api-model-select">Kullanılacak Model</label>
+            <select class="input-field" id="api-model-select" style="width:100%;">
+              <option value="gemini-2.0-flash">Gemini 2.0 Flash (Hızlı)</option>
+              <option value="gemini-2.5-flash">Gemini 2.5 Flash (Gelişmiş &amp; Hızlı)</option>
+              <option value="gemini-3.5-flash">Gemini 3.5 Flash (En Yeni &amp; Hızlı)</option>
+              <option value="gemini-flash-latest">Gemini Flash Stable (Düşük Kota Dostu)</option>
+              <option value="gemini-pro-latest">Gemini Pro Stable (Hassas Akıl Yürütme)</option>
+            </select>
+          </div>
+          <button type="button" class="btn btn-secondary" id="test-api-key-btn" style="width: 100%; font-size: 11.5px; padding: 6px 12px; margin-top:8px;">Anahtarı &amp; Modelleri Test Et</button>
+          <div id="api-test-results" style="margin-top: 10px; font-size: 11px; max-height: 100px; overflow-y: auto; display: none; background: rgba(0,0,0,0.3); padding: 8px; border-radius: var(--border-radius-sm); font-family: monospace; white-space: pre-wrap; text-align: left; border: 1px solid var(--border-color);"></div>
         </div>
-        <div class="form-group">
-          <label for="api-model-select">Kullanılacak Model</label>
-          <select class="input-field" id="api-model-select">
-            <option value="gemini-2.0-flash">Gemini 2.0 Flash (Hızlı)</option>
-            <option value="gemini-2.5-flash">Gemini 2.5 Flash (Gelişmiş &amp; Hızlı)</option>
-            <option value="gemini-3.5-flash">Gemini 3.5 Flash (En Yeni &amp; Hızlı)</option>
-            <option value="gemini-flash-latest">Gemini Flash Stable (Düşük Kota Dostu)</option>
-            <option value="gemini-pro-latest">Gemini Pro Stable (Hassas Akıl Yürütme)</option>
-          </select>
+
+        <!-- Profile Section -->
+        <div>
+          <h4 style="font-weight:600; color:var(--accent-gold); margin-bottom:10px; font-size:14px; border-bottom:1px solid var(--border-color); padding-bottom:4px;">Eğitim Bilgileri</h4>
+          <p style="font-size:11px; color:var(--color-text-muted); margin-bottom:10px;">
+            ⚠️ Bölümü değiştirmek mevcut derslerinizi, notlarınızı ve testlerinizi temizleyerek yeni bölüm müfredatını yükleyecektir.
+          </p>
+          <div class="form-group" style="margin-bottom:10px;">
+            <label for="settings-univ-select">Üniversite</label>
+            <select class="input-field" id="settings-univ-select" style="width:100%;">
+              <option value="Çukurova Üniversitesi">Çukurova Üniversitesi</option>
+              <option value="Orta Doğu Teknik Üniversitesi">Orta Doğu Teknik Üniversitesi (ODTÜ)</option>
+              <option value="Ankara Üniversitesi">Ankara Üniversitesi</option>
+              <option value="İstanbul Üniversitesi">İstanbul Üniversitesi</option>
+              <option value="diğer">Diğer</option>
+            </select>
+            <input type="text" class="input-field" id="settings-univ-custom" placeholder="Üniversite Adı..." style="display:none; width:100%; margin-top:8px;">
+          </div>
+          <div class="form-group">
+            <label for="settings-dept-select">Bölüm</label>
+            <select class="input-field" id="settings-dept-select" style="width:100%;">
+              <option value="hukuk">Hukuk</option>
+              <option value="bilgisayar-muhendisligi">Bilgisayar Mühendisliği</option>
+              <option value="tip">Tıp</option>
+              <option value="isletme">İşletme</option>
+              <option value="diger">Diğer (Genel Müfredat)</option>
+            </select>
+            <input type="text" class="input-field" id="settings-dept-custom" placeholder="Bölüm Adı..." style="display:none; width:100%; margin-top:8px;">
+          </div>
         </div>
-        <p style="font-size: 11px; color: var(--color-text-dark); margin-top: 10px;">
-          API anahtarınız yoksa <a href="https://aistudio.google.com/" target="_blank" class="text-gold" style="text-decoration:none;">Google AI Studio</a> adresinden ücretsiz alabilirsiniz.
-        </p>
-        <button type="button" class="btn btn-secondary" id="test-api-key-btn" style="margin-top: 12px; width: 100%; font-size: 12px; padding: 8px 12px;">Anahtarı &amp; Uyumlu Modelleri Test Et</button>
-        <div id="api-test-results" style="margin-top: 10px; font-size: 11px; max-height: 120px; overflow-y: auto; display: none; background: rgba(0,0,0,0.3); padding: 8px; border-radius: var(--border-radius-sm); font-family: monospace; white-space: pre-wrap; text-align: left; border: 1px solid var(--border-color);"></div>
+
+        <!-- Danger Zone -->
+        <div style="border: 1px dashed rgba(239, 68, 68, 0.4); padding: 12px; border-radius: 8px; background: rgba(239, 68, 68, 0.03); display:flex; flex-direction:column; gap:8px;">
+          <h5 style="font-weight:bold; color:#ef4444; font-size:12px;">⚠️ Tehlikeli Alan</h5>
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+            <span style="font-size:11px; color:var(--color-text-muted); line-height:1.3;">Tüm veritabanını, notları ve ayarları temizleyerek kurulum ekranına dönün.</span>
+            <button class="btn btn-secondary btn-sm" id="settings-reset-system-btn" style="color:#ef4444; border-color:#ef4444; padding:6px 12px; font-size:11px; white-space:nowrap;">Sistemi Sıfırla</button>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" id="clear-api-key-btn" style="color:var(--color-error)">Anahtarı Sil</button>
-        <button class="btn btn-primary" id="save-api-key-btn">Anahtarı Kaydet</button>
+        <button class="btn btn-primary" id="save-api-key-btn">Ayarları Kaydet</button>
       </div>
     </div>
   </div>
@@ -2807,43 +3197,196 @@ Soru 2: ..."></textarea>
 
 /* js/db.js */
 
+/* js/db.js */
+
 const DB_NAME = 'cukurova_hukuk_db';
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 
 let dbInstance = null;
 
-const DEFAULT_COURSES = [
-  // 1. Sınıf
-  { id: 'hukuk-baslangici', name: 'Hukuk Başlangıcı', year: 1 },
-  { id: 'anayasa-hukuku-1', name: 'Anayasa Hukuku (Genel Esaslar)', year: 1 },
-  { id: 'medeni-hukuk-1', name: 'Medeni Hukuk (Giriş - Kişiler - Aile)', year: 1 },
-  { id: 'roma-hukuku', name: 'Roma Hukuku', year: 1 },
-  { id: 'hukuk-tarihi', name: 'Hukuk Tarihi', year: 1 },
-  { id: 'hukuk-sosyolojisi', name: 'Hukuk Sosyolojisi', year: 1 },
-  
-  // 2. Sınıf
-  { id: 'borclar-genel', name: 'Borçlar Hukuku Genel Hükümler', year: 2 },
-  { id: 'ceza-genel', name: 'Ceza Hukuku Genel Hükümler', year: 2 },
-  { id: 'idare-hukuku', name: 'İdare Hukuku', year: 2 },
-  { id: 'uluslararasi-kamu', name: 'Uluslararası Kamu Hukuku', year: 2 },
-  { id: 'genel-kamu-teorisi', name: 'Genel Kamu Teorisi', year: 2 },
-  
-  // 3. Sınıf
-  { id: 'borclar-ozel', name: 'Borçlar Hukuku Özel Hükümler', year: 3 },
-  { id: 'ceza-ozel', name: 'Ceza Hukuku Özel Hükümler', year: 3 },
-  { id: 'medeni-usul', name: 'Medeni Usul Hukuku', year: 3 },
-  { id: 'esya-hukuku', name: 'Eşya Hukuku', year: 3 },
-  { id: 'ticaret-hukuku', name: 'Ticaret Hukuku', year: 3 },
-  { id: 'vergi-hukuku', name: 'Vergi Hukuku', year: 3 },
-  { id: 'idari-yargilama', name: 'İdari Yargılama Hukuku', year: 3 },
-  
-  // 4. Sınıf
-  { id: 'ceza-muhakemesi', name: 'Ceza Muhakemesi Hukuku', year: 4 },
-  { id: 'icra-iflas', name: 'İcra ve İflas Hukuku', year: 4 },
-  { id: 'uluslararasi-ozel', name: 'Uluslararası Özel Hukuk', year: 4 },
-  { id: 'is-sosyal-guvenlik', name: 'İş ve Sosyal Güvenlik Hukuku', year: 4 },
-  { id: 'kiymetli-evrak', name: 'Kıymetli Evrak Hukuku', year: 4 },
-  { id: 'adli-tip', name: 'Adli Tıp', year: 4 }
+const CURRICULUM_TEMPLATES = {
+  'hukuk': [
+    { id: 'hukuk-baslangici', name: 'Hukuk Başlangıcı', year: 1 },
+    { id: 'anayasa-hukuku-1', name: 'Anayasa Hukuku (Genel Esaslar)', year: 1 },
+    { id: 'medeni-hukuk-1', name: 'Medeni Hukuk (Giriş - Kişiler - Aile)', year: 1 },
+    { id: 'roma-hukuku', name: 'Roma Hukuku', year: 1 },
+    { id: 'hukuk-tarihi', name: 'Hukuk Tarihi', year: 1 },
+    { id: 'hukuk-sosyolojisi', name: 'Hukuk Sosyolojisi', year: 1 },
+    { id: 'borclar-genel', name: 'Borçlar Hukuku Genel Hükümler', year: 2 },
+    { id: 'ceza-genel', name: 'Ceza Hukuku Genel Hükümler', year: 2 },
+    { id: 'idare-hukuku', name: 'İdare Hukuku', year: 2 },
+    { id: 'uluslararasi-kamu', name: 'Uluslararası Kamu Hukuku', year: 2 },
+    { id: 'genel-kamu-teorisi', name: 'Genel Kamu Teorisi', year: 2 },
+    { id: 'borclar-ozel', name: 'Borçlar Hukuku Özel Hükümler', year: 3 },
+    { id: 'ceza-ozel', name: 'Ceza Hukuku Özel Hükümler', year: 3 },
+    { id: 'medeni-usul', name: 'Medeni Usul Hukuku', year: 3 },
+    { id: 'esya-hukuku', name: 'Eşya Hukuku', year: 3 },
+    { id: 'ticaret-hukuku', name: 'Ticaret Hukuku', year: 3 },
+    { id: 'vergi-hukuku', name: 'Vergi Hukuku', year: 3 },
+    { id: 'idari-yargilama', name: 'İdari Yargılama Hukuku', year: 3 },
+    { id: 'ceza-muhakemesi', name: 'Ceza Muhakemesi Hukuku', year: 4 },
+    { id: 'icra-iflas', name: 'İcra ve İflas Hukuku', year: 4 },
+    { id: 'uluslararasi-ozel', name: 'Uluslararası Özel Hukuk', year: 4 },
+    { id: 'is-sosyal-guvenlik', name: 'İş ve Sosyal Güvenlik Hukuku', year: 4 },
+    { id: 'kiymetli-evrak', name: 'Kıymetli Evrak Hukuku', year: 4 },
+    { id: 'adli-tip', name: 'Adli Tıp', year: 4 }
+  ],
+  'bilgisayar-muhendisligi': [
+    { id: 'programlamaya-giris', name: 'Programlamaya Giriş (Python/C)', year: 1 },
+    { id: 'matematik-1', name: 'Matematik I (Kalkülüs)', year: 1 },
+    { id: 'fizik-1', name: 'Fizik I', year: 1 },
+    { id: 'lineer-cebir', name: 'Lineer Cebir', year: 1 },
+    { id: 'matematik-2', name: 'Matematik II (Kalkülüs)', year: 1 },
+    { id: 'fizik-2', name: 'Fizik II', year: 1 },
+    { id: 'veri-yapilari', name: 'Veri Yapıları ve Algoritmalar', year: 2 },
+    { id: 'bilgisayar-organizasyonu', name: 'Bilgisayar Organizasyonu', year: 2 },
+    { id: 'nesne-yonelimli-prog', name: 'Nesne Yönelimli Programlama', year: 2 },
+    { id: 'diferansiyel-denklemler', name: 'Diferansiyel Denklemler', year: 2 },
+    { id: 'ayrik-matematik', name: 'Ayrık Matematik', year: 2 },
+    { id: 'isletim-sistemleri', name: 'İşletim Sistemleri', year: 3 },
+    { id: 'veritabani-yonetim', name: 'Veritabanı Yönetim Sistemleri', year: 3 },
+    { id: 'yazilim-muhendisligi', name: 'Yazılım Mühendisliği', year: 3 },
+    { id: 'algoritma-analizi', name: 'Algoritmaların Tasarımı ve Analizi', year: 3 },
+    { id: 'otomata-teorisi', name: 'Otomata Teorisi ve Biçimsel Diller', year: 3 },
+    { id: 'yapay-zekaya-giris', name: 'Yapay Zekaya Giriş', year: 4 },
+    { id: 'bilgisayar-aglari', name: 'Bilgisayar Ağları', year: 4 },
+    { id: 'bulut-bilisim', name: 'Bulut Bilişim', year: 4 },
+    { id: 'sistem-programlama', name: 'Sistem Programlama', year: 4 },
+    { id: 'bitirme-projesi', name: 'Bitirme Projesi', year: 4 }
+  ],
+  'tip': [
+    { id: 'tibbi-biyoloji-genetik', name: 'Tıbbi Biyoloji ve Genetik', year: 1 },
+    { id: 'anatomiye-giris', name: 'Anatomiye Giriş ve Lokomotor Sistem', year: 1 },
+    { id: 'tibbi-biyokimya-1', name: 'Tıbbi Biyokimya I', year: 1 },
+    { id: 'hucre-bilimi', name: 'Hücre Bilimi ve Histolojiye Giriş', year: 1 },
+    { id: 'anatomi-2', name: 'Anatomi II (Sistemler)', year: 2 },
+    { id: 'fizyoloji-1', name: 'Fizyoloji I', year: 2 },
+    { id: 'histoloji-embriyoloji', name: 'Histoloji ve Embriyoloji II', year: 2 },
+    { id: 'mikrobiyoloji-immunoloji', name: 'Mikrobiyoloji ve İmmünoloji', year: 2 },
+    { id: 'patoloji-genel', name: 'Patoloji Genel Esaslar', year: 3 },
+    { id: 'farmakoloji-giris', name: 'Farmakolojiye Giriş', year: 3 },
+    { id: 'semiyoloji-klinik', name: 'Klinik Semiyoloji (Belirti Bilimi)', year: 3 },
+    { id: 'klinik-mikrobiyoloji', name: 'Klinik Mikrobiyoloji ve Enfeksiyon', year: 3 },
+    { id: 'ic-hastaliklari', name: 'İç Hastalıkları (Dahiliye) Stajı', year: 4 },
+    { id: 'cocuk-sagligi', name: 'Çocuk Sağlığı ve Hastalıkları Stajı', year: 4 },
+    { id: 'genel-cerrahi', name: 'Genel Cerrahi Stajı', year: 4 },
+    { id: 'kadin-hastaliklari', name: 'Kadın Hastalıkları ve Doğum Stajı', year: 4 }
+  ],
+  'isletme': [
+    { id: 'isletme-bilimine-giris', name: 'İşletme Bilimine Giriş', year: 1 },
+    { id: 'mikroekonomi', name: 'Mikroekonomi', year: 1 },
+    { id: 'genel-muhasebe', name: 'Genel Muhasebe', year: 1 },
+    { id: 'isletme-matematigi', name: 'İşletme Matematiği', year: 1 },
+    { id: 'hukukun-temel-kavramlari', name: 'Hukukun Temel Kavramları', year: 1 },
+    { id: 'makroekonomi', name: 'Makroekonomi', year: 2 },
+    { id: 'finansal-muhasebe', name: 'Finansal Muhasebe', year: 2 },
+    { id: 'orgutsel-davranis', name: 'Örgütsel Davranış', year: 2 },
+    { id: 'pazarlama-ilkeleri', name: 'Pazarlama İlkeleri', year: 2 },
+    { id: 'istatistik-1', name: 'İstatistik I', year: 2 },
+    { id: 'finansal-yonetim', name: 'Finansal Yönetim', year: 3 },
+    { id: 'insan-kaynaklari', name: 'İnsan Kaynakları Yönetimi', year: 3 },
+    { id: 'yoneylem-arastirmasi', name: 'Yöneylem Araştırması', year: 3 },
+    { id: 'uretim-yonetimi', name: 'Üretim ve İşlemler Yönetimi', year: 3 },
+    { id: 'isletme-hukuku', name: 'İşletme Hukuku', year: 3 },
+    { id: 'stratejik-yonetim', name: 'Stratejik Yönetim', year: 4 },
+    { id: 'girisimcilik', name: 'Girişimcilik', year: 4 },
+    { id: 'uluslararasi-isletmecilik', name: 'Uluslararası İşletmecilik', year: 4 },
+    { id: 'karar-analizi', name: 'Karar Analizi', year: 4 },
+    { id: 'isletme-etigi', name: 'İşletme Etiği', year: 4 }
+  ],
+  'diger': [
+    { id: 'akademik-yazim', name: 'Akademik Yazım ve Sunum Becerileri', year: 1 },
+    { id: 'bilgi-teknolojileri', name: 'Temel Bilgi Teknolojileri', year: 1 },
+    { id: 'ilgili-alana-giris-1', name: 'İlgili Alana Giriş I', year: 1 },
+    { id: 'ilgili-alana-giris-2', name: 'İlgili Alana Giriş II', year: 1 },
+    { id: 'ileri-duzey-calismalar-1', name: 'İleri Düzey Çalışmalar I', year: 2 },
+    { id: 'ileri-duzey-calismalar-2', name: 'İleri Düzey Çalışmalar II', year: 2 },
+    { id: 'arastirma-yontemleri', name: 'Araştırma Yöntemleri', year: 2 },
+    { id: 'mesleki-etik', name: 'Mesleki Etik ve Sorumluluk', year: 2 },
+    { id: 'alan-secmeli-1', name: 'Alan Seçmeli Dersi I', year: 3 },
+    { id: 'alan-secmeli-2', name: 'Alan Seçmeli Dersi II', year: 3 },
+    { id: 'proje-yonetimi', name: 'Proje Yönetimi', year: 3 },
+    { id: 'staj-uygulama', name: 'Staj ve Saha Uygulaması', year: 3 },
+    { id: 'bitirme-projesi', name: 'Bitirme Projesi / Tezi', year: 4 },
+    { id: 'sektorel-analiz', name: 'Sektörel Analiz ve Raporlama', year: 4 },
+    { id: 'alan-secmeli-3', name: 'Alan Seçmeli Dersi III', year: 4 },
+    { id: 'alan-secmeli-4', name: 'Alan Seçmeli Dersi IV', year: 4 }
+  ]
+};
+
+const MOCK_COMMUNITY_ITEMS = [
+  {
+    id: 'comm-1',
+    title: 'Anayasa Mahkemesi Karar İncelemeleri Özet Dökümanı',
+    type: 'pdf',
+    university: 'Ankara Üniversitesi',
+    department: 'Hukuk',
+    courseName: 'Anayasa Hukuku',
+    size: 24576,
+    textContent: '[Sayfa 1]\nAnayasa Mahkemesi’nin bireysel başvuru kararlarında mülkiyet hakkı koruması ve idarenin takdir yetkisi sınırları...',
+    uploaderName: 'Ahmet Yılmaz',
+    downloads: 42,
+    createdAt: Date.now() - 3 * 24 * 60 * 60 * 1000
+  },
+  {
+    id: 'comm-2',
+    title: 'Veri Yapıları - Ağaçlar ve Graf Algoritmaları Çalışma Notu',
+    type: 'note',
+    university: 'Orta Doğu Teknik Üniversitesi',
+    department: 'Bilgisayar Mühendisliği',
+    courseName: 'Veri Yapıları ve Algoritmalar',
+    size: 5120,
+    textContent: 'Binary Search Tree (BST), AVL Ağaçları ve Kırmızı-Siyah Ağaçlar üzerine detaylı çalışma özeti...\nKruskal ve Prim algoritmaları çalışma süreleri kıyaslaması...',
+    uploaderName: 'Selin Kaya',
+    downloads: 87,
+    createdAt: Date.now() - 1 * 24 * 60 * 60 * 1000
+  },
+  {
+    id: 'comm-3',
+    title: 'Anatomi Lokomotor Sistem Çıkmış Sınav Soruları',
+    type: 'quiz',
+    university: 'Hacettepe Üniversitesi',
+    department: 'Tıp',
+    courseName: 'Anatomiye Giriş ve Lokomotor Sistem',
+    size: 0,
+    textContent: JSON.stringify([
+      {
+        question: "Aşağıdeki kemiklerden hangisi neurocranium (beyin kafatası) kemiklerindendir?",
+        options: ["Os sphenoidale", "Os zygomaticum", "Os lacrimale", "Os nasale", "Maxilla"],
+        answerIndex: 0,
+        explanation: "Os sphenoidale (temel kemik) neurocranium'a aittir, diğerleri viscerocranium (yüz kafatası) kemikleridir."
+      },
+      {
+        question: "Articulatio humeri (omuz eklemi) ne tip bir eklemdir?",
+        options: ["Sellar", "Trochoid", "Ginglymus", "Spheroid", "Condylar"],
+        answerIndex: 3,
+        explanation: "Articulatio humeri, spheroidea (art. spheroidea - küresel) tipte çok eksenli bir eklemdir."
+      }
+    ]),
+    uploaderName: 'Dr. Burak Çetin',
+    downloads: 135,
+    createdAt: Date.now() - 5 * 24 * 60 * 60 * 1000
+  },
+  {
+    id: 'comm-4',
+    title: 'Mikroekonomi - Tüketici Dengesi ve Esneklik Çözümlü Test',
+    type: 'quiz',
+    university: 'İstanbul Üniversitesi',
+    department: 'İşletme',
+    courseName: 'Mikroekonomi',
+    size: 0,
+    textContent: JSON.stringify([
+      {
+        question: "Bir malın fiyatı arttığında, ikame malın talebi nasıl değişir?",
+        options: ["Azalır", "Değişmez", "Artar", "Önce azalır sonra artar"],
+        answerIndex: 2,
+        explanation: "İkame mallarda, birinin fiyatı artarsa tüketiciler diğer mala yönelir, bu yüzden ikame malın talebi artar."
+      }
+    ]),
+    uploaderName: 'Merve Demir',
+    downloads: 64,
+    createdAt: Date.now() - 8 * 24 * 60 * 60 * 1000
+  }
 ];
 
 function initDb() {
@@ -2885,24 +3428,25 @@ function initDb() {
         pdfsStore.createIndex('courseId', 'courseId', { unique: false });
       }
 
-      // Quizzes store (history of solved tests)
+      // Quizzes store
       if (!db.objectStoreNames.contains('quizzes')) {
         const quizzesStore = db.createObjectStore('quizzes', { keyPath: 'id' });
         quizzesStore.createIndex('courseId', 'courseId', { unique: false });
       }
 
-      // Saved Quiz Banks store (named question sets for reuse)
+      // Saved Quiz Banks store
       if (!db.objectStoreNames.contains('savedQuizBanks')) {
         const banksStore = db.createObjectStore('savedQuizBanks', { keyPath: 'id' });
         banksStore.createIndex('courseId', 'courseId', { unique: false });
       }
 
-      // Populate default courses
-      const transaction = event.target.transaction;
-      const coursesStore = transaction.objectStore('courses');
-      DEFAULT_COURSES.forEach(course => {
-        coursesStore.put(course);
-      });
+      // Community Items store
+      if (!db.objectStoreNames.contains('communityItems')) {
+        const communityStore = db.createObjectStore('communityItems', { keyPath: 'id' });
+        communityStore.createIndex('university', 'university', { unique: false });
+        communityStore.createIndex('department', 'department', { unique: false });
+        communityStore.createIndex('type', 'type', { unique: false });
+      }
     };
   });
 }
@@ -2925,10 +3469,40 @@ async function addCourse(course) {
   return new Promise((resolve, reject) => {
     const transaction = db.transaction('courses', 'readwrite');
     const store = transaction.objectStore('courses');
-    const request = store.put(course); // put acts as insert/update
+    const request = store.put(course);
     
     request.onsuccess = () => resolve(course);
     request.onerror = () => reject(request.error);
+  });
+}
+
+async function deleteCourse(id) {
+  const db = await initDb();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(['courses', 'notes', 'pdfs', 'quizzes', 'savedQuizBanks'], 'readwrite');
+    
+    transaction.objectStore('courses').delete(id);
+    
+    const deleteFromStoreByIndex = (storeName, indexName, value) => {
+      const store = transaction.objectStore(storeName);
+      const index = store.index(indexName);
+      const request = index.openCursor(IDBKeyRange.only(value));
+      request.onsuccess = (event) => {
+        const cursor = event.target.result;
+        if (cursor) {
+          cursor.delete();
+          cursor.continue();
+        }
+      };
+    };
+
+    deleteFromStoreByIndex('notes', 'courseId', id);
+    deleteFromStoreByIndex('pdfs', 'courseId', id);
+    deleteFromStoreByIndex('quizzes', 'courseId', id);
+    deleteFromStoreByIndex('savedQuizBanks', 'courseId', id);
+
+    transaction.oncomplete = () => resolve(id);
+    transaction.onerror = () => reject(transaction.error);
   });
 }
 
@@ -3119,9 +3693,9 @@ async function getGlobalStats() {
 
 // --- Saved Quiz Banks Operations ---
 async function getQuizBanks(courseId) {
-  const dbInstanceLocal = await initDb();
+  const db = await initDb();
   return new Promise((resolve, reject) => {
-    const transaction = dbInstanceLocal.transaction('savedQuizBanks', 'readonly');
+    const transaction = db.transaction('savedQuizBanks', 'readonly');
     const store = transaction.objectStore('savedQuizBanks');
     const index = store.index('courseId');
     const request = index.getAll(IDBKeyRange.only(courseId));
@@ -3131,9 +3705,9 @@ async function getQuizBanks(courseId) {
 }
 
 async function saveQuizBank(bank) {
-  const dbInstanceLocal = await initDb();
+  const db = await initDb();
   return new Promise((resolve, reject) => {
-    const transaction = dbInstanceLocal.transaction('savedQuizBanks', 'readwrite');
+    const transaction = db.transaction('savedQuizBanks', 'readwrite');
     const store = transaction.objectStore('savedQuizBanks');
     const request = store.put(bank);
     request.onsuccess = () => resolve(bank);
@@ -3142,9 +3716,9 @@ async function saveQuizBank(bank) {
 }
 
 async function deleteQuizBank(id) {
-  const dbInstanceLocal = await initDb();
+  const db = await initDb();
   return new Promise((resolve, reject) => {
-    const transaction = dbInstanceLocal.transaction('savedQuizBanks', 'readwrite');
+    const transaction = db.transaction('savedQuizBanks', 'readwrite');
     const store = transaction.objectStore('savedQuizBanks');
     const request = store.delete(id);
     request.onsuccess = () => resolve(id);
@@ -3152,10 +3726,94 @@ async function deleteQuizBank(id) {
   });
 }
 
+// --- Dynamic Curriculum Setup ---
+async function setupCurriculum(university, department) {
+  const db = await initDb();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(['courses', 'notes', 'pdfs', 'quizzes', 'savedQuizBanks'], 'readwrite');
+    
+    transaction.objectStore('courses').clear();
+    transaction.objectStore('notes').clear();
+    transaction.objectStore('pdfs').clear();
+    transaction.objectStore('quizzes').clear();
+    transaction.objectStore('savedQuizBanks').clear();
+
+    const coursesStore = transaction.objectStore('courses');
+    const templateKey = CURRICULUM_TEMPLATES[department] ? department : 'diger';
+    const coursesToLoad = CURRICULUM_TEMPLATES[templateKey];
+
+    coursesToLoad.forEach(course => {
+      coursesStore.put(course);
+    });
+
+    transaction.oncomplete = () => {
+      localStorage.setItem('selected_university', university);
+      localStorage.setItem('selected_department', department);
+      resolve();
+    };
+
+    transaction.onerror = () => {
+      reject(transaction.error);
+    };
+  });
+}
+
+// --- Community Operations ---
+async function getCommunityItems() {
+  const db = await initDb();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction('communityItems', 'readonly');
+    const store = transaction.objectStore('communityItems');
+    const request = store.getAll();
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function addCommunityItem(item) {
+  const db = await initDb();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction('communityItems', 'readwrite');
+    const store = transaction.objectStore('communityItems');
+    const request = store.put(item);
+    request.onsuccess = () => resolve(item);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function deleteCommunityItem(id) {
+  const db = await initDb();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction('communityItems', 'readwrite');
+    const store = transaction.objectStore('communityItems');
+    const request = store.delete(id);
+    request.onsuccess = () => resolve(id);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function seedCommunityItems() {
+  const db = await initDb();
+  const items = await getCommunityItems();
+  if (items.length > 0) return; // already seeded
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction('communityItems', 'readwrite');
+    const store = transaction.objectStore('communityItems');
+    MOCK_COMMUNITY_ITEMS.forEach(item => {
+      store.put(item);
+    });
+    transaction.oncomplete = () => resolve();
+    transaction.onerror = () => reject(transaction.error);
+  });
+}
+
+
 const db = {
   initDb,
   getCourses,
   addCourse,
+  deleteCourse,
   getNotes,
   getNote,
   saveNote,
@@ -3168,11 +3826,15 @@ const db = {
   getAllQuizzes,
   saveQuiz,
   getGlobalStats,
-  saveQuizBank,
   getQuizBanks,
-  deleteQuizBank
+  saveQuizBank,
+  deleteQuizBank,
+  setupCurriculum,
+  getCommunityItems,
+  addCommunityItem,
+  deleteCommunityItem,
+  seedCommunityItems
 };
-
 
 /* js/pdf-helper.js */
 
@@ -3504,6 +4166,7 @@ const ai = {
 
 /* js/ui.js */
 
+/* js/ui.js */
 
 
 // Global variables for active items
@@ -3511,6 +4174,14 @@ let activeCourse = null;
 let activeNote = null;
 let activePdf = null;
 let activeYearTab = 1;
+
+const DEPT_LABELS = {
+  'hukuk': 'Hukuk Müfredatı',
+  'bilgisayar-muhendisligi': 'Bilgisayar Müh. Müfredatı',
+  'tip': 'Tıp Fakültesi Müfredatı',
+  'isletme': 'İşletme Müfredatı',
+  'diger': 'Akademik Müfredat'
+};
 
 function setActiveCourse(course) {
   activeCourse = course;
@@ -3521,29 +4192,12 @@ function setActiveCourse(course) {
     tag.style.display = 'inline-block';
     tag.textContent = `${course.year}. Sınıf`;
     display.textContent = course.name;
-    
-    // Enable study panels
-    document.getElementById('notebook-empty-view').style.display = 'none';
-    document.getElementById('notebook-main-view').style.display = 'flex';
-    
-    document.getElementById('chat-empty-view').style.display = 'none';
-    document.getElementById('chat-main-view').style.display = 'flex';
-    
-    document.getElementById('quiz-empty-view').style.display = 'none';
-    document.getElementById('quiz-main-view').style.display = 'flex';
   } else {
     tag.style.display = 'none';
-    display.textContent = 'Çukurova Hukuk Platformu';
-    
-    // Disable study panels, show placeholders
-    document.getElementById('notebook-empty-view').style.display = 'block';
-    document.getElementById('notebook-main-view').style.display = 'none';
-    
-    document.getElementById('chat-empty-view').style.display = 'block';
-    document.getElementById('chat-main-view').style.display = 'none';
-    
-    document.getElementById('quiz-empty-view').style.display = 'block';
-    document.getElementById('quiz-main-view').style.display = 'none';
+    const uni = localStorage.getItem('selected_university') || 'Kampüs';
+    const dept = localStorage.getItem('selected_department') || 'NotebookLM';
+    const deptLabel = DEPT_LABELS[dept] || 'NotebookLM';
+    display.textContent = `${uni} - ${deptLabel}`;
   }
 }
 
@@ -3553,57 +4207,54 @@ function setActiveNote(note) {
   const bodyField = document.getElementById('note-editor-body');
   const statusField = document.getElementById('editor-save-status');
 
-  // Close PDF viewer if it was open
-  document.getElementById('pdf-viewer-container').classList.remove('active');
   activePdf = null;
 
   if (note) {
-    titleField.disabled = false;
-    titleField.value = note.title;
-    bodyField.contentEditable = 'true';
-    bodyField.innerHTML = note.content || '';
-    statusField.textContent = 'Not düzenleniyor';
+    if (titleField) {
+      titleField.disabled = false;
+      titleField.value = note.title;
+    }
+    if (bodyField) {
+      bodyField.contentEditable = 'true';
+      bodyField.innerHTML = note.content || '';
+    }
+    if (statusField) statusField.textContent = 'Not düzenleniyor';
     
     // Highlight in list
-    document.querySelectorAll('#notes-list-area .list-item').forEach(item => {
+    document.querySelectorAll('.list-item').forEach(item => {
       item.classList.toggle('active', item.dataset.id === note.id);
     });
   } else {
-    titleField.disabled = true;
-    titleField.value = '';
-    bodyField.contentEditable = 'false';
-    bodyField.innerHTML = '';
-    statusField.textContent = 'Not seçilmedi';
-    
-    document.querySelectorAll('#notes-list-area .list-item').forEach(item => {
-      item.classList.remove('active');
-    });
+    if (titleField) {
+      titleField.disabled = true;
+      titleField.value = '';
+    }
+    if (bodyField) {
+      bodyField.contentEditable = 'false';
+      bodyField.innerHTML = '';
+    }
+    if (statusField) statusField.textContent = 'Not seçilmedi';
   }
 }
 
 function setActivePdf(pdf) {
   activePdf = pdf;
-  activeNote = null; // Unselect active note in editor
-  setActiveNote(null);
+  activeNote = null;
 
-  const container = document.getElementById('pdf-viewer-container');
   const titleField = document.getElementById('pdf-viewer-title-field');
   const contentBox = document.getElementById('pdf-text-content-box');
 
   if (pdf) {
-    titleField.textContent = pdf.name;
-    contentBox.textContent = pdf.textContent || 'Bu PDF dosyasından okunabilir metin çıkarılamadı.';
-    container.classList.add('active');
+    if (titleField) titleField.textContent = pdf.name;
+    if (contentBox) contentBox.textContent = pdf.textContent || 'Bu PDF dosyasından okunabilir metin çıkarılamadı.';
     
     // Highlight in list
-    document.querySelectorAll('#pdfs-list-area .list-item').forEach(item => {
+    document.querySelectorAll('.list-item').forEach(item => {
       item.classList.toggle('active', item.dataset.id === pdf.id);
     });
   } else {
-    container.classList.remove('active');
-    document.querySelectorAll('#pdfs-list-area .list-item').forEach(item => {
-      item.classList.remove('active');
-    });
+    if (titleField) titleField.textContent = 'PDF Dokümanı';
+    if (contentBox) contentBox.textContent = '';
   }
 }
 
@@ -3686,6 +4337,7 @@ function showToast(message, type = 'success') {
 function updateApiKeyBadgeStatus() {
   const badge = document.getElementById('api-key-setup-btn');
   const text = document.getElementById('api-key-status-text');
+  if (!badge || !text) return;
   
   if (getApiKey()) {
     badge.classList.add('configured');
@@ -3700,20 +4352,20 @@ function updateApiKeyBadgeStatus() {
  * Render the banner figures at the top of Dashboard
  */
 function renderDashboardStats(stats) {
-  document.getElementById('stat-total-notes').textContent = stats.totalNotes;
-  document.getElementById('stat-total-pdfs').textContent = stats.totalPdfs;
-  document.getElementById('stat-avg-score').textContent = `${stats.avgScore}%`;
+  const n = document.getElementById('stat-total-notes');
+  const p = document.getElementById('stat-total-pdfs');
+  const a = document.getElementById('stat-avg-score');
+  if (n) n.textContent = stats.totalNotes;
+  if (p) p.textContent = stats.totalPdfs;
+  if (a) a.textContent = `${stats.avgScore}%`;
 }
 
 /**
  * Render Course Cards on grid matching selected year
- * 
- * @param {Array} courses List of all course objects
- * @param {number} year Selected year tab (1-4)
- * @param {Function} onCourseClick Callback when card is clicked
  */
 function renderCoursesGrid(courses, year, onCourseClick) {
   const grid = document.getElementById('courses-grid-area');
+  if (!grid) return;
   grid.innerHTML = '';
   activeYearTab = parseInt(year);
 
@@ -3722,16 +4374,17 @@ function renderCoursesGrid(courses, year, onCourseClick) {
 
   if (filtered.length === 0) {
     grid.innerHTML = `
-      <div class="empty-state" style="grid-column: 1 / -1;">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-        </svg>
+      <div class="empty-state" style="grid-column: 1 / -1; padding: 40px 20px;">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:48px;height:48px;color:var(--text-muted);margin-bottom:15px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
         <h3>Ders Bulunamadı</h3>
         <p>Bu sınıfa ait henüz bir ders eklenmemiş.</p>
       </div>
     `;
     return;
   }
+
+  const dept = localStorage.getItem('selected_department') || 'diger';
+  const deptLabel = DEPT_LABELS[dept] || 'Akademik Müfredat';
 
   filtered.forEach(course => {
     const card = document.createElement('div');
@@ -3743,9 +4396,8 @@ function renderCoursesGrid(courses, year, onCourseClick) {
     card.innerHTML = `
       <div class="course-header">
         <div class="course-icon-box">
-          <!-- Scale/Justice SVG Icon -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17M3 12h18M5 7l3 3M19 7l-3 3M5 17l3-3M19 17l-3-3" />
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
           </svg>
         </div>
         <span class="course-year-badge">${course.year}. Sınıf</span>
@@ -3753,16 +4405,16 @@ function renderCoursesGrid(courses, year, onCourseClick) {
       
       <div class="course-info">
         <h4 class="course-title">${course.name}</h4>
-        <p class="course-subtitle">Çukurova Hukuk Müfredatı</p>
+        <p class="course-subtitle">${deptLabel}</p>
       </div>
       
       <div class="course-stats">
         <div class="course-stat-item" title="Ders Notları">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:14px;height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
           <span class="course-stat-val" id="card-note-count-${course.id}">-</span>
         </div>
         <div class="course-stat-item" title="PDF Dokümanları">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/></svg>
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:14px;height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/></svg>
           <span class="course-stat-val" id="card-pdf-count-${course.id}">-</span>
         </div>
       </div>
@@ -3774,16 +4426,11 @@ function renderCoursesGrid(courses, year, onCourseClick) {
 }
 
 
-
 const ui = {
-  get activeCourse() { return activeCourse; },
-  set activeCourse(v) { activeCourse = v; },
-  get activeNote() { return activeNote; },
-  set activeNote(v) { activeNote = v; },
-  get activePdf() { return activePdf; },
-  set activePdf(v) { activePdf = v; },
-  get activeYearTab() { return activeYearTab; },
-  set activeYearTab(v) { activeYearTab = v; },
+  activeCourse,
+  activeNote,
+  activePdf,
+  activeYearTab,
   setActiveCourse,
   setActiveNote,
   setActivePdf,
@@ -3793,12 +4440,9 @@ const ui = {
   renderCoursesGrid
 };
 
-
 /* js/app.js */
 
-
-
-
+/* js/app.js */
 
 
 // Application State
@@ -3806,7 +4450,7 @@ let courses = [];
 let activeQuiz = null;
 let currentQuestionIndex = 0;
 let quizScore = 0;
-let quizAnswers = []; // to track user's choices
+let quizAnswers = [];
 let chatHistory = [];
 let debounceSaveTimer = null;
 
@@ -3816,17 +4460,32 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 1. Initialize IndexedDB
     await db.initDb();
     
-    // 2. Load API key settings
+    // 2. Seed community items
+    await db.seedCommunityItems();
+    
+    // 3. Load API key settings
     ui.updateApiKeyBadgeStatus();
     
-    // 3. Set up event listeners
+    // 4. Set up event listeners
     initEventListeners();
     
-    // 4. Initial load of courses & stats
-    await refreshDashboard();
+    // 5. Check if profile setup is complete
+    const savedUniv = localStorage.getItem('selected_university');
+    const savedDept = localStorage.getItem('selected_department');
     
-    // 5. Render first year tab
-    renderCoursesGridByTab(1);
+    if (!savedUniv || !savedDept) {
+      // Show landing page, hide main app header and sidebar
+      document.querySelector('.sidebar').style.display = 'none';
+      document.querySelector('.main-content').style.marginLeft = '0';
+      document.getElementById('mobile-menu-toggle').style.display = 'none';
+      switchPageProgrammatic('landing-page');
+    } else {
+      // Profile complete: load dashboard
+      document.querySelector('.sidebar').style.display = 'flex';
+      document.getElementById('mobile-menu-toggle').style.display = 'flex';
+      await refreshDashboard();
+      switchPageProgrammatic('dashboard-page');
+    }
     
     ui.showToast('Çalışma platformu başarıyla yüklendi.');
   } catch (error) {
@@ -3835,6 +4494,35 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
+// Programmatic page switching helper
+function switchPageProgrammatic(pageId) {
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(page => {
+    page.classList.remove('active');
+  });
+
+  // Show selected page
+  const selectedPage = document.getElementById(pageId);
+  if (selectedPage) {
+    selectedPage.classList.add('active');
+  }
+
+  // Update sidebar active highlights if menu link exists
+  document.querySelectorAll('.sidebar-menu .menu-item').forEach(link => {
+    link.classList.remove('active');
+    if (link.dataset.page === pageId) {
+      link.classList.add('active');
+    }
+  });
+
+  // Trigger contextual page loading
+  if (pageId === 'dashboard-page') {
+    refreshDashboard();
+  } else if (pageId === 'community-page') {
+    loadCommunityPanel();
+  }
+}
+
 // Event Listeners Registration
 function initEventListeners() {
   // SPA Sidebar Routing
@@ -3842,7 +4530,7 @@ function initEventListeners() {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       const pageId = link.dataset.page;
-      switchPage(pageId, link);
+      switchPageProgrammatic(pageId);
     });
   });
 
@@ -3871,7 +4559,7 @@ function initEventListeners() {
 
   document.getElementById('add-course-form').addEventListener('submit', handleAddCourse);
 
-  // Gemini API Key Modal triggers
+  // Settings Modal triggers
   document.getElementById('api-key-setup-btn').addEventListener('click', () => {
     const keyField = document.getElementById('api-key-input');
     keyField.value = ai.getApiKey();
@@ -3879,6 +4567,13 @@ function initEventListeners() {
     if (modelSelect) {
       modelSelect.value = ai.getApiModel();
     }
+    
+    // Populate profile inputs in settings
+    const univSelect = document.getElementById('settings-univ-select');
+    const deptSelect = document.getElementById('settings-dept-select');
+    if (univSelect) univSelect.value = localStorage.getItem('selected_university') || 'diğer';
+    if (deptSelect) deptSelect.value = localStorage.getItem('selected_department') || 'diger';
+    
     openModal('api-key-modal');
   });
   
@@ -3886,62 +4581,144 @@ function initEventListeners() {
     closeModal('api-key-modal');
   });
   
-  document.getElementById('save-api-key-btn').addEventListener('click', () => {
-    const key = document.getElementById('api-key-input').value;
-    ai.setApiKey(key);
-    const modelSelect = document.getElementById('api-model-select');
-    if (modelSelect) {
-      ai.setApiModel(modelSelect.value);
+  document.getElementById('save-api-key-btn').addEventListener('click', handleSaveSettings);
+  
+  // Settings resets & tests
+  document.getElementById('test-api-key-btn').addEventListener('click', async () => {
+    const keyInput = document.getElementById('api-key-input').value;
+    const resultDiv = document.getElementById('api-test-results');
+    if (!resultDiv) return;
+
+    resultDiv.style.display = 'block';
+    resultDiv.textContent = 'Bağlantı kuruluyor ve model listesi çekiliyor...';
+
+    try {
+      const models = await ai.testApiKeyAndListModels(keyInput);
+      if (models.length === 0) {
+        resultDiv.textContent = 'Bağlantı başarılı fakat bu anahtara tanımlı model bulunamadı!';
+        return;
+      }
+      const listStr = models.slice(0, 5).map(m => m.name.replace('models/', '')).join(', ');
+      resultDiv.innerHTML = `<span style="color:#10b981;font-weight:bold;">✓ Bağlantı Başarılı!</span>\nModeller: ${listStr}`;
+    } catch (err) {
+      resultDiv.innerHTML = `<span style="color:#ef4444;font-weight:bold;">✗ Bağlantı Başarısız!</span>\nHata: ${err.message}`;
     }
-    ui.updateApiKeyBadgeStatus();
-    closeModal('api-key-modal');
-    ui.showToast('Gemini API ayarları başarıyla güncellendi.');
   });
 
-  const testBtn = document.getElementById('test-api-key-btn');
-  if (testBtn) {
-    testBtn.addEventListener('click', async () => {
-      const keyInput = document.getElementById('api-key-input').value;
-      const resultDiv = document.getElementById('api-test-results');
-      if (!resultDiv) return;
-
-      resultDiv.style.display = 'block';
-      resultDiv.textContent = 'Bağlantı kuruluyor ve model listesi çekiliyor...';
-
-      try {
-        const models = await ai.testApiKeyAndListModels(keyInput);
-        if (models.length === 0) {
-          resultDiv.textContent = 'Bağlantı başarılı fakat bu anahtara tanımlı model bulunamadı!';
-          return;
-        }
-
-        const listStr = models.map(m => {
-          const shortName = m.name.replace('models/', '');
-          const supportsGenerate = m.supportedGenerationMethods?.includes('generateContent') ? '✓' : '✗';
-          return `${shortName} [Content: ${supportsGenerate}]`;
-        }).join('\n');
-
-        resultDiv.innerHTML = `<span style="color:#10b981;font-weight:bold;">✓ Bağlantı Başarılı!</span>\n\nYetkili Modeller:\n${listStr}`;
-      } catch (err) {
-        resultDiv.innerHTML = `<span style="color:#ef4444;font-weight:bold;">✗ Bağlantı Başarısız!</span>\n\nHata: ${err.message}`;
-      }
-    });
-  }
-  
   document.getElementById('clear-api-key-btn').addEventListener('click', () => {
     ai.setApiKey('');
     ui.updateApiKeyBadgeStatus();
     closeModal('api-key-modal');
-    ui.showToast('Gemini API Anahtarı silindi.', 'warning');
+    ui.showToast('API Anahtarı silindi.', 'warning');
   });
 
-  // Note actions
-  document.getElementById('create-note-btn').addEventListener('click', handleCreateNote);
+  document.getElementById('settings-reset-system-btn').addEventListener('click', () => {
+    if (confirm('DİKKAT! Tüm veritabanını, notları ve kayıtları silerek kurulum ekranına dönmek istediğinizden emin misiniz? Bu işlem geri alınamaz!')) {
+      localStorage.clear();
+      // Clear IDB
+      indexedDB.deleteDatabase('cukurova_hukuk_db');
+      location.reload();
+    }
+  });
+
+  // Course Details View Controls
+  document.getElementById('course-detail-back-btn').addEventListener('click', () => {
+    switchPageProgrammatic('dashboard-page');
+  });
+  
+  document.getElementById('course-detail-delete-btn').addEventListener('click', async () => {
+    if (confirm(`"${ui.activeCourse.name}" dersini müfredatınızdan tamamen kaldırmak istiyor musunuz? İlgili tüm notlar ve dosyalar silinecektir.`)) {
+      try {
+        await db.deleteCourse(ui.activeCourse.id);
+        ui.showToast('Ders müfredattan kaldırıldı.', 'warning');
+        switchPageProgrammatic('dashboard-page');
+      } catch (err) {
+        ui.showToast('Ders silinemedi.', 'error');
+      }
+    }
+  });
+
+  document.getElementById('detail-create-note-btn').addEventListener('click', handleCreateNote);
+
+  // PDF Dropzone in Course Detail
+  const dropzone = document.getElementById('pdf-dropzone');
+  const fileInput = document.getElementById('pdf-file-input');
+  if (dropzone && fileInput) {
+    dropzone.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', handlePdfFileSelect);
+
+    dropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropzone.style.borderColor = 'var(--accent-gold)';
+      dropzone.style.backgroundColor = 'rgba(212, 175, 55, 0.05)';
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+      dropzone.style.borderColor = 'var(--border-color)';
+      dropzone.style.backgroundColor = 'transparent';
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.style.borderColor = 'var(--border-color)';
+      dropzone.style.backgroundColor = 'transparent';
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        processPdfUpload(files[0]);
+      }
+    });
+  }
+
+  // NotebookLM Workspace Controls
+  document.getElementById('notebook-back-btn').addEventListener('click', () => {
+    switchPageProgrammatic('course-detail-page');
+    loadCourseDetails(ui.activeCourse);
+  });
+
+  document.getElementById('notebook-share-btn').addEventListener('click', handleShareToCommunity);
+
+  // Workspace Tabs switcher
+  document.querySelectorAll('.workspace-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.workspace-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tabId = btn.dataset.tab;
+      document.querySelectorAll('.workspace-tab-content').forEach(c => c.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+    });
+  });
+
+  // Chat submit in workspace
+  document.getElementById('chat-form-element').addEventListener('submit', handleChatSubmit);
+  const chatInput = document.getElementById('chat-input-field');
+  const chatSubmitBtn = document.getElementById('chat-submit-btn');
+  if (chatInput && chatSubmitBtn) {
+    chatInput.addEventListener('input', () => {
+      chatSubmitBtn.disabled = !chatInput.value.trim();
+    });
+  }
+
+  // Quiz actions in workspace
+  document.getElementById('start-ai-quiz-generation').addEventListener('click', handleAiQuizGeneration);
+  document.getElementById('start-local-pdf-quiz').addEventListener('click', handleLocalPdfQuizConversion);
+  document.getElementById('quiz-next-btn').addEventListener('click', handleQuizNext);
+  document.getElementById('quiz-quit-btn').addEventListener('click', () => {
+    if (confirm('Testi yarıda kesmek istediğinizden emin misiniz?')) {
+      endQuizAndShowResults();
+    }
+  });
+  document.getElementById('results-restart-btn').addEventListener('click', restartQuiz);
+
+  // Workspace Notepad Save button
+  document.getElementById('workspace-note-save-btn').addEventListener('click', saveWorkspaceNote);
+
+  // Main Note Editor save events
   document.getElementById('note-title-field').addEventListener('input', handleNoteContentChange);
   document.getElementById('note-editor-body').addEventListener('input', handleNoteContentChange);
-  
-  // Editor Toolbar basic commands
-  document.querySelectorAll('.toolbar-btn[data-cmd]').forEach(btn => {
+  document.getElementById('editor-save-btn').addEventListener('click', saveActiveNoteImmediate);
+
+  // Editor rich text command buttons
+  document.querySelectorAll('.editor-toolbar .toolbar-btn[data-cmd]').forEach(btn => {
     btn.addEventListener('click', () => {
       const cmd = btn.dataset.cmd;
       const val = btn.dataset.val || null;
@@ -3951,220 +4728,108 @@ function initEventListeners() {
     });
   });
 
-  // Manual Note Save Button
-  document.getElementById('editor-save-btn').addEventListener('click', () => {
-    saveActiveNoteImmediate();
-  });
-
-  // PDF Viewer Close
-  document.getElementById('close-pdf-btn').addEventListener('click', () => {
-    ui.setActivePdf(null);
-  });
-
-  // PDF Drag & Drop Upload
-  const dropzone = document.getElementById('pdf-dropzone');
-  const fileInput = document.getElementById('pdf-file-input');
-
-  dropzone.addEventListener('click', () => fileInput.click());
-  fileInput.addEventListener('change', handlePdfFileSelect);
-
-  dropzone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropzone.style.borderColor = 'var(--accent-gold)';
-    dropzone.style.backgroundColor = 'var(--accent-gold-glow)';
-  });
-
-  dropzone.addEventListener('dragleave', () => {
-    dropzone.style.borderColor = 'var(--border-color)';
-    dropzone.style.backgroundColor = 'transparent';
-  });
-
-  dropzone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropzone.style.borderColor = 'var(--border-color)';
-    dropzone.style.backgroundColor = 'transparent';
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      processPdfUpload(files[0]);
-    }
-  });
-
-  // Chat/Sources panel quiz generation redirection
-  document.getElementById('chat-sources-quiz-btn').addEventListener('click', () => {
-    // Jump directly to quiz page
-    document.getElementById('menu-quiz').click();
-    // Pre-select AI generation
-    document.getElementById('quiz-source-ai-btn').click();
-  });
-
-  // Chat message clearing
-  document.getElementById('clear-chat-btn').addEventListener('click', () => {
-    chatHistory = [];
-    const chatBox = document.getElementById('chat-messages-box');
-    chatBox.innerHTML = `
-      <div class="message ai">
-        <div class="message-avatar">AI</div>
-        <div class="message-content">
-          <div class="message-bubble">
-            <p>Merhaba Neslihan! Sohbet geçmişini temizledim. Seçtiğin kaynaklar doğrultusunda sormak istediğin yeni hukuki konuları yazabilirsin.</p>
-          </div>
-        </div>
-      </div>
-    `;
-  });
-
-  // Chat input field auto-resize & key actions
-  const chatInput = document.getElementById('chat-input-field');
-  const chatSubmitBtn = document.getElementById('chat-submit-btn');
-
-  chatInput.addEventListener('input', () => {
-    chatSubmitBtn.disabled = !chatInput.value.trim();
-    chatInput.style.height = '46px';
-    chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + 'px';
-  });
-
-  chatInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      if (chatInput.value.trim()) {
-        document.getElementById('chat-form-element').dispatchEvent(new Event('submit'));
+  // Landing Page Events
+  const testApiLanding = document.getElementById('landing-test-api-btn');
+  if (testApiLanding) {
+    testApiLanding.addEventListener('click', async () => {
+      const key = document.getElementById('landing-api-key').value.trim();
+      const resultsDiv = document.getElementById('landing-api-test-results');
+      if (!key) {
+        resultsDiv.style.display = 'block';
+        resultsDiv.innerHTML = '<span style="color:#ef4444;">Lütfen bir API anahtarı girin.</span>';
+        return;
       }
-    }
-  });
-
-  document.getElementById('chat-form-element').addEventListener('submit', handleChatSubmit);
-
-  // Quiz Setup View Selectors
-  document.getElementById('quiz-source-ai-btn').addEventListener('click', () => {
-    document.getElementById('quiz-source-ai-btn').classList.add('active');
-    document.getElementById('quiz-source-pdf-btn').classList.remove('active');
-    document.getElementById('quiz-source-manual-btn').classList.remove('active');
-    document.getElementById('quiz-setup-ai-controls').style.display = 'block';
-    document.getElementById('quiz-setup-pdf-controls').style.display = 'none';
-    document.getElementById('quiz-setup-manual-controls').style.display = 'none';
-  });
-
-  document.getElementById('quiz-source-pdf-btn').addEventListener('click', () => {
-    document.getElementById('quiz-source-pdf-btn').classList.add('active');
-    document.getElementById('quiz-source-ai-btn').classList.remove('active');
-    document.getElementById('quiz-source-manual-btn').classList.remove('active');
-    document.getElementById('quiz-setup-pdf-controls').style.display = 'block';
-    document.getElementById('quiz-setup-ai-controls').style.display = 'none';
-    document.getElementById('quiz-setup-manual-controls').style.display = 'none';
-  });
-
-  document.getElementById('quiz-source-manual-btn').addEventListener('click', () => {
-    document.getElementById('quiz-source-manual-btn').classList.add('active');
-    document.getElementById('quiz-source-ai-btn').classList.remove('active');
-    document.getElementById('quiz-source-pdf-btn').classList.remove('active');
-    document.getElementById('quiz-setup-manual-controls').style.display = 'block';
-    document.getElementById('quiz-setup-ai-controls').style.display = 'none';
-    document.getElementById('quiz-setup-pdf-controls').style.display = 'none';
-  });
-
-  document.getElementById('start-ai-quiz-generation').addEventListener('click', handleAiQuizGeneration);
-  document.getElementById('start-pdf-quiz-conversion').addEventListener('click', handlePdfQuizConversion);
-  document.getElementById('start-local-pdf-quiz').addEventListener('click', handleLocalPdfQuizConversion);
-  document.getElementById('start-manual-quiz').addEventListener('click', handleManualQuizImport);
-
-  // Active quiz controls
-  document.getElementById('quiz-next-btn').addEventListener('click', handleQuizNext);
-  document.getElementById('quiz-quit-btn').addEventListener('click', () => {
-    if (confirm('Testi yarıda kesip bitirmek istediğinizden emin misiniz?')) {
-      endQuizAndShowResults();
-    }
-  });
-
-  document.getElementById('results-restart-btn').addEventListener('click', restartQuiz);
-  document.getElementById('results-close-btn').addEventListener('click', () => {
-    document.getElementById('menu-dashboard').click();
-  });
-
-  // Mobile Hamburger Toggle
-  const toggleBtn = document.getElementById('mobile-menu-toggle');
-  const sidebar = document.querySelector('.sidebar');
-  const overlay = document.getElementById('sidebar-overlay');
-
-  if (toggleBtn && sidebar && overlay) {
-    const toggleSidebar = () => {
-      const isOpen = sidebar.classList.contains('mobile-active');
-      if (isOpen) {
-        sidebar.classList.remove('mobile-active');
-        overlay.style.display = 'none';
-      } else {
-        sidebar.classList.add('mobile-active');
-        overlay.style.display = 'block';
+      resultsDiv.style.display = 'block';
+      resultsDiv.textContent = 'Bağlantı test ediliyor...';
+      try {
+        const models = await ai.testApiKeyAndListModels(key);
+        resultsDiv.innerHTML = `<span style="color:#10b981;font-weight:bold;">✓ Başarılı!</span> Yetkili Modeller: ${models.slice(0, 3).map(m=>m.name.replace('models/','')).join(', ')}`;
+      } catch (err) {
+        resultsDiv.innerHTML = `<span style="color:#ef4444;font-weight:bold;">✗ Başarısız!</span> Hata: ${err.message}`;
       }
-    };
-
-    toggleBtn.addEventListener('click', toggleSidebar);
-    overlay.addEventListener('click', toggleSidebar);
-
-    // Close menu when navigation items are clicked on mobile
-    document.querySelectorAll('.sidebar-menu .menu-item').forEach(item => {
-      item.addEventListener('click', () => {
-        if (sidebar.classList.contains('mobile-active')) {
-          sidebar.classList.remove('mobile-active');
-          overlay.style.display = 'none';
-        }
-      });
     });
   }
-}
 
-// SPA Routing switcher
-function switchPage(pageId, activeLink) {
-  // Hide all pages
-  document.querySelectorAll('.page').forEach(page => {
-    page.classList.remove('active');
-  });
-
-  // Show selected page
-  const selectedPage = document.getElementById(pageId);
-  if (selectedPage) {
-    selectedPage.classList.add('active');
+  // Landing page Custom input toggle
+  const univSelect = document.getElementById('landing-univ-select');
+  const customUnivInput = document.getElementById('landing-univ-custom');
+  if (univSelect && customUnivInput) {
+    univSelect.addEventListener('change', () => {
+      customUnivInput.style.display = univSelect.value === 'diğer' ? 'block' : 'none';
+    });
+  }
+  
+  const deptSelect = document.getElementById('landing-dept-select');
+  const customDeptInput = document.getElementById('landing-dept-custom');
+  if (deptSelect && customDeptInput) {
+    deptSelect.addEventListener('change', () => {
+      customDeptInput.style.display = deptSelect.value === 'diger' ? 'block' : 'none';
+    });
   }
 
-  // Handle active link highlights
-  document.querySelectorAll('.sidebar-menu .menu-item').forEach(link => {
-    link.classList.remove('active');
-  });
-  activeLink.classList.add('active');
-
-  // Trigger contextual page loading
-  if (pageId === 'notebook-page') {
-    loadNotebookPanel();
-  } else if (pageId === 'chat-page') {
-    loadChatPanel();
-  } else if (pageId === 'quiz-page') {
-    loadQuizPanel();
-  } else if (pageId === 'dashboard-page') {
-    refreshDashboard();
+  const landingSubmit = document.getElementById('landing-submit-btn');
+  if (landingSubmit) {
+    landingSubmit.addEventListener('submit', (e) => e.preventDefault());
+    landingSubmit.addEventListener('click', handleLandingSetup);
   }
+
+  // Community Filters
+  const fUniv = document.getElementById('comm-filter-univ');
+  const fDept = document.getElementById('comm-filter-dept');
+  const fType = document.getElementById('comm-filter-type');
+  if (fUniv) fUniv.addEventListener('change', filterCommunityItems);
+  if (fDept) fDept.addEventListener('change', filterCommunityItems);
+  if (fType) fType.addEventListener('change', filterCommunityItems);
 }
 
-// Modal open/close helpers
+// Modal opening
 function openModal(id) {
   const modal = document.getElementById(id);
-  modal.classList.add('active');
+  if (modal) modal.classList.add('active');
 }
 
 function closeModal(id) {
   const modal = document.getElementById(id);
-  modal.classList.remove('active');
+  if (modal) modal.classList.remove('active');
 }
 
-// Refresh Dashboard Data
+// Refresh Dashboard Info
 async function refreshDashboard() {
   courses = await db.getCourses();
   const stats = await db.getGlobalStats();
   ui.renderDashboardStats(stats);
+  
+  const uni = localStorage.getItem('selected_university') || 'Kampüs';
+  const dept = localStorage.getItem('selected_department') || 'NotebookLM';
+  
+  const welcomeTitle = document.getElementById('dashboard-welcome-title');
+  if (welcomeTitle) welcomeTitle.textContent = `Hoş geldin! (${uni})`;
+  
+  const welcomeDesc = document.getElementById('dashboard-welcome-desc');
+  if (welcomeDesc) {
+    const DEPT_LABELS_FULL = {
+      'hukuk': 'Hukuk',
+      'bilgisayar-muhendisligi': 'Bilgisayar Mühendisliği',
+      'tip': 'Tıp Fakültesi',
+      'isletme': 'İşletme',
+      'diger': 'Genel Akademik'
+    };
+    const deptLabel = DEPT_LABELS_FULL[dept] || dept;
+    welcomeDesc.textContent = `Eğitim Profiliniz: ${uni} - ${deptLabel}. Derslerinize ait kaynakları yükleyerek başlayabilir, notlarınızı düzenleyebilir ve Gemini AI ile dilediğiniz ders veya PDF üzerinden sınavlar oluşturarak kendinizi test edebilirsiniz.`;
+  }
+
+  // Update brand header
+  ui.setActiveCourse(null);
+  
   renderCoursesGridByTab(ui.activeYearTab);
 }
 
 // Render grid based on year
 async function renderCoursesGridByTab(year) {
-  ui.renderCoursesGrid(courses, year, handleCourseSelection);
+  ui.renderCoursesGrid(courses, year, (course) => {
+    switchPageProgrammatic('course-detail-page');
+    loadCourseDetails(course);
+  });
   
   // Fill counts async on the generated cards
   courses.forEach(async (c) => {
@@ -4179,16 +4844,7 @@ async function renderCoursesGridByTab(year) {
   });
 }
 
-// Handle course clicked from dashboard
-function handleCourseSelection(course) {
-  ui.setActiveCourse(course);
-  
-  // Redirect to Notebook immediately
-  const notebookLink = document.getElementById('menu-notebook');
-  switchPage('notebook-page', notebookLink);
-}
-
-// Add Custom Course submit
+// Add Course submit
 async function handleAddCourse(e) {
   e.preventDefault();
   const name = document.getElementById('course-name-input').value;
@@ -4212,160 +4868,207 @@ async function handleAddCourse(e) {
   }
 }
 
-// --- NOTEBOOK SCREEN ACTIONS ---
+// --- LANDING SETUP ---
+async function handleLandingSetup() {
+  const key = document.getElementById('landing-api-key').value.trim();
+  const univSelect = document.getElementById('landing-univ-select');
+  const deptSelect = document.getElementById('landing-dept-select');
+  const customUniv = document.getElementById('landing-univ-custom').value.trim();
+  const customDept = document.getElementById('landing-dept-custom').value.trim();
 
-async function loadNotebookPanel() {
-  if (!ui.activeCourse) return;
-  await refreshNotebookSidebar();
-  ui.setActiveNote(null);
-  ui.setActivePdf(null);
-}
+  let university = univSelect.value === 'diğer' ? customUniv : univSelect.value;
+  let department = deptSelect.value === 'diger' ? (customDept || 'diger') : deptSelect.value;
 
-async function refreshNotebookSidebar() {
-  const notes = await db.getNotes(ui.activeCourse.id);
-  const pdfs = await db.getPdfs(ui.activeCourse.id);
+  if (!university) university = 'Genel Üniversite';
+  if (!department) department = 'diger';
 
-  // Render Notes list
-  const notesArea = document.getElementById('notes-list-area');
-  notesArea.innerHTML = '';
-  if (notes.length === 0) {
-    notesArea.innerHTML = '<li class="list-item" style="cursor:default; text-align:center;">Henüz not bulunmuyor.</li>';
-  } else {
-    notes.forEach(note => {
-      const li = document.createElement('li');
-      li.className = 'list-item';
-      li.dataset.id = note.id;
-      if (ui.activeNote && ui.activeNote.id === note.id) li.classList.add('active');
-      
-      li.innerHTML = `
-        <span class="list-item-title">${note.title}</span>
-        <div class="list-item-actions">
-          <button class="list-action-btn note-del-btn" title="Sil">
-            <svg style="width:14px;height:14px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.34 9m-4.72 0-.34-9m9.03-9.25 1.07 10.53a1.88 1.88 0 0 1-1.87 2.07H5.06a1.88 1.88 0 0 1-1.87-2.07L4.25 4.75h15.5Z"/></svg>
-          </button>
-        </div>
-      `;
-
-      li.addEventListener('click', (e) => {
-        if (e.target.closest('.note-del-btn')) {
-          e.stopPropagation();
-          handleDeleteNote(note.id);
-        } else {
-          ui.setActiveNote(note);
-        }
-      });
-      notesArea.appendChild(li);
-    });
+  if (key) {
+    ai.setApiKey(key);
+    ui.updateApiKeyBadgeStatus();
   }
 
-  // Render PDFs list
-  const pdfsArea = document.getElementById('pdfs-list-area');
-  pdfsArea.innerHTML = '';
+  try {
+    ui.showToast('Müfredat kuruluyor, lütfen bekleyin...');
+    await db.setupCurriculum(university, department);
+    
+    // UI Layout restoration
+    document.querySelector('.sidebar').style.display = 'flex';
+    document.getElementById('mobile-menu-toggle').style.display = 'flex';
+    
+    // Load Dashboard
+    await refreshDashboard();
+    switchPageProgrammatic('dashboard-page');
+    ui.showToast('Kurulum tamamlandı! Kampüs NotebookLM\'e hoş geldiniz.', 'success');
+  } catch (err) {
+    ui.showToast('Müfredat yüklenirken hata oluştu: ' + err.message, 'error');
+  }
+}
+
+// --- SETTINGS SAVE ---
+async function handleSaveSettings() {
+  const key = document.getElementById('api-key-input').value.trim();
+  const model = document.getElementById('api-model-select').value;
+  
+  if (key) {
+    ai.setApiKey(key);
+    ai.setApiModel(model);
+    ui.updateApiKeyBadgeStatus();
+  }
+
+  const uSelect = document.getElementById('settings-univ-select');
+  const dSelect = document.getElementById('settings-dept-select');
+  const uCustom = document.getElementById('settings-univ-custom');
+  const dCustom = document.getElementById('settings-dept-custom');
+
+  let university = uSelect.value === 'diğer' ? uCustom.value.trim() : uSelect.value;
+  let department = dSelect.value === 'diger' ? (dCustom.value.trim() || 'diger') : dSelect.value;
+
+  if (!university) university = localStorage.getItem('selected_university');
+  if (!department) department = localStorage.getItem('selected_department');
+
+  const oldDept = localStorage.getItem('selected_department');
+  
+  if (department !== oldDept) {
+    if (!confirm('DİKKAT! Bölüm değiştirme işlemi tüm eski derslerinizi ve dosyalarınızı tamamen silecektir. Devam etmek istiyor musunuz?')) {
+      closeModal('api-key-modal');
+      return;
+    }
+    
+    try {
+      await db.setupCurriculum(university, department);
+      ui.showToast('Bölüm müfredatı güncellendi ve veriler sıfırlandı.', 'warning');
+    } catch (err) {
+      ui.showToast('Müfredat güncellenemedi.', 'error');
+    }
+  } else {
+    localStorage.setItem('selected_university', university);
+    ui.showToast('Profil ve API ayarları kaydedildi.');
+  }
+
+  closeModal('api-key-modal');
+  await refreshDashboard();
+}
+
+// --- COURSE DETAILS LOADING ---
+async function loadCourseDetails(course) {
+  ui.setActiveCourse(course);
+  
+  const nameField = document.getElementById('detail-course-name');
+  const metaField = document.getElementById('detail-course-meta');
+  if (nameField) nameField.textContent = course.name;
+  if (metaField) {
+    const dept = localStorage.getItem('selected_department') || 'diger';
+    metaField.textContent = `${course.year}. Sınıf • ${dept.toUpperCase().replace('-', ' ')}`;
+  }
+
+  await refreshCourseDetailLists();
+}
+
+async function refreshCourseDetailLists() {
+  if (!ui.activeCourse) return;
+
+  const pdfs = await db.getPdfs(ui.activeCourse.id);
+  const notes = await db.getNotes(ui.activeCourse.id);
+  const quizzes = await db.getQuizBanks(ui.activeCourse.id);
+
+  // Render PDFs List
+  const pdfList = document.getElementById('detail-pdfs-list');
+  pdfList.innerHTML = '';
   if (pdfs.length === 0) {
-    pdfsArea.innerHTML = '<li class="list-item" style="cursor:default; text-align:center;">Henüz PDF yüklenmemiş.</li>';
+    pdfList.innerHTML = '<li class="text-muted" style="font-size:12px; padding:10px 0; text-align:center;">Belge bulunmuyor.</li>';
   } else {
     pdfs.forEach(pdf => {
       const li = document.createElement('li');
-      li.className = 'list-item';
-      li.dataset.id = pdf.id;
-      if (ui.activePdf && ui.activePdf.id === pdf.id) li.classList.add('active');
-
+      li.className = 'detail-item-card';
       li.innerHTML = `
-        <span class="list-item-title">${pdf.name}</span>
-        <div class="list-item-actions">
-          <button class="list-action-btn pdf-del-btn" title="Sil">
+        <div class="detail-item-info">
+          <span class="detail-item-name">${pdf.name}</span>
+          <span class="detail-item-meta">${Math.round(pdf.size / 1024)} KB</span>
+        </div>
+        <div class="detail-item-actions">
+          <button class="action-icon-btn btn-delete" data-action="delete" title="Belgeyi Sil">
             <svg style="width:14px;height:14px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.34 9m-4.72 0-.34-9m9.03-9.25 1.07 10.53a1.88 1.88 0 0 1-1.87 2.07H5.06a1.88 1.88 0 0 1-1.87-2.07L4.25 4.75h15.5Z"/></svg>
           </button>
         </div>
       `;
-
       li.addEventListener('click', (e) => {
-        if (e.target.closest('.pdf-del-btn')) {
+        if (e.target.closest('.btn-delete')) {
           e.stopPropagation();
-          handleDeletePdf(pdf.id);
+          handleDeletePdf(pdf.id, pdf.name);
         } else {
-          ui.setActivePdf(pdf);
+          openSourceInWorkspace('pdf', pdf);
         }
       });
-      pdfsArea.appendChild(li);
+      pdfList.appendChild(li);
+    });
+  }
+
+  // Render Notes List
+  const notesList = document.getElementById('detail-notes-list');
+  notesList.innerHTML = '';
+  if (notes.length === 0) {
+    notesList.innerHTML = '<li class="text-muted" style="font-size:12px; padding:10px 0; text-align:center;">Not bulunmuyor.</li>';
+  } else {
+    notes.forEach(note => {
+      const li = document.createElement('li');
+      li.className = 'detail-item-card';
+      li.innerHTML = `
+        <div class="detail-item-info">
+          <span class="detail-item-name">${note.title}</span>
+          <span class="detail-item-meta">Ders Notu</span>
+        </div>
+        <div class="detail-item-actions">
+          <button class="action-icon-btn btn-delete" data-action="delete" title="Notu Sil">
+            <svg style="width:14px;height:14px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.34 9m-4.72 0-.34-9m9.03-9.25 1.07 10.53a1.88 1.88 0 0 1-1.87 2.07H5.06a1.88 1.88 0 0 1-1.87-2.07L4.25 4.75h15.5Z"/></svg>
+          </button>
+        </div>
+      `;
+      li.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-delete')) {
+          e.stopPropagation();
+          handleDeleteNote(note.id, note.title);
+        } else {
+          openSourceInWorkspace('note', note);
+        }
+      });
+      notesList.appendChild(li);
+    });
+  }
+
+  // Render Quiz Banks
+  const quizzesList = document.getElementById('detail-quizzes-list');
+  quizzesList.innerHTML = '';
+  if (quizzes.length === 0) {
+    quizzesList.innerHTML = '<li class="text-muted" style="font-size:12px; padding:10px 0; text-align:center;">Soru bankası bulunmuyor.</li>';
+  } else {
+    quizzes.forEach(bank => {
+      const li = document.createElement('li');
+      li.className = 'detail-item-card';
+      li.innerHTML = `
+        <div class="detail-item-info">
+          <span class="detail-item-name">${bank.name}</span>
+          <span class="detail-item-meta">${bank.questions.length} Soru</span>
+        </div>
+        <div class="detail-item-actions">
+          <button class="action-icon-btn btn-delete" data-action="delete" title="Soru Bankasını Sil">
+            <svg style="width:14px;height:14px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.34 9m-4.72 0-.34-9m9.03-9.25 1.07 10.53a1.88 1.88 0 0 1-1.87 2.07H5.06a1.88 1.88 0 0 1-1.87-2.07L4.25 4.75h15.5Z"/></svg>
+          </button>
+        </div>
+      `;
+      li.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-delete')) {
+          e.stopPropagation();
+          handleDeleteQuizBank(bank.id, bank.name);
+        } else {
+          openSourceInWorkspace('quiz', bank);
+        }
+      });
+      quizzesList.appendChild(li);
     });
   }
 }
 
-async function handleCreateNote() {
-  const noteId = `note-${Date.now()}`;
-  const newNote = {
-    id: noteId,
-    courseId: ui.activeCourse.id,
-    title: 'Yeni Ders Notu',
-    content: 'Bu alana notlarınızı yazın...',
-    updatedAt: Date.now()
-  };
-
-  try {
-    await db.saveNote(newNote);
-    await refreshNotebookSidebar();
-    ui.setActiveNote(newNote);
-    ui.showToast('Yeni not taslağı oluşturuldu.');
-  } catch (error) {
-    ui.showToast('Not oluşturulurken bir hata meydana geldi.', 'error');
-  }
-}
-
-// Debounced Content Change
-function handleNoteContentChange() {
-  if (!ui.activeNote) return;
-  document.getElementById('editor-save-status').textContent = 'Değişiklikler kaydediliyor...';
-  
-  clearTimeout(debounceSaveTimer);
-  debounceSaveTimer = setTimeout(() => {
-    saveActiveNoteImmediate();
-  }, 1200);
-}
-
-async function saveActiveNoteImmediate() {
-  if (!ui.activeNote) return;
-
-  const title = document.getElementById('note-title-field').value || 'Başlıksız Not';
-  const content = document.getElementById('note-editor-body').innerHTML;
-  
-  const updatedNote = {
-    ...ui.activeNote,
-    title,
-    content,
-    updatedAt: Date.now()
-  };
-
-  try {
-    await db.saveNote(updatedNote);
-    ui.activeNote.title = title;
-    ui.activeNote.content = content;
-    document.getElementById('editor-save-status').textContent = 'Tüm değişiklikler kaydedildi';
-    
-    // Update sidebar name without reloading the whole list
-    const li = document.querySelector(`#notes-list-area .list-item[data-id="${updatedNote.id}"] .list-item-title`);
-    if (li) li.textContent = title;
-  } catch (error) {
-    document.getElementById('editor-save-status').textContent = 'Kaydedilemedi!';
-  }
-}
-
-async function handleDeleteNote(id) {
-  if (confirm('Bu ders notunu silmek istediğinizden emin misiniz?')) {
-    try {
-      await db.deleteNote(id);
-      if (ui.activeNote && ui.activeNote.id === id) {
-        ui.setActiveNote(null);
-      }
-      await refreshNotebookSidebar();
-      ui.showToast('Ders notu silindi.', 'warning');
-    } catch (error) {
-      ui.showToast('Not silinirken hata oluştu.', 'error');
-    }
-  }
-}
-
-// PDF processing
+// PDF file uploads
 function handlePdfFileSelect(e) {
   const file = e.target.files[0];
   if (file && file.type === 'application/pdf') {
@@ -4376,20 +5079,14 @@ function handlePdfFileSelect(e) {
 }
 
 async function processPdfUpload(file) {
-  const statusField = document.getElementById('editor-save-status');
-  statusField.textContent = 'PDF Metni Ayıklanıyor...';
   ui.showToast('PDF yükleme başladı, metin ayıklanıyor...');
-
   const reader = new FileReader();
   reader.onload = async function() {
     const arrayBuffer = this.result;
-    
     try {
-      // Extract text in browser using PDF.js worker
       const extractedText = await extractTextFromPdf(arrayBuffer, (page, total) => {
-        statusField.textContent = `PDF okunuyor: Sayfa ${page} / ${total}`;
+        // console.log(`PDF read progress: page ${page} of ${total}`);
       });
-
       const pdfId = `pdf-${Date.now()}`;
       const newPdf = {
         id: pdfId,
@@ -4399,148 +5096,233 @@ async function processPdfUpload(file) {
         textContent: extractedText,
         uploadedAt: Date.now()
       };
-
       await db.savePdf(newPdf);
-      statusField.textContent = 'PDF başarıyla kaydedildi';
-      ui.showToast(`${file.name} başarıyla yüklendi ve indekslendi.`);
-      await refreshNotebookSidebar();
+      ui.showToast(`${file.name} başarıyla yüklendi.`);
+      await refreshCourseDetailLists();
     } catch (error) {
       console.error(error);
-      statusField.textContent = 'Hata oluştu!';
       ui.showToast('PDF okunurken bir hata oluştu: ' + error.message, 'error');
     }
   };
   reader.readAsArrayBuffer(file);
 }
 
-async function handleDeletePdf(id) {
-  if (confirm('Bu PDF belgesini platformdan silmek istediğinizden emin misiniz?')) {
+// Delete Helpers
+async function handleDeletePdf(id, name) {
+  if (confirm(`"${name}" dökümanını silmek istiyor musunuz?`)) {
     try {
       await db.deletePdf(id);
-      if (ui.activePdf && ui.activePdf.id === id) {
-        ui.setActivePdf(null);
-      }
-      await refreshNotebookSidebar();
-      ui.showToast('PDF dökümanı silindi.', 'warning');
-    } catch (error) {
-      ui.showToast('PDF silinirken hata oluştu.', 'error');
+      ui.showToast('Belge silindi.', 'warning');
+      await refreshCourseDetailLists();
+    } catch (e) {
+      ui.showToast('Belge silinemedi.', 'error');
     }
   }
 }
 
-// --- CHAT SCREEN ACTIONS (NOTEBOOKLM SIMULATION) ---
-
-async function loadChatPanel() {
-  if (!ui.activeCourse) return;
-
-  const notes = await db.getNotes(ui.activeCourse.id);
-  const pdfs = await db.getPdfs(ui.activeCourse.id);
-
-  // Render PDFs in sidebar checklist
-  const pdfList = document.getElementById('chat-sources-pdfs-list');
-  pdfList.innerHTML = '';
-  if (pdfs.length === 0) {
-    pdfList.innerHTML = '<li class="text-muted" style="font-size:12px;">PDF bulunamadı.</li>';
-  } else {
-    pdfs.forEach(pdf => {
-      const li = document.createElement('li');
-      li.innerHTML = `
-        <label class="source-checkbox-item">
-          <input type="checkbox" class="source-checkbox" data-type="pdf" data-id="${pdf.id}" checked>
-          <div class="source-name-wrap">
-            <span class="source-name-text">${pdf.name}</span>
-            <span class="source-meta-text">${Math.round(pdf.size / 1024)} KB • PDF</span>
-          </div>
-        </label>
-      `;
-      pdfList.appendChild(li);
-    });
+async function handleDeleteNote(id, title) {
+  if (confirm(`"${title}" notunu silmek istiyor musunuz?`)) {
+    try {
+      await db.deleteNote(id);
+      ui.showToast('Ders notu silindi.', 'warning');
+      await refreshCourseDetailLists();
+    } catch (e) {
+      ui.showToast('Not silinemedi.', 'error');
+    }
   }
-
-  // Render Notes in sidebar checklist
-  const notesList = document.getElementById('chat-sources-notes-list');
-  notesList.innerHTML = '';
-  if (notes.length === 0) {
-    notesList.innerHTML = '<li class="text-muted" style="font-size:12px;">Not bulunamadı.</li>';
-  } else {
-    notes.forEach(note => {
-      const li = document.createElement('li');
-      li.innerHTML = `
-        <label class="source-checkbox-item">
-          <input type="checkbox" class="source-checkbox" data-type="note" data-id="${note.id}" checked>
-          <div class="source-name-wrap">
-            <span class="source-name-text">${note.title}</span>
-            <span class="source-meta-text">Ders Notu</span>
-          </div>
-        </label>
-      `;
-      notesList.appendChild(li);
-    });
-  }
-
-  // Listen checklist changes to update counter
-  document.querySelectorAll('.source-checkbox').forEach(cb => {
-    cb.addEventListener('change', updateActiveSourcesCount);
-  });
-
-  updateActiveSourcesCount();
 }
 
-function updateActiveSourcesCount() {
-  const count = document.querySelectorAll('.source-checkbox:checked').length;
-  document.getElementById('chat-active-sources-count').textContent = `${count} kaynak aktif`;
+async function handleDeleteQuizBank(id, name) {
+  if (confirm(`"${name}" soru bankasını silmek istiyor musunuz?`)) {
+    try {
+      await db.deleteQuizBank(id);
+      ui.showToast('Soru bankası silindi.', 'warning');
+      await refreshCourseDetailLists();
+    } catch (e) {
+      ui.showToast('Soru bankası silinemedi.', 'error');
+    }
+  }
 }
 
+// --- WORKSPACE LOADING & TABS ---
+function openSourceInWorkspace(type, source) {
+  switchPageProgrammatic('notebook-page');
+  
+  // Show/Hide Right Panel elements
+  const pdfReader = document.getElementById('workspace-pdf-reader');
+  const noteEditor = document.getElementById('workspace-note-editor');
+  const typeBadge = document.getElementById('notebook-doc-type');
+
+  // Activate Tab 1 (Chat) by default
+  document.querySelector('.workspace-tab-btn[data-tab="tab-chat"]').click();
+
+  if (type === 'pdf') {
+    ui.setActivePdf(source);
+    pdfReader.style.display = 'flex';
+    noteEditor.style.display = 'none';
+    typeBadge.textContent = 'PDF DÖKÜMANI';
+    typeBadge.style.backgroundColor = 'rgba(239, 68, 68, 0.15)';
+    typeBadge.style.color = '#ef4444';
+    
+    // Configure Soru Çöz Setup panel in left panel
+    document.getElementById('workspace-quiz-setup').style.display = 'block';
+    document.getElementById('workspace-quiz-solving').style.display = 'none';
+    document.getElementById('workspace-quiz-results').style.display = 'none';
+  } else if (type === 'note') {
+    ui.setActiveNote(source);
+    pdfReader.style.display = 'none';
+    noteEditor.style.display = 'flex';
+    typeBadge.textContent = 'DERS NOTU';
+    typeBadge.style.backgroundColor = 'rgba(59, 130, 246, 0.15)';
+    typeBadge.style.color = '#3b82f6';
+    
+    document.getElementById('workspace-quiz-setup').style.display = 'block';
+    document.getElementById('workspace-quiz-solving').style.display = 'none';
+    document.getElementById('workspace-quiz-results').style.display = 'none';
+  } else if (type === 'quiz') {
+    // A saved quiz bank was opened directly! Load Soru Çöz tab directly
+    ui.setActivePdf({
+      name: source.name,
+      textContent: `Soru Bankası: ${source.name}\n${source.questions.length} soru içeriyor.`
+    });
+    pdfReader.style.display = 'flex';
+    noteEditor.style.display = 'none';
+    typeBadge.textContent = 'TEST BANKASI';
+    typeBadge.style.backgroundColor = 'rgba(16, 185, 129, 0.15)';
+    typeBadge.style.color = '#10b981';
+    
+    document.querySelector('.workspace-tab-btn[data-tab="tab-quiz"]').click();
+    startQuizSession(source.questions);
+  }
+
+  // Clear workspace summary notepad
+  const noteTitle = document.getElementById('workspace-note-title');
+  const noteBody = document.getElementById('workspace-note-body');
+  if (noteTitle) noteTitle.value = `Not: ${source.name || source.title}`;
+  if (noteBody) noteBody.innerHTML = '';
+
+  // Reset AI Sohbet messages for new context
+  chatHistory = [];
+  const chatMessages = document.getElementById('chat-messages-box');
+  if (chatMessages) {
+    chatMessages.innerHTML = `
+      <div class="message ai">
+        <div class="message-avatar">AI</div>
+        <div class="message-content">
+          <div class="message-bubble">
+            <p>Merhaba! <strong>"${source.name || source.title}"</strong> kaynağınız yüklendi. Döküman ile ilgili benden özet veya açıklama isteyebilirsiniz.</p>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+}
+
+// Create a new note from details page
+async function handleCreateNote() {
+  const noteId = `note-${Date.now()}`;
+  const newNote = {
+    id: noteId,
+    courseId: ui.activeCourse.id,
+    title: 'Yeni Ders Notu',
+    content: 'Bu alana ders notlarınızı yazın...',
+    updatedAt: Date.now()
+  };
+  try {
+    await db.saveNote(newNote);
+    await refreshCourseDetailLists();
+    openSourceInWorkspace('note', newNote);
+  } catch (error) {
+    ui.showToast('Not oluşturulamadı.', 'error');
+  }
+}
+
+// Note Save triggers in main workspace
+function handleNoteContentChange() {
+  if (!ui.activeNote) return;
+  document.getElementById('editor-save-status').textContent = 'Kaydediliyor...';
+  clearTimeout(debounceSaveTimer);
+  debounceSaveTimer = setTimeout(() => {
+    saveActiveNoteImmediate();
+  }, 1500);
+}
+
+async function saveActiveNoteImmediate() {
+  if (!ui.activeNote) return;
+  const title = document.getElementById('note-title-field').value || 'Başlıksız Not';
+  const content = document.getElementById('note-editor-body').innerHTML;
+  const updatedNote = {
+    ...ui.activeNote,
+    title,
+    content,
+    updatedAt: Date.now()
+  };
+  try {
+    await db.saveNote(updatedNote);
+    ui.activeNote.title = title;
+    ui.activeNote.content = content;
+    document.getElementById('editor-save-status').textContent = 'Kaydedildi';
+  } catch (error) {
+    document.getElementById('editor-save-status').textContent = 'Hata!';
+  }
+}
+
+// Save summary notepad from Left Workspace Panel Tab 3
+async function saveWorkspaceNote() {
+  const title = document.getElementById('workspace-note-title').value.trim() || 'Çalışma Notu';
+  const content = document.getElementById('workspace-note-body').innerHTML;
+  if (!content.trim() || content === 'Notlarınızı buraya yazın...') {
+    ui.showToast('Lütfen önce boş bırakılmaması için not yazın.', 'warning');
+    return;
+  }
+  const noteId = `note-${Date.now()}`;
+  const newNote = {
+    id: noteId,
+    courseId: ui.activeCourse.id,
+    title,
+    content,
+    updatedAt: Date.now()
+  };
+  try {
+    await db.saveNote(newNote);
+    ui.showToast(`"${title}" başarıyla ders notlarınıza kaydedildi! ✍️`, 'success');
+    document.getElementById('workspace-note-body').innerHTML = '';
+  } catch (err) {
+    ui.showToast('Çalışma notu kaydedilemedi.', 'error');
+  }
+}
+
+// --- WORKSPACE NOTEBOOKLM AI CHAT ---
 async function handleChatSubmit(e) {
   e.preventDefault();
   const input = document.getElementById('chat-input-field');
   const query = input.value.trim();
   if (!query) return;
 
-  // Clear input area
   input.value = '';
-  input.style.height = '46px';
   document.getElementById('chat-submit-btn').disabled = true;
 
-  // 1. Check API Key
   if (!ai.hasApiKey()) {
-    ui.showToast('Lütfen önce Gemini API Anahtarınızı yapılandırın.', 'warning');
-    document.getElementById('api-key-setup-btn').click();
+    ui.showToast('Lütfen önce Gemini API Anahtarınızı profil ayarlarından girin.', 'warning');
     return;
   }
 
-  // 2. Aggregate checked sources contents
-  let sourcesContent = '';
-  const selectedCheckboxes = document.querySelectorAll('.source-checkbox:checked');
-  
-  if (selectedCheckboxes.length === 0) {
-    ui.showToast('Lütfen yapay zekanın kullanması için en az 1 kaynak döküman seçin.', 'warning');
+  // Get active source text
+  let sourceText = '';
+  if (ui.activePdf) {
+    sourceText = ui.activePdf.textContent;
+  } else if (ui.activeNote) {
+    sourceText = ui.activeNote.content.replace(/<[^>]*>/g, ' ');
+  }
+
+  if (!sourceText.trim()) {
+    ui.showToast('Çalışma kaynağında okunabilir bir metin içeriği bulunamadı.', 'error');
     return;
   }
 
-  for (const cb of selectedCheckboxes) {
-    const id = cb.dataset.id;
-    const type = cb.dataset.type;
-    if (type === 'pdf') {
-      const pdf = await db.getPdf(id);
-      if (pdf) sourcesContent += `[PDF Dosyası: ${pdf.name}]\n${pdf.textContent}\n\n`;
-    } else {
-      const note = await db.getNote(id);
-      if (note) {
-        // Strip html tags from note content for cleaner text input
-        const plainText = note.content.replace(/<[^>]*>/g, ' ');
-        sourcesContent += `[Not: ${note.title}]\n${plainText}\n\n`;
-      }
-    }
-  }
-
-  // 3. Append user message to chat UI
   appendChatMessage('user', query);
-  
-  // Save query to history
   chatHistory.push({ role: 'user', text: query });
 
-  // 4. Append typing indicator
   const chatBox = document.getElementById('chat-messages-box');
   const typingDiv = document.createElement('div');
   typingDiv.className = 'message ai typing-placeholder';
@@ -4560,31 +5342,26 @@ async function handleChatSubmit(e) {
   chatBox.scrollTop = chatBox.scrollHeight;
 
   try {
-    // 5. Send to Gemini
-    const response = await ai.chatWithSources(chatHistory, sourcesContent);
-    
-    // Remove typing indicator
+    const response = await ai.chatWithSources(chatHistory, sourceText);
     typingDiv.remove();
-
-    // 6. Display AI bubble
     appendChatMessage('ai', response);
     chatHistory.push({ role: 'ai', text: response });
-  } catch (error) {
+  } catch (err) {
     typingDiv.remove();
-    appendChatMessage('ai', `Üzgünüm Neslihan, cevap üretilirken bir hata ile karşılaşıldı: ${error.message}`);
-    ui.showToast('Sohbet yanıtı alınamadı.', 'error');
+    appendChatMessage('ai', `Hata: ${err.message}`);
+    ui.showToast('Yapay zekadan cevap alınamadı.', 'error');
   }
 }
 
 function appendChatMessage(sender, text) {
   const chatBox = document.getElementById('chat-messages-box');
+  if (!chatBox) return;
   const msgDiv = document.createElement('div');
   msgDiv.className = `message ${sender}`;
-
-  // Simple Markdown-like formatting helper for bubble
+  
   let formattedText = text
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold formatting
-    .replace(/\n/g, '<br>'); // Line breaks
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br>');
 
   msgDiv.innerHTML = `
     <div class="message-avatar">${sender === 'user' ? 'U' : 'AI'}</div>
@@ -4595,284 +5372,90 @@ function appendChatMessage(sender, text) {
       <span class="message-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
     </div>
   `;
-
   chatBox.appendChild(msgDiv);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// --- AI QUIZ MODULE ACTIONS ---
-
-async function loadQuizPanel() {
-  if (!ui.activeCourse) return;
-  
-  // Show Setup panel, hide quiz screens
-  document.getElementById('quiz-setup-panel').style.display = 'block';
-  document.getElementById('quiz-solving-panel').style.display = 'none';
-  document.getElementById('quiz-results-panel').style.display = 'none';
-
-  // Pre-select AI generation tab by default
-  document.getElementById('quiz-source-ai-btn').click();
-
-  // Populate PDF dropdown
-  try {
-    const pdfs = await db.getPdfs(ui.activeCourse.id);
-    const pdfSelect = document.getElementById('quiz-pdf-select');
-    pdfSelect.innerHTML = '';
-    
-    if (pdfs.length === 0) {
-      pdfSelect.innerHTML = '<option value="">-- Yüklenmiş PDF Bulunmuyor --</option>';
-    } else {
-      pdfs.forEach(pdf => {
-        const opt = document.createElement('option');
-        opt.value = pdf.id;
-        opt.textContent = pdf.name;
-        pdfSelect.appendChild(opt);
-      });
-    }
-  } catch (err) {
-    console.error('Failed to load PDFs for quiz dropdown:', err);
-  }
-
-  // Render saved quiz banks
-  await renderSavedQuizBanks();
-}
-
+// --- WORKSPACE AI & LOCAL QUIZ MODULE ---
 async function handleAiQuizGeneration() {
   if (!ai.hasApiKey()) {
-    ui.showToast('Lütfen önce Gemini API Anahtarınızı yapılandırın.', 'warning');
-    document.getElementById('api-key-setup-btn').click();
+    ui.showToast('Lütfen önce Gemini API Anahtarınızı girin.', 'warning');
     return;
   }
-
-  // 1. Gather all course notes & PDFs
-  const notes = await db.getNotes(ui.activeCourse.id);
-  const pdfs = await db.getPdfs(ui.activeCourse.id);
 
   let sourceText = '';
-  notes.forEach(note => {
-    const plain = note.content.replace(/<[^>]*>/g, ' ');
-    sourceText += `Not: ${note.title}\nİçerik: ${plain}\n\n`;
-  });
-  pdfs.forEach(pdf => {
-    sourceText += `Döküman: ${pdf.name}\nİçerik: ${pdf.textContent}\n\n`;
-  });
+  let sourceName = '';
+  if (ui.activePdf) {
+    sourceText = ui.activePdf.textContent;
+    sourceName = ui.activePdf.name;
+  } else if (ui.activeNote) {
+    sourceText = ui.activeNote.content.replace(/<[^>]*>/g, ' ');
+    sourceName = ui.activeNote.title;
+  }
 
   if (!sourceText.trim()) {
-    ui.showToast('Dersinize ait soru oluşturabilecek hiçbir not veya PDF bulunmamaktadır. Lütfen önce kaynak yükleyin.', 'error');
+    ui.showToast('Soru üretilecek kaynak içeriği boş.', 'error');
     return;
   }
 
-  // Show loading indicator
   const startBtn = document.getElementById('start-ai-quiz-generation');
-  const originalText = startBtn.textContent;
-  startBtn.textContent = 'Sorular Üretiliyor...';
+  const origText = startBtn.textContent;
+  startBtn.textContent = 'Sorular Hazırlanıyor...';
   startBtn.disabled = true;
 
   const count = parseInt(document.getElementById('quiz-question-count').value);
 
   try {
-    const parsedQuestions = await ai.generateQuizFromSources(sourceText, count);
-    
-    if (!Array.isArray(parsedQuestions) || parsedQuestions.length === 0) {
-      throw new Error('Soru formatı geçersiz.');
+    const questions = await ai.generateQuizFromSources(sourceText, count);
+    if (!Array.isArray(questions) || questions.length === 0) {
+      throw new Error('Soru dizisi oluşturulamadı.');
     }
-
-    startQuizSession(parsedQuestions);
-  } catch (error) {
-    ui.showToast('Yapay zeka soru üretemedi: ' + error.message, 'error');
+    await promptSaveQuizBank(questions, `${sourceName.replace(/\.[^/.]+$/, "")} - AI Sınavı`);
+    startQuizSession(questions);
+  } catch (err) {
+    ui.showToast('Hata: ' + err.message, 'error');
   } finally {
-    startBtn.textContent = originalText;
+    startBtn.textContent = origText;
     startBtn.disabled = false;
   }
 }
 
-async function handlePdfQuizConversion() {
-  if (!ai.hasApiKey()) {
-    ui.showToast('Lütfen önce Gemini API Anahtarınızı yapılandırın.', 'warning');
-    document.getElementById('api-key-setup-btn').click();
-    return;
-  }
-
-  const pdfId = document.getElementById('quiz-pdf-select').value;
-  if (!pdfId) {
-    ui.showToast('Lütfen listeden soru dökümanı içeren bir PDF seçin.', 'warning');
-    return;
-  }
-
-  const convertBtn = document.getElementById('start-pdf-quiz-conversion');
-  const originalText = convertBtn.textContent;
-  convertBtn.textContent = 'Sorular Çözülüyor...';
-  convertBtn.disabled = true;
-
-  try {
-    const pdf = await db.getPdf(pdfId);
-    if (!pdf || !pdf.textContent.trim()) {
-      throw new Error('Seçilen PDF dökümanının metin içeriği okunamadı.');
-    }
-
-    const parsedQuestions = await ai.convertQuestionPdfToQuiz(pdf.textContent);
-    
-    if (!Array.isArray(parsedQuestions) || parsedQuestions.length === 0) {
-      throw new Error('Yapay zeka PDF\'ten çözülebilir soru çıkaramadı.');
-    }
-
-    startQuizSession(parsedQuestions);
-    ui.showToast(`${parsedQuestions.length} soru PDF'ten interaktif sınava dönüştürüldü.`);
-  } catch (error) {
-    ui.showToast('Hata: ' + error.message, 'error');
-  } finally {
-    convertBtn.textContent = originalText;
-    convertBtn.disabled = false;
-  }
-}
-
-// Manual Text Quiz Import Parser
-function handleManualQuizImport() {
-  const rawText = document.getElementById('quiz-manual-paste-area').value.trim();
-  if (!rawText) {
-    ui.showToast('Lütfen önce çözülecek soru metnini yapıştırın.', 'warning');
-    return;
-  }
-
-  try {
-    const parsedQuestions = parseManualQuestions(rawText);
-    if (parsedQuestions.length === 0) {
-      throw new Error('Şablon eşleşmedi. Soruları format kurallarına uygun yazdığınızdan emin olun.');
-    }
-    
-    startQuizSession(parsedQuestions);
-    ui.showToast(`${parsedQuestions.length} soru başarıyla içeri aktarıldı ve test başladı.`);
-  } catch (error) {
-    ui.showToast(error.message, 'error');
-  }
-}
-
-/**
- * Custom Parser for manual pasted text.
- * Expects blocks like:
- * Soru 1: [Text]
- * A) [Option]
- * B) [Option]
- * C) [Option]
- * D) [Option]
- * Cevap: [A/B/C/D]
- * Açıklama: [Explanation]
- */
-function parseManualQuestions(text) {
-  // Split into question blocks (starts with "Soru " or "soru ")
-  const blocks = text.split(/(?=Soru\s*\d+\s*:|soru\s*\d+\s*:)/gi);
-  const questionsList = [];
-
-  for (const block of blocks) {
-    const lines = block.split('\n').map(l => l.trim()).filter(l => l !== '');
-    if (lines.length < 5) continue;
-
-    let questionText = '';
-    let options = [];
-    let answerIndex = -1;
-    let explanation = 'Açıklama bulunmuyor.';
-    let readingQuestion = true;
-
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-
-      // Parse question header
-      if (i === 0) {
-        questionText = line.replace(/Soru\s*\d+\s*:\s*/i, '');
-        continue;
-      }
-
-      // Check for options
-      const optMatch = line.match(/^([A-D])\s*[\)\.-]\s*(.+)/i);
-      if (optMatch) {
-        readingQuestion = false;
-        options.push(optMatch[2]);
-        continue;
-      }
-
-      // Parse Answer
-      const ansMatch = line.match(/^Cevap\s*:\s*([A-D])/i);
-      if (ansMatch) {
-        readingQuestion = false;
-        const letter = ansMatch[1].toUpperCase();
-        answerIndex = ['A', 'B', 'C', 'D'].indexOf(letter);
-        continue;
-      }
-
-      // Parse Explanation
-      const expMatch = line.match(/^Açıklama\s*:\s*(.+)/i);
-      if (expMatch) {
-        readingQuestion = false;
-        explanation = expMatch[1] + lines.slice(i+1).join(' ');
-        break; // Stop loop since explanation consumes the rest
-      }
-
-      // If we are still in question text and didn't match anything else, append
-      if (readingQuestion) {
-        questionText += '\n' + line;
-      }
-    }
-
-    if (questionText && options.length >= 2 && answerIndex !== -1) {
-      questionsList.push({
-        question: questionText,
-        options: options,
-        answerIndex: answerIndex,
-        explanation: explanation
-      });
-    }
-  }
-
-  return questionsList;
-}
-
-/**
- * LOCAL (AI-free) fast quiz extraction from PDF text.
- */
 async function handleLocalPdfQuizConversion() {
-  const pdfId = document.getElementById('quiz-pdf-select').value;
-  if (!pdfId) {
-    ui.showToast('Lütfen listeden bir PDF seçin.', 'warning');
+  let sourceText = '';
+  let sourceName = '';
+  if (ui.activePdf) {
+    sourceText = ui.activePdf.textContent;
+    sourceName = ui.activePdf.name;
+  } else if (ui.activeNote) {
+    sourceText = ui.activeNote.content.replace(/<[^>]*>/g, ' ');
+    sourceName = ui.activeNote.title;
+  }
+
+  if (!sourceText.trim()) {
+    ui.showToast('Kaynak döküman metni bulunamadı.', 'error');
     return;
   }
 
-  const pdf = await db.getPdf(pdfId);
-  if (!pdf || !pdf.textContent.trim()) {
-    ui.showToast('PDF metin içeriği okunamadı.', 'error');
+  const questions = parseLocalQuestions(sourceText);
+  if (questions.length === 0) {
+    ui.showToast('Bu dökümanda şablonumuza uyan soru kalıbı bulunamadı. AI ile dönüştürmeyi deneyin.', 'warning');
     return;
   }
 
-  const parsedQuestions = parseLocalQuestions(pdf.textContent);
-
-  if (parsedQuestions.length === 0) {
-    ui.showToast(
-      'Bu PDF\u2019te standart formatlı soru bulunamadı. AI dönüştürücüü deneyin.',
-      'warning'
-    );
-    return;
-  }
-
-  await promptSaveQuizBank(parsedQuestions, pdf.name.replace(/\.pdf$/i, '') + ' (Hızlı)');
-  startQuizSession(parsedQuestions);
-  ui.showToast(`⚡ ${parsedQuestions.length} soru AI olmadan anında çözüldü!`);
+  await promptSaveQuizBank(questions, `${sourceName.replace(/\.[^/.]+$/, "")} (Hızlı Sınav)`);
+  startQuizSession(questions);
+  ui.showToast(`⚡ ${questions.length} soru anında çıkarıldı ve sınav başladı!`);
 }
 
-/**
- * Robust multi-format local parser for Turkish exam PDFs.
- * Handles numbered questions, A/B/C/D options in various styles,
- * inline answer keys and cevap anahtarı tables.
- */
 function parseLocalQuestions(text) {
-  // --- Step 1: Detect answer key table at end of text (e.g. "1-A  2-B") ---
   const answerKey = {};
-  const tail = text.slice(-3000);
+  const tail = text.slice(-3500);
   const keyTableRe = /(\d+)\s*[-\.\)\s]\s*([A-Ea-e])\b/g;
   let keyMatch;
   while ((keyMatch = keyTableRe.exec(tail)) !== null) {
     answerKey[parseInt(keyMatch[1])] = keyMatch[2].toUpperCase();
   }
 
-  // --- Step 2: Split text into question blocks ---
   const blockSplitRe = /(?:^|\n)\s*(?:SORU\s*)?(\d{1,3})\s*[.\-\):](?!\d)/gi;
   const blocks = [];
   let lastIndex = 0;
@@ -4892,11 +5475,15 @@ function parseLocalQuestions(text) {
     blocks.push({ num: lastNum, text: text.slice(lastIndex).trim() });
   }
 
-  // --- Step 3: Parse each block ---
   const questions = [];
 
   for (const block of blocks) {
-    const lines = block.text.split('\n').map(l => l.trim()).filter(l => l);
+    let blockText = block.text;
+    
+    // Split inline options on the same line (e.g. A) X B) Y) into newline-separated
+    blockText = blockText.replace(/\s+([B-Eb-e])([\]\)\.-])\s*/gi, '\n$1$2 ');
+    
+    const lines = blockText.split('\n').map(l => l.trim()).filter(l => l);
     if (lines.length < 3) continue;
 
     let questionLines = [];
@@ -4905,22 +5492,21 @@ function parseLocalQuestions(text) {
     let explanation = '';
 
     for (const line of lines) {
-      // Option line: A) A. A- (A) [A]
       const optMatch = line.match(/^[\[\(]?([A-Ea-e])[\]\).\-\s]\s*(.+)/);
       if (optMatch && options.length < 5) {
         options.push(optMatch[2].trim());
         continue;
       }
-      // Inline answer: "Cevap: B"
       const ansMatch = line.match(/^(?:cevap|yan[ıi]t|do[gğ]ru\s*(?:cevap)?)\s*[:\-]\s*([A-Ea-e])/i);
       if (ansMatch) {
         answerIndex = 'ABCDE'.indexOf(ansMatch[1].toUpperCase());
         continue;
       }
-      // Explanation
       const expMatch = line.match(/^(?:a[cç][ıi]klama|gerek[çc]e)\s*[:\-]\s*(.+)/i);
-      if (expMatch) { explanation = expMatch[1]; continue; }
-      // Question text
+      if (expMatch) {
+        explanation = expMatch[1];
+        continue;
+      }
       if (options.length === 0) questionLines.push(line);
     }
 
@@ -4946,7 +5532,6 @@ function parseLocalQuestions(text) {
   return questions;
 }
 
-// Start active Quiz Session
 function startQuizSession(questions) {
   activeQuiz = {
     id: `quiz-${Date.now()}`,
@@ -4955,15 +5540,14 @@ function startQuizSession(questions) {
     score: 0,
     maxScore: questions.length
   };
-
   currentQuestionIndex = 0;
   quizScore = 0;
   quizAnswers = Array(questions.length).fill(null);
 
-  // Layout Toggle
-  document.getElementById('quiz-setup-panel').style.display = 'none';
-  document.getElementById('quiz-solving-panel').style.display = 'flex';
-  document.getElementById('quiz-results-panel').style.display = 'none';
+  // Show Active Solve layout
+  document.getElementById('workspace-quiz-setup').style.display = 'none';
+  document.getElementById('workspace-quiz-solving').style.display = 'flex';
+  document.getElementById('workspace-quiz-results').style.display = 'none';
 
   renderQuizQuestion(0);
 }
@@ -4971,62 +5555,61 @@ function startQuizSession(questions) {
 function renderQuizQuestion(index) {
   const q = activeQuiz.questions[index];
   
-  // Progress & Scores
   document.getElementById('current-q-index').textContent = index + 1;
   document.getElementById('total-q-count').textContent = activeQuiz.questions.length;
   
-  const percentage = (index / activeQuiz.questions.length) * 100;
-  document.getElementById('quiz-progress-bar').style.width = `${percentage}%`;
+  const pct = (index / activeQuiz.questions.length) * 100;
+  document.getElementById('quiz-progress-bar').style.width = `${pct}%`;
   document.getElementById('quiz-score-badge').textContent = `Skor: ${quizScore} / ${activeQuiz.questions.length}`;
 
-  // Content
   document.getElementById('active-q-text').innerHTML = q.question.replace(/\n/g, '<br>');
   
   const optionsArea = document.getElementById('active-q-options');
   optionsArea.innerHTML = '';
   
-  const prefixes = ['A', 'B', 'C', 'D'];
+  const prefixes = ['A', 'B', 'C', 'D', 'E'];
   q.options.forEach((optText, optIdx) => {
     const li = document.createElement('li');
     li.className = 'option-item';
+    li.style.backgroundColor = 'rgba(255,255,255,0.02)';
+    li.style.border = '1px solid var(--border-color)';
+    li.style.padding = '10px 14px';
+    li.style.borderRadius = '6px';
+    li.style.cursor = 'pointer';
+    li.style.display = 'flex';
+    li.style.gap = '10px';
+    li.style.transition = 'background-color 0.2s';
+    
     li.innerHTML = `
-      <span class="option-prefix">${prefixes[optIdx]}</span>
+      <span class="option-prefix" style="color:var(--accent-gold); font-weight:bold;">${prefixes[optIdx]}</span>
       <span class="option-text">${optText}</span>
     `;
 
-    // Click handler for options
     li.addEventListener('click', () => handleOptionClick(optIdx));
     optionsArea.appendChild(li);
   });
 
-  // Reset footer and explanation
   document.getElementById('active-q-explanation-box').style.display = 'none';
   const nextBtn = document.getElementById('quiz-next-btn');
   nextBtn.disabled = true;
-  
-  if (index === activeQuiz.questions.length - 1) {
-    nextBtn.textContent = 'Sınavı Bitir';
-  } else {
-    nextBtn.textContent = 'Sonraki Soru';
-  }
+  nextBtn.textContent = index === activeQuiz.questions.length - 1 ? 'Sınavı Bitir' : 'Sonraki Soru';
 }
 
 function handleOptionClick(selectedIdx) {
-  // Lock click once answered
   if (quizAnswers[currentQuestionIndex] !== null) return;
-
   const q = activeQuiz.questions[currentQuestionIndex];
   quizAnswers[currentQuestionIndex] = selectedIdx;
 
   const optionElements = document.querySelectorAll('#active-q-options .option-item');
   const isCorrect = (selectedIdx === q.answerIndex);
 
-  // Update styles
   optionElements.forEach((el, idx) => {
     if (idx === q.answerIndex) {
-      el.classList.add('correct'); // Highlight green
+      el.style.backgroundColor = 'rgba(16, 185, 129, 0.15)';
+      el.style.borderColor = '#10b981';
     } else if (idx === selectedIdx && !isCorrect) {
-      el.classList.add('wrong'); // Highlight red
+      el.style.backgroundColor = 'rgba(239, 68, 68, 0.15)';
+      el.style.borderColor = '#ef4444';
     }
   });
 
@@ -5037,23 +5620,19 @@ function handleOptionClick(selectedIdx) {
     ui.showToast('Yanlış cevap.', 'error');
   }
 
-  // Display explanation
   const expBox = document.getElementById('active-q-explanation-box');
   const expText = document.getElementById('active-q-explanation-text');
-  
-  expText.innerHTML = q.explanation.replace(/\n/g, '<br>');
-  expBox.style.display = 'flex';
+  if (expBox && expText) {
+    expText.innerHTML = q.explanation.replace(/\n/g, '<br>');
+    expBox.style.display = 'flex';
+  }
 
-  // Update live score badge
   document.getElementById('quiz-score-badge').textContent = `Skor: ${quizScore} / ${activeQuiz.questions.length}`;
-
-  // Enable Next button
   document.getElementById('quiz-next-btn').disabled = false;
 }
 
 function handleQuizNext() {
   currentQuestionIndex++;
-  
   if (currentQuestionIndex < activeQuiz.questions.length) {
     renderQuizQuestion(currentQuestionIndex);
   } else {
@@ -5064,34 +5643,32 @@ function handleQuizNext() {
 async function endQuizAndShowResults() {
   activeQuiz.score = quizScore;
   activeQuiz.date = Date.now();
-
   try {
-    // Save to Database history
     await db.saveQuiz(activeQuiz);
     
-    // UI Updates
-    document.getElementById('quiz-solving-panel').style.display = 'none';
-    document.getElementById('quiz-results-panel').style.display = 'flex';
+    document.getElementById('workspace-quiz-solving').style.display = 'none';
+    document.getElementById('workspace-quiz-results').style.display = 'flex';
 
     document.getElementById('results-correct-count').textContent = quizScore;
     document.getElementById('results-wrong-count').textContent = activeQuiz.questions.length - quizScore;
     
-    const finalPct = Math.round((quizScore / activeQuiz.questions.length) * 100);
-    document.getElementById('results-percentage').textContent = `${finalPct}%`;
+    const pct = Math.round((quizScore / activeQuiz.questions.length) * 100);
+    document.getElementById('results-percentage').textContent = `${pct}%`;
 
     const msgField = document.getElementById('results-message');
-    if (finalPct >= 70) {
-      msgField.textContent = 'Harika bir başarı Neslihan! Konuyu çok iyi pekiştirmişsin. Tebrikler 🎓';
-    } else if (finalPct >= 40) {
-      msgField.textContent = 'İyi bir deneme Neslihan! Yanlış yaptığın gerekçeleri not alarak biraz daha çalışmak iyi olabilir 📖';
+    if (pct >= 70) {
+      msgField.textContent = 'Harika bir başarı! Konuyu çok iyi pekiştirmişsiniz. Tebrikler 🎓';
+    } else if (pct >= 40) {
+      msgField.textContent = 'İyi bir deneme! Yanlış yaptığınız gerekçeleri not alarak biraz daha çalışmak yararlı olabilir 📖';
     } else {
-      msgField.textContent = 'Neslihan, bu ders için notları biraz daha detaylı okuyup tekrar soru çözmeyi deneyelim. Çalışmaya devam! 💪';
+      msgField.textContent = 'Bu konu için notları biraz daha detaylı okuyup tekrar soru çözmeyi deneyelim. Çalışmaya devam! 💪';
     }
-
-    // Refresh Dashboard stats
-    await refreshDashboard();
+    
+    // Refresh stats
+    const stats = await db.getGlobalStats();
+    ui.renderDashboardStats(stats);
   } catch (error) {
-    ui.showToast('Skor veritabanına yazılırken bir hata oluştu.', 'error');
+    ui.showToast('Skor veritabanına yazılamadı.', 'error');
   }
 }
 
@@ -5101,8 +5678,7 @@ function restartQuiz() {
   }
 }
 
-// ====== QUIZ BANK FUNCTIONS ======
-
+// Soru Bankasını Kaydet Modal Prompter
 async function promptSaveQuizBank(questions, defaultName) {
   return new Promise((resolve) => {
     const modal = document.getElementById('save-bank-modal');
@@ -5111,7 +5687,7 @@ async function promptSaveQuizBank(questions, defaultName) {
     const skipBtn = document.getElementById('save-bank-skip-btn');
     const countSpan = document.getElementById('save-bank-count');
 
-    nameInput.value = defaultName || '';
+    if (nameInput) nameInput.value = defaultName || '';
     if (countSpan) countSpan.textContent = questions.length;
     modal.classList.add('active');
 
@@ -5132,71 +5708,262 @@ async function promptSaveQuizBank(questions, defaultName) {
       };
       try {
         await db.saveQuizBank(bank);
-        ui.showToast(`“${name}” soru bankası kaydedildi! 📚`);
+        ui.showToast(`"${name}" soru bankası kaydedildi! 📚`);
       } catch (e) {
         ui.showToast('Banka kaydedilemedi: ' + e.message, 'error');
       }
       cleanup();
       resolve();
     };
-    const onSkip = () => { cleanup(); resolve(); };
+
+    const onSkip = () => {
+      cleanup();
+      resolve();
+    };
 
     saveBtn.addEventListener('click', onSave);
     skipBtn.addEventListener('click', onSkip);
   });
 }
 
-async function renderSavedQuizBanks() {
-  const container = document.getElementById('saved-banks-list');
-  if (!container) return;
+// --- WORKSPACE SOURCE SHARING TO COMMUNITY ---
+async function handleShareToCommunity() {
+  let itemToShare = null;
+  const uni = localStorage.getItem('selected_university') || 'Genel Üniversite';
+  const dept = localStorage.getItem('selected_department') || 'diger';
+
+  if (ui.activePdf) {
+    itemToShare = {
+      id: `comm-${Date.now()}`,
+      title: ui.activePdf.name,
+      type: 'pdf',
+      university: uni,
+      department: dept,
+      courseName: ui.activeCourse.name,
+      size: ui.activePdf.size || 10240,
+      textContent: ui.activePdf.textContent,
+      uploaderName: 'Öğrenci',
+      downloads: 0,
+      createdAt: Date.now()
+    };
+  } else if (ui.activeNote) {
+    itemToShare = {
+      id: `comm-${Date.now()}`,
+      title: ui.activeNote.title,
+      type: 'note',
+      university: uni,
+      department: dept,
+      courseName: ui.activeCourse.name,
+      size: ui.activeNote.content.length,
+      textContent: ui.activeNote.content,
+      uploaderName: 'Öğrenci',
+      downloads: 0,
+      createdAt: Date.now()
+    };
+  }
+
+  if (!itemToShare) {
+    ui.showToast('Paylaşılacak aktif döküman bulunamadı.', 'warning');
+    return;
+  }
+
+  if (confirm(`"${itemToShare.title}" dökümanını ${uni} - ${dept.toUpperCase()} topluluk kitaplığında paylaşmak istiyor musunuz?`)) {
+    try {
+      await db.addCommunityItem(itemToShare);
+      ui.showToast('Döküman topluluk kütüphanesinde başarıyla paylaşıldı! 🌍', 'success');
+    } catch (err) {
+      ui.showToast('Paylaşılırken hata oluştu.', 'error');
+    }
+  }
+}
+
+// --- COMMUNITY PANEL ---
+async function loadCommunityPanel() {
+  const univFilter = document.getElementById('comm-filter-univ');
+  if (!univFilter) return;
+
   try {
-    const banks = await db.getQuizBanks(ui.activeCourse.id);
-    container.innerHTML = '';
-    if (banks.length === 0) {
-      container.innerHTML = `
-        <div class="empty-banks-msg">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" /></svg>
-          <p>Henüz bu ders için kayıtlı soru bankası yok.<br>Ürettiğiniz soruları kaydedin, burada çıksın!</p>
-        </div>`;
+    const items = await db.getCommunityItems();
+    
+    // Populate University Dropdown uniquely
+    const univs = [...new Set(items.map(item => item.university))];
+    const curVal = univFilter.value;
+    univFilter.innerHTML = '<option value="">Tüm Üniversiteler</option>';
+    univs.forEach(u => {
+      const opt = document.createElement('option');
+      opt.value = u;
+      opt.textContent = u;
+      univFilter.appendChild(opt);
+    });
+    univFilter.value = curVal;
+
+    filterCommunityItems();
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function filterCommunityItems() {
+  const grid = document.getElementById('community-grid-area');
+  if (!grid) return;
+
+  const fUniv = document.getElementById('comm-filter-univ').value.toLowerCase();
+  const fDept = document.getElementById('comm-filter-dept').value.toLowerCase();
+  const fType = document.getElementById('comm-filter-type').value.toLowerCase();
+
+  try {
+    const items = await db.getCommunityItems();
+    grid.innerHTML = '';
+
+    const filtered = items.filter(item => {
+      const matchUniv = !fUniv || item.university.toLowerCase() === fUniv;
+      const matchDept = !fDept || item.department.toLowerCase() === fDept;
+      const matchType = !fType || item.type.toLowerCase() === fType;
+      return matchUniv && matchDept && matchType;
+    });
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `
+        <div class="empty-state" style="grid-column: 1 / -1; padding:60px 20px;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:48px;height:48px;color:var(--text-muted);margin-bottom:15px;"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.637 10.637Z" /></svg>
+          <h3>Sonuç Bulunamadı</h3>
+          <p>Seçtiğiniz filtrelere uyan hiçbir topluluk materyali bulunamadı.</p>
+        </div>
+      `;
       return;
     }
-    banks.sort((a, b) => b.createdAt - a.createdAt).forEach(bank => {
+
+    filtered.sort((a,b) => b.createdAt - a.createdAt).forEach(item => {
       const card = document.createElement('div');
-      card.className = 'bank-card';
-      const dateStr = new Date(bank.createdAt).toLocaleDateString('tr-TR');
+      card.className = 'community-card';
+      const dateStr = new Date(item.createdAt).toLocaleDateString('tr-TR');
+      
+      const sizeLabel = item.type === 'pdf' ? `${Math.round(item.size/1024)} KB` : (item.type === 'note' ? 'Ders Notu' : 'Soru Bankası');
+
       card.innerHTML = `
-        <div class="bank-card-info">
-          <div class="bank-card-name">${bank.name}</div>
-          <div class="bank-card-meta">${bank.questions.length} soru &bull; ${dateStr}</div>
+        <div>
+          <div class="comm-card-header">
+            <span class="comm-type-badge ${item.type}">${item.type}</span>
+            <span style="font-size:11px; color:var(--color-text-muted);">${dateStr}</span>
+          </div>
+          <h4 class="comm-card-title">${item.title}</h4>
+          <div class="comm-card-tags">
+            <span class="comm-tag">${item.university}</span>
+            <span class="comm-tag">${item.courseName}</span>
+            <span class="comm-tag">${sizeLabel}</span>
+          </div>
         </div>
-        <div class="bank-card-actions">
-          <button class="btn btn-primary btn-sm bank-start-btn" data-id="${bank.id}">▶ Sınava Başla</button>
-          <button class="btn btn-secondary btn-sm bank-del-btn" data-id="${bank.id}" title="Bankayı Sil">🗑</button>
-        </div>`;
-      card.querySelector('.bank-start-btn').addEventListener('click', () => startQuizFromBank(bank));
-      card.querySelector('.bank-del-btn').addEventListener('click', () => handleDeleteQuizBank(bank.id, bank.name));
-      container.appendChild(card);
+        <div>
+          <div class="comm-card-footer">
+            <span>Paylaşan: <strong class="comm-uploader">${item.uploaderName}</strong></span>
+            <span>⬇ ${item.downloads} indirme</span>
+          </div>
+          <button class="btn btn-secondary btn-sm comm-import-btn" style="width:100%; margin-top:10px; font-size:12px; padding:6px 12px;">⬇ Derslerime Ekle (İndir)</button>
+        </div>
+      `;
+
+      card.querySelector('.comm-import-btn').addEventListener('click', () => handleImportItemModal(item));
+      grid.appendChild(card);
     });
   } catch (err) {
-    console.error('Saved banks load error:', err);
+    ui.showToast('Topluluk materyalleri yüklenemedi.', 'error');
   }
 }
 
-function startQuizFromBank(bank) {
-  ui.showToast(`“${bank.name}” bankası başlatıldı!`);
-  startQuizSession(bank.questions);
-}
+// Modal for importing a community item to a user course
+async function handleImportItemModal(item) {
+  const currentCourses = await db.getCourses();
+  if (currentCourses.length === 0) {
+    ui.showToast('Bu materyali ekleyebilmeniz için önce Dashboard üzerinde en az 1 dersiniz olması gerekir.', 'warning');
+    return;
+  }
 
-async function handleDeleteQuizBank(id, name) {
-  if (confirm(`“${name}” soru bankasını silmek istediğinizden emin misiniz?`)) {
+  // Create an overlay modal dynamically
+  const modalDiv = document.createElement('div');
+  modalDiv.className = 'modal active';
+  modalDiv.id = 'import-community-modal';
+  
+  const selectOptions = currentCourses.map(c => `<option value="${c.id}">${c.name} (${c.year}. Sınıf)</option>`).join('');
+
+  modalDiv.innerHTML = `
+    <div class="modal-content" style="max-width:440px;">
+      <div class="modal-header">
+        <h3>⬇ Materyali İçe Aktar</h3>
+      </div>
+      <div class="modal-body" style="text-align:left;">
+        <p style="font-size:13px; color:var(--color-text-muted); margin-bottom:15px; line-height:1.5;">
+          <strong>"${item.title}"</strong> dökümanını hangi dersinize eklemek istersiniz?
+        </p>
+        <div class="form-group">
+          <label for="import-course-select">Ders Seçin</label>
+          <select class="input-field" id="import-course-select" style="width:100%; margin-top:5px;">
+            ${selectOptions}
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="import-cancel-btn">İptal</button>
+        <button class="btn btn-primary" id="import-confirm-btn">Dersime Ekle</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modalDiv);
+
+  const cleanup = () => {
+    modalDiv.remove();
+  };
+
+  modalDiv.querySelector('#import-cancel-btn').addEventListener('click', cleanup);
+  
+  modalDiv.querySelector('#import-confirm-btn').addEventListener('click', async () => {
+    const courseId = modalDiv.querySelector('#import-course-select').value;
+    const selectedCourse = currentCourses.find(c => c.id === courseId);
+    
     try {
-      await db.deleteQuizBank(id);
-      ui.showToast('Soru bankası silindi.', 'warning');
-      await renderSavedQuizBanks();
-    } catch (err) {
-      ui.showToast('Soru bankası silinemedi.', 'error');
+      if (item.type === 'pdf') {
+        const newPdf = {
+          id: `pdf-${Date.now()}`,
+          courseId,
+          name: item.title,
+          size: item.size,
+          textContent: item.textContent,
+          uploadedAt: Date.now()
+        };
+        await db.savePdf(newPdf);
+      } else if (item.type === 'note') {
+        const newNote = {
+          id: `note-${Date.now()}`,
+          courseId,
+          title: item.title,
+          content: item.textContent,
+          updatedAt: Date.now()
+        };
+        await db.saveNote(newNote);
+      } else if (item.type === 'quiz') {
+        const newBank = {
+          id: `bank-${Date.now()}`,
+          courseId,
+          name: item.title,
+          questions: JSON.parse(item.textContent),
+          createdAt: Date.now()
+        };
+        await db.saveQuizBank(newBank);
+      }
+
+      // Update download count inside IndexedDB community store (simulate upload)
+      item.downloads = (item.downloads || 0) + 1;
+      await db.addCommunityItem(item);
+
+      ui.showToast(`"${item.title}" belgesi "${selectedCourse.name}" dersine başarıyla eklendi!`, 'success');
+    } catch (e) {
+      console.error(e);
+      ui.showToast('İçe aktarılırken hata oluştu.', 'error');
     }
-  }
+    
+    cleanup();
+    filterCommunityItems();
+  });
 }
 
   </script>
