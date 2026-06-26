@@ -5,6 +5,57 @@ import { extractTextFromPdf } from './pdf-helper.js';
 import * as ai from './gemini.js';
 import * as ui from './ui.js';
 
+// Turkish Universities and Departments list
+const TURKISH_UNIVERSITIES = [
+  "Çukurova Üniversitesi",
+  "Orta Doğu Teknik Üniversitesi (ODTÜ)",
+  "Ankara Üniversitesi",
+  "İstanbul Üniversitesi",
+  "İstanbul Teknik Üniversitesi (İTÜ)",
+  "Hacettepe Üniversitesi",
+  "Boğaziçi Üniversitesi",
+  "Yıldız Teknik Üniversitesi (YTÜ)",
+  "Marmara Üniversitesi",
+  "Gazi Üniversitesi",
+  "Ege Üniversitesi",
+  "Dokuz Eylül Üniversitesi",
+  "Bilkent Üniversitesi",
+  "Koç Üniversitesi",
+  "Sabancı Üniversitesi",
+  "Bahçeşehir Üniversitesi",
+  "Yeditepe Üniversitesi",
+  "Özyeğin Üniversitesi",
+  "TOBB ETÜ",
+  "Kadir Has Üniversitesi",
+  "MEF Üniversitesi",
+  "Anadolu Üniversitesi",
+  "Akdeniz Üniversitesi",
+  "Karadeniz Teknik Üniversitesi (KTÜ)",
+  "Bursa Uludağ Üniversitesi",
+  "Selçuk Üniversitesi",
+  "Erciyes Üniversitesi",
+  "Kocaeli Üniversitesi",
+  "Sakarya Üniversitesi",
+  "Eskişehir Osmangazi Üniversitesi",
+  "diğer"
+];
+
+const DEPARTMENTS = [
+  "Hukuk",
+  "Bilgisayar Mühendisliği",
+  "Tıp",
+  "İşletme",
+  "Elektrik-Elektronik Mühendisliği",
+  "Makine Mühendisliği",
+  "Endüstri Mühendisliği",
+  "Mimarlık",
+  "Psikoloji",
+  "Sosyoloji",
+  "İktisat",
+  "Uluslararası İlişkiler",
+  "diğer"
+];
+
 // Application State
 let courses = [];
 let activeQuiz = null;
@@ -13,6 +64,7 @@ let quizScore = 0;
 let quizAnswers = [];
 let chatHistory = [];
 let debounceSaveTimer = null;
+let currentUser = null;
 
 // Initialize App
 document.addEventListener('DOMContentLoaded', async () => {
@@ -23,26 +75,40 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 2. Seed community items
     await db.seedCommunityItems();
     
-    // 3. Load API key settings
-    ui.updateApiKeyBadgeStatus();
+    // 3. Setup Auth forms and dynamic dropdown lists
+    initAuthPage();
     
     // 4. Set up event listeners
     initEventListeners();
     
-    // 5. Check if profile setup is complete
-    const savedUniv = localStorage.getItem('selected_university');
-    const savedDept = localStorage.getItem('selected_department');
-    
-    if (!savedUniv || !savedDept) {
-      // Show landing page, hide main app header and sidebar
+    // 5. Load User session
+    const savedUser = localStorage.getItem('currentUser');
+    if (!savedUser) {
+      // Hide main app header and sidebar, redirect to auth-page
       document.querySelector('.sidebar').style.display = 'none';
       document.querySelector('.main-content').style.marginLeft = '0';
       document.getElementById('mobile-menu-toggle').style.display = 'none';
-      switchPageProgrammatic('landing-page');
+      switchPageProgrammatic('auth-page');
     } else {
+      currentUser = JSON.parse(savedUser);
       // Profile complete: load dashboard
       document.querySelector('.sidebar').style.display = 'flex';
       document.getElementById('mobile-menu-toggle').style.display = 'flex';
+      
+      // Update sidebar/header info
+      document.getElementById('sidebar-brand-sub').textContent = currentUser.department.toUpperCase();
+      document.getElementById('current-course-display').textContent = `${currentUser.university} - ${currentUser.department.toUpperCase()}`;
+      document.getElementById('dashboard-welcome-title').textContent = `Hoş geldin, ${currentUser.fullName}!`;
+      
+      // Set active AI API keys
+      if (currentUser.apiKey) {
+        ai.setApiKey(currentUser.apiKey);
+        if (currentUser.apiModel) {
+          ai.setApiModel(currentUser.apiModel);
+        }
+      }
+      ui.updateApiKeyBadgeStatus();
+      
       await refreshDashboard();
       switchPageProgrammatic('dashboard-page');
     }
@@ -50,7 +116,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     ui.showToast('Çalışma platformu başarıyla yüklendi.');
   } catch (error) {
     console.error('App init error:', error);
-    ui.showToast('Veritabanı yüklenemedi. Lütfen sayfayı yenileyin.', 'error');
+    ui.showToast('Sistem yüklenirken hata oluştu.', 'error');
   }
 });
 
@@ -87,11 +153,13 @@ function switchPageProgrammatic(pageId) {
 function initEventListeners() {
   // SPA Sidebar Routing
   document.querySelectorAll('.sidebar-menu .menu-item').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const pageId = link.dataset.page;
-      switchPageProgrammatic(pageId);
-    });
+    if (link.id !== 'menu-logout') {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const pageId = link.dataset.page;
+        switchPageProgrammatic(pageId);
+      });
+    }
   });
 
   // Dashboard Tabs
@@ -128,11 +196,26 @@ function initEventListeners() {
       modelSelect.value = ai.getApiModel();
     }
     
-    // Populate profile inputs in settings
-    const univSelect = document.getElementById('settings-univ-select');
-    const deptSelect = document.getElementById('settings-dept-select');
-    if (univSelect) univSelect.value = localStorage.getItem('selected_university') || 'diğer';
-    if (deptSelect) deptSelect.value = localStorage.getItem('selected_department') || 'diger';
+    // Populate profile inputs in settings modal
+    const uSelect = document.getElementById('settings-univ-select');
+    const dSelect = document.getElementById('settings-dept-select');
+    
+    if (uSelect) {
+      uSelect.innerHTML = TURKISH_UNIVERSITIES.map(u => `<option value="${u}">${u}</option>`).join('');
+      uSelect.value = currentUser.university;
+      
+      uSelect.addEventListener('change', () => {
+        document.getElementById('settings-univ-custom').style.display = uSelect.value === 'diğer' ? 'block' : 'none';
+      });
+    }
+    if (dSelect) {
+      dSelect.innerHTML = DEPARTMENTS.map(d => `<option value="${d.toLowerCase().replace(/[^a-z0-9]/g, '-')}">${d}</option>`).join('');
+      dSelect.value = currentUser.department;
+      
+      dSelect.addEventListener('change', () => {
+        document.getElementById('settings-dept-custom').style.display = dSelect.value === 'diğer' ? 'block' : 'none';
+      });
+    }
     
     openModal('api-key-modal');
   });
@@ -175,112 +258,150 @@ function initEventListeners() {
   document.getElementById('settings-reset-system-btn').addEventListener('click', () => {
     if (confirm('DİKKAT! Tüm veritabanını, notları ve kayıtları silerek kurulum ekranına dönmek istediğinizden emin misiniz? Bu işlem geri alınamaz!')) {
       localStorage.clear();
-      // Clear IDB
       indexedDB.deleteDatabase('cukurova_hukuk_db');
       location.reload();
     }
   });
 
-  // Course Details View Controls
+  // Course detail back
   document.getElementById('course-detail-back-btn').addEventListener('click', () => {
     switchPageProgrammatic('dashboard-page');
   });
-  
+
   document.getElementById('course-detail-delete-btn').addEventListener('click', async () => {
-    if (confirm(`"${ui.activeCourse.name}" dersini müfredatınızdan tamamen kaldırmak istiyor musunuz? İlgili tüm notlar ve dosyalar silinecektir.`)) {
+    if (ui.activeCourse && confirm(`“${ui.activeCourse.name}” dersini ve bu derse ait TÜM PDF/Not/Soru içeriklerini silmek istediğinizden emin misiniz?`)) {
       try {
         await db.deleteCourse(ui.activeCourse.id);
-        ui.showToast('Ders müfredattan kaldırıldı.', 'warning');
+        ui.showToast('Ders ve ilişkili tüm içerikleri silindi.', 'warning');
         switchPageProgrammatic('dashboard-page');
       } catch (err) {
-        ui.showToast('Ders silinemedi.', 'error');
+        ui.showToast('Ders silinirken hata oluştu.', 'error');
       }
     }
   });
 
+  // Course detail additions
   document.getElementById('detail-create-note-btn').addEventListener('click', handleCreateNote);
 
-  // PDF Dropzone in Course Detail
-  const dropzone = document.getElementById('pdf-dropzone');
-  const fileInput = document.getElementById('pdf-file-input');
+  const dropzone = document.getElementById('detail-pdf-dropzone');
+  const fileInput = document.getElementById('detail-pdf-file-input');
   if (dropzone && fileInput) {
     dropzone.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', handlePdfFileSelect);
-
+    
     dropzone.addEventListener('dragover', (e) => {
       e.preventDefault();
-      dropzone.style.borderColor = 'var(--accent-gold)';
-      dropzone.style.backgroundColor = 'rgba(212, 175, 55, 0.05)';
+      dropzone.classList.add('dragover');
     });
-
+    
     dropzone.addEventListener('dragleave', () => {
-      dropzone.style.borderColor = 'var(--border-color)';
-      dropzone.style.backgroundColor = 'transparent';
+      dropzone.classList.remove('dragover');
     });
-
+    
     dropzone.addEventListener('drop', (e) => {
       e.preventDefault();
-      dropzone.style.borderColor = 'var(--border-color)';
-      dropzone.style.backgroundColor = 'transparent';
+      dropzone.classList.remove('dragover');
       const files = e.dataTransfer.files;
-      if (files.length > 0) {
+      if (files.length > 0 && files[0].type === 'application/pdf') {
         processPdfUpload(files[0]);
+      } else {
+        ui.showToast('Lütfen geçerli bir PDF dosyası bırakın.', 'error');
       }
     });
   }
 
-  // NotebookLM Workspace Controls
+  // Notebook workspace triggers
   document.getElementById('notebook-back-btn').addEventListener('click', () => {
-    switchPageProgrammatic('course-detail-page');
-    loadCourseDetails(ui.activeCourse);
+    if (ui.activeCourse) {
+      loadCourseDetails(ui.activeCourse);
+      switchPageProgrammatic('course-detail-page');
+    } else {
+      switchPageProgrammatic('dashboard-page');
+    }
   });
 
-  document.getElementById('notebook-share-btn').addEventListener('click', handleShareToCommunity);
-
-  // Workspace Tabs switcher
-  document.querySelectorAll('.workspace-tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.workspace-tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const tabId = btn.dataset.tab;
-      document.querySelectorAll('.workspace-tab-content').forEach(c => c.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-    });
-  });
-
-  // Chat submit in workspace
-  document.getElementById('chat-form-element').addEventListener('submit', handleChatSubmit);
-  const chatInput = document.getElementById('chat-input-field');
-  const chatSubmitBtn = document.getElementById('chat-submit-btn');
-  if (chatInput && chatSubmitBtn) {
-    chatInput.addEventListener('input', () => {
-      chatSubmitBtn.disabled = !chatInput.value.trim();
+  // Collapsible Left Assistant panel toggle
+  const notebookToggleBtn = document.getElementById('notebook-toggle-sidebar-btn');
+  if (notebookToggleBtn) {
+    notebookToggleBtn.addEventListener('click', () => {
+      const leftPanel = document.querySelector('.workspace-panel-left');
+      if (leftPanel) {
+        leftPanel.classList.toggle('collapsed');
+        const isCollapsed = leftPanel.classList.contains('collapsed');
+        if (isCollapsed) {
+          notebookToggleBtn.innerHTML = '<span id="notebook-toggle-sidebar-icon">▶</span> Asistan Panelini Göster';
+        } else {
+          notebookToggleBtn.innerHTML = '<span id="notebook-toggle-sidebar-icon">◀</span> Asistan Panelini Gizle';
+        }
+      }
     });
   }
 
-  // Quiz actions in workspace
+  // Collapsible Main Sidebar toggle
+  const sidebarToggleBtn = document.getElementById('mobile-menu-toggle');
+  if (sidebarToggleBtn) {
+    sidebarToggleBtn.addEventListener('click', () => {
+      const sidebar = document.querySelector('.sidebar');
+      const mainContent = document.querySelector('.main-content');
+      if (window.innerWidth <= 768) {
+        sidebar.classList.toggle('mobile-active');
+      } else {
+        sidebar.classList.toggle('collapsed');
+        mainContent.classList.toggle('full-width');
+      }
+    });
+  }
+
+  // Close sidebar on menu click on mobile
+  document.querySelectorAll('.sidebar-menu .menu-item').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 768) {
+        document.querySelector('.sidebar').classList.remove('mobile-active');
+      }
+    });
+  });
+
+  // Logout trigger
+  const logoutBtn = document.getElementById('menu-logout');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleLogout();
+    });
+  }
+
+  document.getElementById('notebook-share-btn').addEventListener('click', handleShareToCommunity);
+
+  document.querySelectorAll('.workspace-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.workspace-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.workspace-tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      const tabId = btn.dataset.tab;
+      const tabContent = document.getElementById(tabId);
+      if (tabContent) tabContent.classList.add('active');
+    });
+  });
+
+  document.getElementById('chat-form-element').addEventListener('submit', handleChatSubmit);
+  const chatInput = document.getElementById('chat-input-field');
+  if (chatInput) {
+    chatInput.addEventListener('input', () => {
+      const submitBtn = document.getElementById('chat-submit-btn');
+      if (submitBtn) submitBtn.disabled = !chatInput.value.trim();
+    });
+  }
+
   document.getElementById('start-ai-quiz-generation').addEventListener('click', handleAiQuizGeneration);
   document.getElementById('start-local-pdf-quiz').addEventListener('click', handleLocalPdfQuizConversion);
   document.getElementById('quiz-next-btn').addEventListener('click', handleQuizNext);
   document.getElementById('quiz-quit-btn').addEventListener('click', () => {
-    if (confirm('Testi yarıda kesmek istediğinizden emin misiniz?')) {
-      endQuizAndShowResults();
-    }
+    if (confirm('Sınavı bitirmek istediğinizden emin misiniz?')) restartQuizSetup();
   });
   document.getElementById('results-restart-btn').addEventListener('click', restartQuiz);
 
-  // Workspace Notepad Save button
   document.getElementById('workspace-note-save-btn').addEventListener('click', saveWorkspaceNote);
 
-  // Main Note Editor save events
-  document.getElementById('note-title-field').addEventListener('input', handleNoteContentChange);
-  document.getElementById('note-editor-body').addEventListener('input', handleNoteContentChange);
-  document.getElementById('editor-save-btn').addEventListener('click', saveActiveNoteImmediate);
-
-  // Editor rich text command buttons
-  document.querySelectorAll('.editor-toolbar .toolbar-btn[data-cmd]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const cmd = btn.dataset.cmd;
       const val = btn.dataset.val || null;
       document.execCommand(cmd, false, val);
       document.getElementById('note-editor-body').focus();

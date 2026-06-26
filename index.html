@@ -2559,6 +2559,36 @@ body {
   }
 }
 
+/* --- Desktop Collapsible Sidebar & Panel Transitions --- */
+@media (min-width: 769px) {
+  .sidebar {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .sidebar.collapsed {
+    transform: translateX(-260px);
+  }
+  .main-content {
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .main-content.full-width {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+}
+
+.workspace-panel-left {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.workspace-panel-left.collapsed {
+  width: 0 !important;
+  min-width: 0 !important;
+  opacity: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  pointer-events: none;
+}
+
 </style>
 </head>
 <body>
@@ -2592,6 +2622,14 @@ body {
             Topluluk Kütüphanesi
           </a>
         </li>
+        <li style="margin-top: auto; border-top: 1px solid var(--border-color); padding-top: 10px;">
+          <a href="#" class="menu-item" id="menu-logout" style="color: #ef4444 !important;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="color: #ef4444 !important;">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
+            </svg>
+            Çıkış Yap
+          </a>
+        </li>
       </ul>
       
       <div class="sidebar-footer">
@@ -2605,7 +2643,7 @@ body {
       
       <!-- Top Header -->
       <header class="top-header">
-        <button class="hamburger-menu" id="mobile-menu-toggle" aria-label="Menüyü Aç/Kapat" style="display:none; background:none; border:none; color:var(--color-text); cursor:pointer; padding:8px; margin-right:12px; align-items:center; justify-content:center;">
+        <button class="hamburger-menu" id="mobile-menu-toggle" aria-label="Menüyü Aç/Kapat" style="display:flex; background:none; border:none; color:var(--color-text); cursor:pointer; padding:8px; margin-right:12px; align-items:center; justify-content:center;">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:24px; height:24px;"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
         </button>
         <div class="header-title-area">
@@ -2735,10 +2773,15 @@ body {
       <!-- PAGE: NOTEBOOKLM WORKSPACE -->
       <section class="page" id="notebook-page">
         <!-- Back and Title bar -->
-        <div class="course-detail-header" style="margin-bottom: 15px;">
-          <div class="detail-back-btn" id="notebook-back-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
-            Ders Detayına Dön
+        <div class="course-detail-header" style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <div class="detail-back-btn" id="notebook-back-btn" style="margin: 0;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
+              Ders Detayına Dön
+            </div>
+            <button class="btn btn-sm btn-secondary" id="notebook-toggle-sidebar-btn" style="padding: 6px 12px; font-size:12px; display:flex; align-items:center; gap:6px;">
+              <span id="notebook-toggle-sidebar-icon">◀</span> Asistan Panelini Gizle
+            </button>
           </div>
           <div style="text-align: right; display:flex; gap:10px; align-items:center;">
             <button class="btn btn-sm btn-secondary" id="notebook-share-btn" style="padding: 4px 10px; font-size:11px;">🌍 Toplulukta Paylaş</button>
@@ -2957,64 +3000,100 @@ body {
         </div>
       </section>
 
-      <!-- PAGE: LANDING / SETUP -->
-      <section class="page" id="landing-page" style="padding: 0;">
+      <!-- PAGE: AUTHENTICATION (LOGIN / REGISTER) -->
+      <section class="page" id="auth-page" style="padding: 0;">
         <div class="landing-page-container">
-          <div class="landing-card">
+          
+          <!-- LOGIN CONTAINER -->
+          <div class="landing-card" id="auth-login-card">
             <div class="landing-header">
               <h1>Kampüs NotebookLM</h1>
-              <p>Kişiselleştirilmiş Yapay Zeka Destekli Çalışma Alanı</p>
+              <p>Yapay Zeka Destekli Çalışma Platformuna Giriş Yapın</p>
             </div>
             <div class="landing-body">
-              <!-- Step 1: API Key -->
-              <div style="margin-bottom: 30px;">
-                <h3 class="landing-step-title"><span>1</span> Gemini API Kurulumu</h3>
-                <p class="landing-help-text" style="margin-bottom:10px;">
-                  Sistem, derslerinizden özet, soru ve sohbet yanıtları oluşturabilmek için Gemini API Anahtarınızı kullanır. 
-                  API anahtarınızı tamamen ücretsiz olarak <a href="https://aistudio.google.com/" target="_blank">Google AI Studio</a> üzerinden alabilirsiniz.
-                </p>
-                <div class="api-test-inline">
-                  <input type="password" class="input-field" id="landing-api-key" placeholder="AI Studio'dan aldığınız API Anahtarı...">
-                  <button class="btn btn-secondary" id="landing-test-api-btn" style="padding: 10px 14px;">Test Et</button>
+              <form id="auth-login-form" onsubmit="event.preventDefault();">
+                <div class="form-group" style="text-align:left; margin-bottom:15px;">
+                  <label for="login-username">Kullanıcı Adı veya E-posta</label>
+                  <input type="text" class="input-field" id="login-username" placeholder="Kullanıcı adınızı veya e-postanızı girin..." required style="width:100%; margin-top:5px;">
                 </div>
-                <div id="landing-api-test-results" style="display:none; font-size:11.5px; margin-top:10px; padding:10px; border-radius:6px; border:1px solid var(--border-color); background:rgba(0,0,0,0.15); white-space:pre-wrap;"></div>
-              </div>
-
-              <!-- Step 2: Curriculum Select -->
-              <div style="margin-bottom: 35px;">
-                <h3 class="landing-step-title"><span>2</span> Eğitim Bilgileri</h3>
-                <div class="uni-dept-inputs">
-                  <div class="form-group" style="text-align:left;">
-                    <label for="landing-univ-select" style="font-size:12px; font-weight:600; color:var(--color-text-muted);">Üniversite</label>
-                    <select class="input-field" id="landing-univ-select" style="width:100%; margin-top:5px;">
-                      <option value="Çukurova Üniversitesi">Çukurova Üniversitesi</option>
-                      <option value="Orta Doğu Teknik Üniversitesi">Orta Doğu Teknik Üniversitesi (ODTÜ)</option>
-                      <option value="Ankara Üniversitesi">Ankara Üniversitesi</option>
-                      <option value="İstanbul Üniversitesi">İstanbul Üniversitesi</option>
-                      <option value="diğer">Diğer (Kendim Gireceğim)</option>
-                    </select>
-                    <input type="text" class="input-field" id="landing-univ-custom" placeholder="Üniversite Adını Yazınız..." style="display:none; width:100%; margin-top:8px;">
-                  </div>
-
-                  <div class="form-group" style="text-align:left;">
-                    <label for="landing-dept-select" style="font-size:12px; font-weight:600; color:var(--color-text-muted);">Bölüm</label>
-                    <select class="input-field" id="landing-dept-select" style="width:100%; margin-top:5px;">
-                      <option value="hukuk">Hukuk</option>
-                      <option value="bilgisayar-muhendisligi">Bilgisayar Mühendisliği</option>
-                      <option value="tip">Tıp</option>
-                      <option value="isletme">İşletme</option>
-                      <option value="diger">Diğer (Genel Müfredat)</option>
-                    </select>
-                    <input type="text" class="input-field" id="landing-dept-custom" placeholder="Bölüm Adını Yazınız..." style="display:none; width:100%; margin-top:8px;">
-                  </div>
+                <div class="form-group" style="text-align:left; margin-bottom:20px;">
+                  <label for="login-password">Şifre</label>
+                  <input type="password" class="input-field" id="login-password" placeholder="Şifrenizi girin..." required style="width:100%; margin-top:5px;">
                 </div>
-              </div>
-
-              <button class="btn btn-primary" id="landing-submit-btn" style="width:100%; padding:14px; font-size:15px; border-radius:8px;">
-                🚀 Kurulumu Tamamla ve Platforma Giriş Yap
-              </button>
+                <button type="submit" class="btn btn-primary" id="login-submit-btn" style="width:100%; padding:14px; font-size:15px; border-radius:8px; margin-bottom:15px;">
+                  🔐 Giriş Yap
+                </button>
+                <div style="text-align:center; font-size:13px; color:var(--color-text-muted);">
+                  Hesabınız yok mu? <a href="#" id="go-to-register-link" style="color:var(--accent-gold); font-weight:600; text-decoration:none;">Yeni Kayıt Oluşturun</a>
+                </div>
+              </form>
             </div>
           </div>
+
+          <!-- REGISTER CONTAINER -->
+          <div class="landing-card" id="auth-register-card" style="display:none; max-width:520px;">
+            <div class="landing-header">
+              <h1>Kampüs NotebookLM</h1>
+              <p>Platforma Kayıt Olup Kendi Müfredatınızı Oluşturun</p>
+            </div>
+            <div class="landing-body" style="max-height: calc(100vh - 220px); overflow-y: auto; padding-right: 5px;">
+              <form id="auth-register-form" onsubmit="event.preventDefault();">
+                <div class="form-group" style="text-align:left; margin-bottom:12px;">
+                  <label for="register-fullname">Ad Soyad</label>
+                  <input type="text" class="input-field" id="register-fullname" placeholder="Adınızı ve soyadınızı girin..." required style="width:100%; margin-top:5px;">
+                </div>
+                <div class="form-group" style="text-align:left; margin-bottom:12px;">
+                  <label for="register-email">E-posta</label>
+                  <input type="email" class="input-field" id="register-email" placeholder="E-posta adresinizi girin..." required style="width:100%; margin-top:5px;">
+                </div>
+                <div class="form-group" style="text-align:left; margin-bottom:12px;">
+                  <label for="register-username">Kullanıcı Adı</label>
+                  <input type="text" class="input-field" id="register-username" placeholder="Benzersiz bir kullanıcı adı seçin..." required style="width:100%; margin-top:5px;">
+                </div>
+                <div class="form-group" style="text-align:left; margin-bottom:12px;">
+                  <label for="register-password">Şifre</label>
+                  <input type="password" class="input-field" id="register-password" placeholder="Bir şifre belirleyin..." required style="width:100%; margin-top:5px;">
+                </div>
+                
+                <hr style="border:0; border-top:1px solid var(--border-color); margin:15px 0;">
+                
+                <!-- University Selection -->
+                <div class="form-group" style="text-align:left; margin-bottom:12px;">
+                  <label for="register-univ-select">Üniversite</label>
+                  <select class="input-field" id="register-univ-select" style="width:100%; margin-top:5px;">
+                    <!-- Will be populated dynamically -->
+                  </select>
+                  <input type="text" class="input-field" id="register-univ-custom" placeholder="Üniversite adını elle yazın..." style="display:none; width:100%; margin-top:8px;">
+                </div>
+
+                <!-- Department Selection -->
+                <div class="form-group" style="text-align:left; margin-bottom:15px;">
+                  <label for="register-dept-select">Bölüm</label>
+                  <select class="input-field" id="register-dept-select" style="width:100%; margin-top:5px;">
+                    <!-- Will be populated dynamically -->
+                  </select>
+                  <input type="text" class="input-field" id="register-dept-custom" placeholder="Bölüm adını elle yazın..." style="display:none; width:100%; margin-top:8px;">
+                </div>
+
+                <div class="form-group" style="text-align:left; margin-bottom:20px;">
+                  <label for="register-api-key">Gemini API Anahtarı (Opsiyonel)</label>
+                  <input type="password" class="input-field" id="register-api-key" placeholder="AI Studio API Key (İsterseniz sonra da ekleyebilirsiniz)..." style="width:100%; margin-top:5px;">
+                  <div style="font-size:11px; color:var(--color-text-muted); margin-top:5px; line-height:1.4;">
+                    API anahtarını tamamen ücretsiz olarak <a href="https://aistudio.google.com/" target="_blank" style="color:var(--accent-gold);">Google AI Studio</a>'dan edinebilirsiniz.
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="register-submit-btn" style="width:100%; padding:14px; font-size:15px; border-radius:8px; margin-bottom:15px;">
+                  🚀 Kaydı Tamamla ve Giriş Yap
+                </button>
+                
+                <div style="text-align:center; font-size:13px; color:var(--color-text-muted);">
+                  Zaten hesabınız var mı? <a href="#" id="go-to-login-link" style="color:var(--accent-gold); font-weight:600; text-decoration:none;">Giriş Yapın</a>
+                </div>
+              </form>
+            </div>
+          </div>
+
         </div>
       </section>
     </main>
@@ -3200,7 +3279,7 @@ body {
 /* js/db.js */
 
 const DB_NAME = 'cukurova_hukuk_db';
-const DB_VERSION = 3;
+const DB_VERSION = 4;
 
 let dbInstance = null;
 
@@ -3411,6 +3490,11 @@ function initDb() {
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
 
+      // Users store
+      if (!db.objectStoreNames.contains('users')) {
+        db.createObjectStore('users', { keyPath: 'username' });
+      }
+
       // Courses store
       if (!db.objectStoreNames.contains('courses')) {
         db.createObjectStore('courses', { keyPath: 'id' });
@@ -3452,14 +3536,21 @@ function initDb() {
 }
 
 // --- Courses Operations ---
-async function getCourses() {
+async function getCourses(userId) {
   const db = await initDb();
   return new Promise((resolve, reject) => {
     const transaction = db.transaction('courses', 'readonly');
     const store = transaction.objectStore('courses');
     const request = store.getAll();
     
-    request.onsuccess = () => resolve(request.result);
+    request.onsuccess = () => {
+      const all = request.result || [];
+      if (!userId) {
+        resolve(all);
+      } else {
+        resolve(all.filter(c => c.userId === userId));
+      }
+    };
     request.onerror = () => reject(request.error);
   });
 }
@@ -3727,28 +3818,25 @@ async function deleteQuizBank(id) {
 }
 
 // --- Dynamic Curriculum Setup ---
-async function setupCurriculum(university, department) {
+async function setupCurriculum(university, department, userId) {
   const db = await initDb();
   return new Promise((resolve, reject) => {
-    const transaction = db.transaction(['courses', 'notes', 'pdfs', 'quizzes', 'savedQuizBanks'], 'readwrite');
-    
-    transaction.objectStore('courses').clear();
-    transaction.objectStore('notes').clear();
-    transaction.objectStore('pdfs').clear();
-    transaction.objectStore('quizzes').clear();
-    transaction.objectStore('savedQuizBanks').clear();
-
+    // Only transacting courses to avoid clearing other users' data
+    const transaction = db.transaction(['courses'], 'readwrite');
     const coursesStore = transaction.objectStore('courses');
     const templateKey = CURRICULUM_TEMPLATES[department] ? department : 'diger';
     const coursesToLoad = CURRICULUM_TEMPLATES[templateKey];
 
     coursesToLoad.forEach(course => {
-      coursesStore.put(course);
+      coursesStore.put({
+        id: `${course.id}-${userId}`,
+        name: course.name,
+        year: course.year,
+        userId: userId
+      });
     });
 
     transaction.oncomplete = () => {
-      localStorage.setItem('selected_university', university);
-      localStorage.setItem('selected_department', department);
       resolve();
     };
 
@@ -3808,6 +3896,62 @@ async function seedCommunityItems() {
   });
 }
 
+// --- Users Operations ---
+async function registerUser(user) {
+  const db = await initDb();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction('users', 'readwrite');
+    const store = transaction.objectStore('users');
+    
+    const checkReq = store.get(user.username);
+    checkReq.onsuccess = () => {
+      if (checkReq.result) {
+        reject(new Error('Bu kullanıcı adı zaten alınmış.'));
+        return;
+      }
+      
+      const putReq = store.put(user);
+      putReq.onsuccess = () => resolve(user);
+      putReq.onerror = () => reject(putReq.error);
+    };
+    checkReq.onerror = () => reject(checkReq.error);
+  });
+}
+
+async function loginUser(usernameOrEmail, password) {
+  const db = await initDb();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction('users', 'readonly');
+    const store = transaction.objectStore('users');
+    const request = store.getAll();
+    
+    request.onsuccess = () => {
+      const users = request.result || [];
+      const matched = users.find(u => 
+        (u.username === usernameOrEmail || u.email === usernameOrEmail) && 
+        u.password === password
+      );
+      if (matched) {
+        resolve(matched);
+      } else {
+        reject(new Error('Kullanıcı adı/e-posta veya şifre hatalı.'));
+      }
+    };
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function updateUserProfile(user) {
+  const db = await initDb();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction('users', 'readwrite');
+    const store = transaction.objectStore('users');
+    const request = store.put(user);
+    request.onsuccess = () => resolve(user);
+    request.onerror = () => reject(request.error);
+  });
+}
+
 
 const db = {
   initDb,
@@ -3833,7 +3977,10 @@ const db = {
   getCommunityItems,
   addCommunityItem,
   deleteCommunityItem,
-  seedCommunityItems
+  seedCommunityItems,
+  registerUser,
+  loginUser,
+  updateUserProfile
 };
 
 /* js/pdf-helper.js */
@@ -4445,6 +4592,57 @@ const ui = {
 /* js/app.js */
 
 
+// Turkish Universities and Departments list
+const TURKISH_UNIVERSITIES = [
+  "Çukurova Üniversitesi",
+  "Orta Doğu Teknik Üniversitesi (ODTÜ)",
+  "Ankara Üniversitesi",
+  "İstanbul Üniversitesi",
+  "İstanbul Teknik Üniversitesi (İTÜ)",
+  "Hacettepe Üniversitesi",
+  "Boğaziçi Üniversitesi",
+  "Yıldız Teknik Üniversitesi (YTÜ)",
+  "Marmara Üniversitesi",
+  "Gazi Üniversitesi",
+  "Ege Üniversitesi",
+  "Dokuz Eylül Üniversitesi",
+  "Bilkent Üniversitesi",
+  "Koç Üniversitesi",
+  "Sabancı Üniversitesi",
+  "Bahçeşehir Üniversitesi",
+  "Yeditepe Üniversitesi",
+  "Özyeğin Üniversitesi",
+  "TOBB ETÜ",
+  "Kadir Has Üniversitesi",
+  "MEF Üniversitesi",
+  "Anadolu Üniversitesi",
+  "Akdeniz Üniversitesi",
+  "Karadeniz Teknik Üniversitesi (KTÜ)",
+  "Bursa Uludağ Üniversitesi",
+  "Selçuk Üniversitesi",
+  "Erciyes Üniversitesi",
+  "Kocaeli Üniversitesi",
+  "Sakarya Üniversitesi",
+  "Eskişehir Osmangazi Üniversitesi",
+  "diğer"
+];
+
+const DEPARTMENTS = [
+  "Hukuk",
+  "Bilgisayar Mühendisliği",
+  "Tıp",
+  "İşletme",
+  "Elektrik-Elektronik Mühendisliği",
+  "Makine Mühendisliği",
+  "Endüstri Mühendisliği",
+  "Mimarlık",
+  "Psikoloji",
+  "Sosyoloji",
+  "İktisat",
+  "Uluslararası İlişkiler",
+  "diğer"
+];
+
 // Application State
 let courses = [];
 let activeQuiz = null;
@@ -4453,6 +4651,7 @@ let quizScore = 0;
 let quizAnswers = [];
 let chatHistory = [];
 let debounceSaveTimer = null;
+let currentUser = null;
 
 // Initialize App
 document.addEventListener('DOMContentLoaded', async () => {
@@ -4463,26 +4662,40 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 2. Seed community items
     await db.seedCommunityItems();
     
-    // 3. Load API key settings
-    ui.updateApiKeyBadgeStatus();
+    // 3. Setup Auth forms and dynamic dropdown lists
+    initAuthPage();
     
     // 4. Set up event listeners
     initEventListeners();
     
-    // 5. Check if profile setup is complete
-    const savedUniv = localStorage.getItem('selected_university');
-    const savedDept = localStorage.getItem('selected_department');
-    
-    if (!savedUniv || !savedDept) {
-      // Show landing page, hide main app header and sidebar
+    // 5. Load User session
+    const savedUser = localStorage.getItem('currentUser');
+    if (!savedUser) {
+      // Hide main app header and sidebar, redirect to auth-page
       document.querySelector('.sidebar').style.display = 'none';
       document.querySelector('.main-content').style.marginLeft = '0';
       document.getElementById('mobile-menu-toggle').style.display = 'none';
-      switchPageProgrammatic('landing-page');
+      switchPageProgrammatic('auth-page');
     } else {
+      currentUser = JSON.parse(savedUser);
       // Profile complete: load dashboard
       document.querySelector('.sidebar').style.display = 'flex';
       document.getElementById('mobile-menu-toggle').style.display = 'flex';
+      
+      // Update sidebar/header info
+      document.getElementById('sidebar-brand-sub').textContent = currentUser.department.toUpperCase();
+      document.getElementById('current-course-display').textContent = `${currentUser.university} - ${currentUser.department.toUpperCase()}`;
+      document.getElementById('dashboard-welcome-title').textContent = `Hoş geldin, ${currentUser.fullName}!`;
+      
+      // Set active AI API keys
+      if (currentUser.apiKey) {
+        ai.setApiKey(currentUser.apiKey);
+        if (currentUser.apiModel) {
+          ai.setApiModel(currentUser.apiModel);
+        }
+      }
+      ui.updateApiKeyBadgeStatus();
+      
       await refreshDashboard();
       switchPageProgrammatic('dashboard-page');
     }
@@ -4490,7 +4703,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     ui.showToast('Çalışma platformu başarıyla yüklendi.');
   } catch (error) {
     console.error('App init error:', error);
-    ui.showToast('Veritabanı yüklenemedi. Lütfen sayfayı yenileyin.', 'error');
+    ui.showToast('Sistem yüklenirken hata oluştu.', 'error');
   }
 });
 
@@ -4527,11 +4740,13 @@ function switchPageProgrammatic(pageId) {
 function initEventListeners() {
   // SPA Sidebar Routing
   document.querySelectorAll('.sidebar-menu .menu-item').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const pageId = link.dataset.page;
-      switchPageProgrammatic(pageId);
-    });
+    if (link.id !== 'menu-logout') {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const pageId = link.dataset.page;
+        switchPageProgrammatic(pageId);
+      });
+    }
   });
 
   // Dashboard Tabs
@@ -4568,11 +4783,26 @@ function initEventListeners() {
       modelSelect.value = ai.getApiModel();
     }
     
-    // Populate profile inputs in settings
-    const univSelect = document.getElementById('settings-univ-select');
-    const deptSelect = document.getElementById('settings-dept-select');
-    if (univSelect) univSelect.value = localStorage.getItem('selected_university') || 'diğer';
-    if (deptSelect) deptSelect.value = localStorage.getItem('selected_department') || 'diger';
+    // Populate profile inputs in settings modal
+    const uSelect = document.getElementById('settings-univ-select');
+    const dSelect = document.getElementById('settings-dept-select');
+    
+    if (uSelect) {
+      uSelect.innerHTML = TURKISH_UNIVERSITIES.map(u => `<option value="${u}">${u}</option>`).join('');
+      uSelect.value = currentUser.university;
+      
+      uSelect.addEventListener('change', () => {
+        document.getElementById('settings-univ-custom').style.display = uSelect.value === 'diğer' ? 'block' : 'none';
+      });
+    }
+    if (dSelect) {
+      dSelect.innerHTML = DEPARTMENTS.map(d => `<option value="${d.toLowerCase().replace(/[^a-z0-9]/g, '-')}">${d}</option>`).join('');
+      dSelect.value = currentUser.department;
+      
+      dSelect.addEventListener('change', () => {
+        document.getElementById('settings-dept-custom').style.display = dSelect.value === 'diğer' ? 'block' : 'none';
+      });
+    }
     
     openModal('api-key-modal');
   });
@@ -4615,112 +4845,150 @@ function initEventListeners() {
   document.getElementById('settings-reset-system-btn').addEventListener('click', () => {
     if (confirm('DİKKAT! Tüm veritabanını, notları ve kayıtları silerek kurulum ekranına dönmek istediğinizden emin misiniz? Bu işlem geri alınamaz!')) {
       localStorage.clear();
-      // Clear IDB
       indexedDB.deleteDatabase('cukurova_hukuk_db');
       location.reload();
     }
   });
 
-  // Course Details View Controls
+  // Course detail back
   document.getElementById('course-detail-back-btn').addEventListener('click', () => {
     switchPageProgrammatic('dashboard-page');
   });
-  
+
   document.getElementById('course-detail-delete-btn').addEventListener('click', async () => {
-    if (confirm(`"${ui.activeCourse.name}" dersini müfredatınızdan tamamen kaldırmak istiyor musunuz? İlgili tüm notlar ve dosyalar silinecektir.`)) {
+    if (ui.activeCourse && confirm(`“${ui.activeCourse.name}” dersini ve bu derse ait TÜM PDF/Not/Soru içeriklerini silmek istediğinizden emin misiniz?`)) {
       try {
         await db.deleteCourse(ui.activeCourse.id);
-        ui.showToast('Ders müfredattan kaldırıldı.', 'warning');
+        ui.showToast('Ders ve ilişkili tüm içerikleri silindi.', 'warning');
         switchPageProgrammatic('dashboard-page');
       } catch (err) {
-        ui.showToast('Ders silinemedi.', 'error');
+        ui.showToast('Ders silinirken hata oluştu.', 'error');
       }
     }
   });
 
+  // Course detail additions
   document.getElementById('detail-create-note-btn').addEventListener('click', handleCreateNote);
 
-  // PDF Dropzone in Course Detail
-  const dropzone = document.getElementById('pdf-dropzone');
-  const fileInput = document.getElementById('pdf-file-input');
+  const dropzone = document.getElementById('detail-pdf-dropzone');
+  const fileInput = document.getElementById('detail-pdf-file-input');
   if (dropzone && fileInput) {
     dropzone.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', handlePdfFileSelect);
-
+    
     dropzone.addEventListener('dragover', (e) => {
       e.preventDefault();
-      dropzone.style.borderColor = 'var(--accent-gold)';
-      dropzone.style.backgroundColor = 'rgba(212, 175, 55, 0.05)';
+      dropzone.classList.add('dragover');
     });
-
+    
     dropzone.addEventListener('dragleave', () => {
-      dropzone.style.borderColor = 'var(--border-color)';
-      dropzone.style.backgroundColor = 'transparent';
+      dropzone.classList.remove('dragover');
     });
-
+    
     dropzone.addEventListener('drop', (e) => {
       e.preventDefault();
-      dropzone.style.borderColor = 'var(--border-color)';
-      dropzone.style.backgroundColor = 'transparent';
+      dropzone.classList.remove('dragover');
       const files = e.dataTransfer.files;
-      if (files.length > 0) {
+      if (files.length > 0 && files[0].type === 'application/pdf') {
         processPdfUpload(files[0]);
+      } else {
+        ui.showToast('Lütfen geçerli bir PDF dosyası bırakın.', 'error');
       }
     });
   }
 
-  // NotebookLM Workspace Controls
+  // Notebook workspace triggers
   document.getElementById('notebook-back-btn').addEventListener('click', () => {
-    switchPageProgrammatic('course-detail-page');
-    loadCourseDetails(ui.activeCourse);
+    if (ui.activeCourse) {
+      loadCourseDetails(ui.activeCourse);
+      switchPageProgrammatic('course-detail-page');
+    } else {
+      switchPageProgrammatic('dashboard-page');
+    }
   });
 
-  document.getElementById('notebook-share-btn').addEventListener('click', handleShareToCommunity);
-
-  // Workspace Tabs switcher
-  document.querySelectorAll('.workspace-tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.workspace-tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const tabId = btn.dataset.tab;
-      document.querySelectorAll('.workspace-tab-content').forEach(c => c.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-    });
-  });
-
-  // Chat submit in workspace
-  document.getElementById('chat-form-element').addEventListener('submit', handleChatSubmit);
-  const chatInput = document.getElementById('chat-input-field');
-  const chatSubmitBtn = document.getElementById('chat-submit-btn');
-  if (chatInput && chatSubmitBtn) {
-    chatInput.addEventListener('input', () => {
-      chatSubmitBtn.disabled = !chatInput.value.trim();
+  // Collapsible Left Assistant panel toggle
+  const notebookToggleBtn = document.getElementById('notebook-toggle-sidebar-btn');
+  if (notebookToggleBtn) {
+    notebookToggleBtn.addEventListener('click', () => {
+      const leftPanel = document.querySelector('.workspace-panel-left');
+      if (leftPanel) {
+        leftPanel.classList.toggle('collapsed');
+        const isCollapsed = leftPanel.classList.contains('collapsed');
+        if (isCollapsed) {
+          notebookToggleBtn.innerHTML = '<span id="notebook-toggle-sidebar-icon">▶</span> Asistan Panelini Göster';
+        } else {
+          notebookToggleBtn.innerHTML = '<span id="notebook-toggle-sidebar-icon">◀</span> Asistan Panelini Gizle';
+        }
+      }
     });
   }
 
-  // Quiz actions in workspace
+  // Collapsible Main Sidebar toggle
+  const sidebarToggleBtn = document.getElementById('mobile-menu-toggle');
+  if (sidebarToggleBtn) {
+    sidebarToggleBtn.addEventListener('click', () => {
+      const sidebar = document.querySelector('.sidebar');
+      const mainContent = document.querySelector('.main-content');
+      if (window.innerWidth <= 768) {
+        sidebar.classList.toggle('mobile-active');
+      } else {
+        sidebar.classList.toggle('collapsed');
+        mainContent.classList.toggle('full-width');
+      }
+    });
+  }
+
+  // Close sidebar on menu click on mobile
+  document.querySelectorAll('.sidebar-menu .menu-item').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 768) {
+        document.querySelector('.sidebar').classList.remove('mobile-active');
+      }
+    });
+  });
+
+  // Logout trigger
+  const logoutBtn = document.getElementById('menu-logout');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleLogout();
+    });
+  }
+
+  document.getElementById('notebook-share-btn').addEventListener('click', handleShareToCommunity);
+
+  document.querySelectorAll('.workspace-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.workspace-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.workspace-tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      const tabId = btn.dataset.tab;
+      const tabContent = document.getElementById(tabId);
+      if (tabContent) tabContent.classList.add('active');
+    });
+  });
+
+  document.getElementById('chat-form-element').addEventListener('submit', handleChatSubmit);
+  const chatInput = document.getElementById('chat-input-field');
+  if (chatInput) {
+    chatInput.addEventListener('input', () => {
+      const submitBtn = document.getElementById('chat-submit-btn');
+      if (submitBtn) submitBtn.disabled = !chatInput.value.trim();
+    });
+  }
+
   document.getElementById('start-ai-quiz-generation').addEventListener('click', handleAiQuizGeneration);
   document.getElementById('start-local-pdf-quiz').addEventListener('click', handleLocalPdfQuizConversion);
   document.getElementById('quiz-next-btn').addEventListener('click', handleQuizNext);
   document.getElementById('quiz-quit-btn').addEventListener('click', () => {
-    if (confirm('Testi yarıda kesmek istediğinizden emin misiniz?')) {
-      endQuizAndShowResults();
-    }
+    if (confirm('Sınavı bitirmek istediğinizden emin misiniz?')) restartQuizSetup();
   });
   document.getElementById('results-restart-btn').addEventListener('click', restartQuiz);
 
-  // Workspace Notepad Save button
   document.getElementById('workspace-note-save-btn').addEventListener('click', saveWorkspaceNote);
 
-  // Main Note Editor save events
-  document.getElementById('note-title-field').addEventListener('input', handleNoteContentChange);
-  document.getElementById('note-editor-body').addEventListener('input', handleNoteContentChange);
-  document.getElementById('editor-save-btn').addEventListener('click', saveActiveNoteImmediate);
-
-  // Editor rich text command buttons
-  document.querySelectorAll('.editor-toolbar .toolbar-btn[data-cmd]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const cmd = btn.dataset.cmd;
       const val = btn.dataset.val || null;
       document.execCommand(cmd, false, val);
       document.getElementById('note-editor-body').focus();

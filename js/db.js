@@ -1,7 +1,7 @@
 /* js/db.js */
 
 const DB_NAME = 'cukurova_hukuk_db';
-const DB_VERSION = 3;
+const DB_VERSION = 4;
 
 let dbInstance = null;
 
@@ -212,6 +212,11 @@ export function initDb() {
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
 
+      // Users store
+      if (!db.objectStoreNames.contains('users')) {
+        db.createObjectStore('users', { keyPath: 'username' });
+      }
+
       // Courses store
       if (!db.objectStoreNames.contains('courses')) {
         db.createObjectStore('courses', { keyPath: 'id' });
@@ -253,14 +258,21 @@ export function initDb() {
 }
 
 // --- Courses Operations ---
-export async function getCourses() {
+export async function getCourses(userId) {
   const db = await initDb();
   return new Promise((resolve, reject) => {
     const transaction = db.transaction('courses', 'readonly');
     const store = transaction.objectStore('courses');
     const request = store.getAll();
     
-    request.onsuccess = () => resolve(request.result);
+    request.onsuccess = () => {
+      const all = request.result || [];
+      if (!userId) {
+        resolve(all);
+      } else {
+        resolve(all.filter(c => c.userId === userId));
+      }
+    };
     request.onerror = () => reject(request.error);
   });
 }
@@ -528,28 +540,25 @@ export async function deleteQuizBank(id) {
 }
 
 // --- Dynamic Curriculum Setup ---
-export async function setupCurriculum(university, department) {
+export async function setupCurriculum(university, department, userId) {
   const db = await initDb();
   return new Promise((resolve, reject) => {
-    const transaction = db.transaction(['courses', 'notes', 'pdfs', 'quizzes', 'savedQuizBanks'], 'readwrite');
-    
-    transaction.objectStore('courses').clear();
-    transaction.objectStore('notes').clear();
-    transaction.objectStore('pdfs').clear();
-    transaction.objectStore('quizzes').clear();
-    transaction.objectStore('savedQuizBanks').clear();
-
+    // Only transacting courses to avoid clearing other users' data
+    const transaction = db.transaction(['courses'], 'readwrite');
     const coursesStore = transaction.objectStore('courses');
     const templateKey = CURRICULUM_TEMPLATES[department] ? department : 'diger';
     const coursesToLoad = CURRICULUM_TEMPLATES[templateKey];
 
     coursesToLoad.forEach(course => {
-      coursesStore.put(course);
+      coursesStore.put({
+        id: `${course.id}-${userId}`,
+        name: course.name,
+        year: course.year,
+        userId: userId
+      });
     });
 
     transaction.oncomplete = () => {
-      localStorage.setItem('selected_university', university);
-      localStorage.setItem('selected_department', department);
       resolve();
     };
 
@@ -606,5 +615,61 @@ export async function seedCommunityItems() {
     });
     transaction.oncomplete = () => resolve();
     transaction.onerror = () => reject(transaction.error);
+  });
+}
+
+// --- Users Operations ---
+export async function registerUser(user) {
+  const db = await initDb();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction('users', 'readwrite');
+    const store = transaction.objectStore('users');
+    
+    const checkReq = store.get(user.username);
+    checkReq.onsuccess = () => {
+      if (checkReq.result) {
+        reject(new Error('Bu kullanıcı adı zaten alınmış.'));
+        return;
+      }
+      
+      const putReq = store.put(user);
+      putReq.onsuccess = () => resolve(user);
+      putReq.onerror = () => reject(putReq.error);
+    };
+    checkReq.onerror = () => reject(checkReq.error);
+  });
+}
+
+export async function loginUser(usernameOrEmail, password) {
+  const db = await initDb();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction('users', 'readonly');
+    const store = transaction.objectStore('users');
+    const request = store.getAll();
+    
+    request.onsuccess = () => {
+      const users = request.result || [];
+      const matched = users.find(u => 
+        (u.username === usernameOrEmail || u.email === usernameOrEmail) && 
+        u.password === password
+      );
+      if (matched) {
+        resolve(matched);
+      } else {
+        reject(new Error('Kullanıcı adı/e-posta veya şifre hatalı.'));
+      }
+    };
+    request.onerror = () => reject(request.error);
+  });
+}
+
+export async function updateUserProfile(user) {
+  const db = await initDb();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction('users', 'readwrite');
+    const store = transaction.objectStore('users');
+    const request = store.put(user);
+    request.onsuccess = () => resolve(user);
+    request.onerror = () => reject(request.error);
   });
 }
