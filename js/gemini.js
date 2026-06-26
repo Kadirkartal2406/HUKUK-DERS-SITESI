@@ -46,16 +46,36 @@ export function hasApiKey() {
   return !!getApiKey();
 }
 
+// All models in fallback order (preferred first, most reliable last)
+const FALLBACK_MODELS = [
+  'gemini-2.5-flash',
+  'gemini-2.0-flash',
+  'gemini-flash-latest',
+  'gemini-pro-latest',
+  'gemini-3.5-flash',
+];
+
+function isQuotaOrDemandError(msg) {
+  return (
+    msg.includes('Quota exceeded') ||
+    msg.includes('quota') ||
+    msg.includes('limit: 0') ||
+    msg.includes('billing') ||
+    msg.includes('high demand') ||
+    msg.includes('RESOURCE_EXHAUSTED') ||
+    msg.includes('429')
+  );
+}
+
 /**
- * Common fetch wrapper for Gemini API
+ * Core single-model request (no fallback)
  */
-async function callGemini(contents, systemInstruction = '', jsonMode = false) {
+async function callGeminiWithModel(modelName, contents, systemInstruction = '', jsonMode = false) {
   const apiKey = getApiKey();
   if (!apiKey) {
     throw new Error('Lütfen önce sağ üst köşeden Gemini API Anahtarınızı girin.');
   }
 
-  const modelName = getApiModel();
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
 
   const requestBody = {};
@@ -83,12 +103,10 @@ async function callGemini(contents, systemInstruction = '', jsonMode = false) {
   if (!response.ok) {
     const errData = await response.json().catch(() => ({}));
     const errMsg = errData.error?.message || `HTTP Hata: ${response.status}`;
-    
-    if (errMsg.includes('Quota exceeded') || errMsg.includes('quota') || errMsg.includes('limit: 0') || errMsg.includes('billing')) {
-      throw new Error(`KOTA LİMİTİ AŞILDI (Limit: 0)!\n\nOlası Çözümler:\n1. Sağ üst köşedeki API ayarlarına tıklayarak Modeli 'Gemini 1.5 Flash (Düşük Kota Dostu)' olarak değiştirin.\n2. API anahtarınızı Google AI Studio'da faturalandırma (Billing) tanımlı olan projenizin altında oluşturduğunuzdan emin olun (Create API key in existing project seçeneğiyle).`);
-    }
-    
-    throw new Error(`Gemini API Hatası: ${errMsg}`);
+    const err = new Error(errMsg);
+    err.isQuota = isQuotaOrDemandError(errMsg);
+    err.modelName = modelName;
+    throw err;
   }
 
   const data = await response.json();
@@ -99,6 +117,44 @@ async function callGemini(contents, systemInstruction = '', jsonMode = false) {
   }
 
   return textResponse;
+}
+
+/**
+ * Common fetch wrapper with automatic model fallback on quota / high-demand errors
+ */
+async function callGemini(contents, systemInstruction = '', jsonMode = false) {
+  // Build trial order: user's preferred model first, then fallbacks
+  const preferred = getApiModel();
+  const modelsToTry = [preferred, ...FALLBACK_MODELS.filter(m => m !== preferred)];
+
+  let lastError = null;
+
+  for (const model of modelsToTry) {
+    try {
+      const result = await callGeminiWithModel(model, contents, systemInstruction, jsonMode);
+      // If success with a fallback model, silently note it in console
+      if (model !== preferred) {
+        console.info(`[Gemini] Fallback başarılı: '${preferred}' yerine '${model}' kullanıldı.`);
+      }
+      return result;
+    } catch (err) {
+      lastError = err;
+      if (err.isQuota) {
+        // Quota / demand error → try next model
+        console.warn(`[Gemini] Model '${model}' kota/yoğunluk hatası verdi, sıradaki model deneniyor...`);
+        continue;
+      }
+      // Any other error (invalid key, bad payload, etc.) → stop immediately
+      throw err;
+    }
+  }
+
+  // All models exhausted
+  throw new Error(
+    `Tüm modeller kota veya yoğunluk hatası verdi.\n\n` +
+    `Lütfen birkaç dakika bekleyip tekrar deneyin ya da farklı bir API anahtarı kullanın.\n\n` +
+    `Son hata: ${lastError?.message || 'Bilinmiyor'}`
+  );
 }
 
 /**
