@@ -1510,6 +1510,102 @@ body {
 }
 
 /* Setup View */
+/* ===== SAVED QUIZ BANKS ===== */
+.saved-banks-section {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: 28px 32px;
+  margin-top: 20px;
+}
+
+.saved-banks-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-title);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin-bottom: 20px;
+}
+
+.saved-banks-header svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.bank-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  padding: 14px 18px;
+  margin-bottom: 10px;
+  transition: var(--transition-normal);
+  gap: 12px;
+}
+
+.bank-card:hover {
+  border-color: var(--accent-gold);
+  background: var(--bg-card-hover);
+}
+
+.bank-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.bank-card-name {
+  font-weight: 600;
+  font-size: 14.5px;
+  color: var(--color-text);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bank-card-meta {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.bank-card-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 12.5px;
+  border-radius: var(--border-radius-sm);
+}
+
+.empty-banks-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 30px 20px;
+  color: var(--color-text-dark);
+  text-align: center;
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+.empty-banks-msg svg {
+  width: 36px;
+  height: 36px;
+  opacity: 0.4;
+}
+
+/* ============================= */
+
 .quiz-setup-card {
   text-align: center;
   padding: 40px;
@@ -2468,6 +2564,15 @@ Soru 2: ..."></textarea>
               <button class="btn btn-primary" style="margin-top:20px;" id="start-manual-quiz">Testi Çözülebilir Hale Getir</button>
             </div>
           </div>
+
+          <!-- Saved Quiz Banks Section -->
+          <div class="saved-banks-section" id="saved-banks-section">
+            <div class="saved-banks-header">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" /></svg>
+              Kaydedilmiş Soru Bankalarım
+            </div>
+            <div id="saved-banks-list"></div>
+          </div>
           
           <!-- Active Solving Screen -->
           <div id="quiz-solving-panel" style="display:none; flex-direction:column; gap:20px;">
@@ -2532,6 +2637,28 @@ Soru 2: ..."></textarea>
     </main>
   </div>
   
+  <!-- MODAL: SAVE QUIZ BANK -->
+  <div class="modal" id="save-bank-modal">
+    <div class="modal-content" style="max-width:460px;">
+      <div class="modal-header">
+        <h3>📚 Soru Bankasını Kaydet</h3>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:13.5px; color:var(--color-text-muted); margin-bottom:16px; line-height:1.6;">
+          <strong id="save-bank-count">0</strong> soru üretildi! Bu soruları ileride tekrar çözmek için bir isim vererek kaydedin.
+        </p>
+        <div class="form-group">
+          <label for="save-bank-name-input">Soru Bankası Adı</label>
+          <input type="text" class="input-field" id="save-bank-name-input" placeholder="Örn: İdare Hukuku Vize Soruları">
+        </div>
+      </div>
+      <div class="modal-footer" style="gap:10px;">
+        <button class="btn btn-secondary" id="save-bank-skip-btn">Kaydetme, Sadece Çöz</button>
+        <button class="btn btn-primary" id="save-bank-confirm-btn">💾 Kaydet ve Çöz</button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL: ADD COURSE -->
   <div class="modal" id="add-course-modal">
     <div class="modal-content">

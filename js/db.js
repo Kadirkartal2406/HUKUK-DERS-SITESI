@@ -1,7 +1,7 @@
 /* js/db.js */
 
 const DB_NAME = 'cukurova_hukuk_db';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 let dbInstance = null;
 
@@ -84,9 +84,15 @@ export function initDb() {
         quizzesStore.createIndex('courseId', 'courseId', { unique: false });
       }
 
+      // Saved Quiz Banks store (named question sets for reuse)
+      if (!db.objectStoreNames.contains('savedQuizBanks')) {
+        const banksStore = db.createObjectStore('savedQuizBanks', { keyPath: 'id' });
+        banksStore.createIndex('courseId', 'courseId', { unique: false });
+      }
+
       // Populate default courses
       const transaction = event.target.transaction;
-      const coursesStore = transaction.objectStore( 'courses');
+      const coursesStore = transaction.objectStore('courses');
       DEFAULT_COURSES.forEach(course => {
         coursesStore.put(course);
       });
@@ -302,4 +308,39 @@ export async function getGlobalStats() {
   const avgScore = await getAvgQuizScore();
 
   return { totalNotes, totalPdfs, avgScore };
+}
+
+// --- Saved Quiz Banks Operations ---
+export async function getQuizBanks(courseId) {
+  const db = await initDb();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction('savedQuizBanks', 'readonly');
+    const store = transaction.objectStore('savedQuizBanks');
+    const index = store.index('courseId');
+    const request = index.getAll(IDBKeyRange.only(courseId));
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+export async function saveQuizBank(bank) {
+  const db = await initDb();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction('savedQuizBanks', 'readwrite');
+    const store = transaction.objectStore('savedQuizBanks');
+    const request = store.put(bank);
+    request.onsuccess = () => resolve(bank);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+export async function deleteQuizBank(id) {
+  const db = await initDb();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction('savedQuizBanks', 'readwrite');
+    const store = transaction.objectStore('savedQuizBanks');
+    const request = store.delete(id);
+    request.onsuccess = () => resolve(id);
+    request.onerror = () => reject(request.error);
+  });
 }

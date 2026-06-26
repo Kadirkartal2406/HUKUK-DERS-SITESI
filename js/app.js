@@ -835,6 +835,9 @@ async function loadQuizPanel() {
   } catch (err) {
     console.error('Failed to load PDFs for quiz dropdown:', err);
   }
+
+  // Render saved quiz banks
+  await renderSavedQuizBanks();
 }
 
 async function handleAiQuizGeneration() {
@@ -877,6 +880,8 @@ async function handleAiQuizGeneration() {
       throw new Error('Soru formatı geçersiz.');
     }
 
+    // Ask to save before starting
+    await promptSaveQuizBank(parsedQuestions, `AI - ${ui.activeCourse.name} - ${new Date().toLocaleDateString('tr-TR')}`);
     startQuizSession(parsedQuestions);
   } catch (error) {
     ui.showToast('Yapay zeka soru üretemedi: ' + error.message, 'error');
@@ -916,6 +921,8 @@ async function handlePdfQuizConversion() {
       throw new Error('Yapay zeka PDF\'ten çözülebilir soru çıkaramadı.');
     }
 
+    // Ask to save before starting
+    await promptSaveQuizBank(parsedQuestions, pdf.name.replace('.pdf', '').replace('.PDF', ''));
     startQuizSession(parsedQuestions);
     ui.showToast(`${parsedQuestions.length} soru PDF'ten interaktif sınava dönüştürüldü.`);
   } catch (error) {
@@ -1178,5 +1185,120 @@ async function endQuizAndShowResults() {
 function restartQuiz() {
   if (activeQuiz && activeQuiz.questions) {
     startQuizSession(activeQuiz.questions);
+  }
+}
+
+// --- QUIZ BANKS ---
+
+/**
+ * Shows a modal-like prompt asking the user to name & save the generated quiz bank.
+ */
+async function promptSaveQuizBank(questions, defaultName) {
+  return new Promise((resolve) => {
+    const modal = document.getElementById('save-bank-modal');
+    const nameInput = document.getElementById('save-bank-name-input');
+    const saveBtn = document.getElementById('save-bank-confirm-btn');
+    const skipBtn = document.getElementById('save-bank-skip-btn');
+    const countSpan = document.getElementById('save-bank-count');
+
+    nameInput.value = defaultName || '';
+    if (countSpan) countSpan.textContent = questions.length;
+
+    modal.classList.add('active');
+
+    const cleanup = () => {
+      modal.classList.remove('active');
+      saveBtn.removeEventListener('click', onSave);
+      skipBtn.removeEventListener('click', onSkip);
+    };
+
+    const onSave = async () => {
+      const name = nameInput.value.trim() || defaultName;
+      const bank = {
+        id: `bank-${Date.now()}`,
+        courseId: ui.activeCourse.id,
+        name,
+        questions,
+        createdAt: Date.now()
+      };
+      try {
+        await db.saveQuizBank(bank);
+        ui.showToast(`"${name}" soru bankası kaydedildi! 📚`);
+      } catch (e) {
+        ui.showToast('Banka kaydedilemedi: ' + e.message, 'error');
+      }
+      cleanup();
+      resolve();
+    };
+
+    const onSkip = () => {
+      cleanup();
+      resolve();
+    };
+
+    saveBtn.addEventListener('click', onSave);
+    skipBtn.addEventListener('click', onSkip);
+  });
+}
+
+/**
+ * Renders the saved quiz banks list inside quiz setup panel.
+ */
+async function renderSavedQuizBanks() {
+  const container = document.getElementById('saved-banks-list');
+  if (!container) return;
+
+  try {
+    const banks = await db.getQuizBanks(ui.activeCourse.id);
+    container.innerHTML = '';
+
+    if (banks.length === 0) {
+      container.innerHTML = `
+        <div class="empty-banks-msg">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" /></svg>
+          <p>Henüz bu ders için kayıtlı soru bankası yok.<br>Ürettiğiniz soruları kaydedin, burada çıksın!</p>
+        </div>
+      `;
+      return;
+    }
+
+    banks.sort((a, b) => b.createdAt - a.createdAt).forEach(bank => {
+      const card = document.createElement('div');
+      card.className = 'bank-card';
+      const dateStr = new Date(bank.createdAt).toLocaleDateString('tr-TR');
+      card.innerHTML = `
+        <div class="bank-card-info">
+          <div class="bank-card-name">${bank.name}</div>
+          <div class="bank-card-meta">${bank.questions.length} soru &bull; ${dateStr}</div>
+        </div>
+        <div class="bank-card-actions">
+          <button class="btn btn-primary btn-sm bank-start-btn" data-id="${bank.id}">▶ Sınava Başla</button>
+          <button class="btn btn-secondary btn-sm bank-del-btn" data-id="${bank.id}" title="Bankayı Sil">🗑</button>
+        </div>
+      `;
+
+      card.querySelector('.bank-start-btn').addEventListener('click', () => startQuizFromBank(bank));
+      card.querySelector('.bank-del-btn').addEventListener('click', () => handleDeleteQuizBank(bank.id, bank.name));
+      container.appendChild(card);
+    });
+  } catch (err) {
+    console.error('Saved banks load error:', err);
+  }
+}
+
+function startQuizFromBank(bank) {
+  ui.showToast(`"${bank.name}" bankası başlatıldı!`);
+  startQuizSession(bank.questions);
+}
+
+async function handleDeleteQuizBank(id, name) {
+  if (confirm(`"${name}" soru bankasını silmek istediğinizden emin misiniz?`)) {
+    try {
+      await db.deleteQuizBank(id);
+      ui.showToast('Soru bankası silindi.', 'warning');
+      await renderSavedQuizBanks();
+    } catch (err) {
+      ui.showToast('Soru bankası silinemedi.', 'error');
+    }
   }
 }
